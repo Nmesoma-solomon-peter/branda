@@ -59,7 +59,7 @@ const FAQ = () => {
         <div className="faq-contact">
           <h3>Still have questions?</h3>
           <p>We are here to help. Reach out to our support team.</p>
-          <a href="mailto:support@branda.com">Contact Support</a>
+          <a href="mailto:support@branda-five.vercel.app">Contact Support</a>
         </div>
       </div>
     </>

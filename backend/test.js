@@ -198,7 +198,7 @@ async function run() {
   assert('GET specialist projects → 200', specProjects.status === 200, `got ${specProjects.status}`);
 
   // Assign specialist via admin
-  const adminLogin = await request('POST', '/auth/login', { email: 'admin@branda.com', password: 'admin123' });
+  const adminLogin = await request('POST', '/auth/login', { email: 'admin@branda-five.vercel.app', password: 'admin123' });
   const adminToken = adminLogin.body.token;
 
   const adminReq = await request('PUT', `/admin/projects/${projectId}/assign`, { specialistId: reg2.body.user.id }, adminToken);

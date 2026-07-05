@@ -24,7 +24,7 @@ const getTransporter = async () => {
 
 const getFromAddress = async () => {
   const settings = await Settings.findOne().lean();
-  return settings?.smtpFrom || settings?.smtpUser || 'noreply@branda.ng';
+  return settings?.smtpFrom || settings?.smtpUser || 'noreply@branda-five.vercel.app';
 };
 
 const sendEmail = async (to, subject, html) => {

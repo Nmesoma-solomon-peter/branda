@@ -84,7 +84,7 @@ const Contact = () => {
         <div className="contact-info">
           <div className="contact-info-item">
             <div className="contact-info-label">Email</div>
-            <div className="contact-info-value"><a href="mailto:support@branda.com">support@branda.com</a></div>
+            <div className="contact-info-value"><a href="mailto:support@branda-five.vercel.app">support@branda-five.vercel.app</a></div>
           </div>
           <div className="contact-info-item">
             <div className="contact-info-label">Location</div>

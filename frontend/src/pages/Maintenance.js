@@ -23,8 +23,8 @@ const Maintenance = () => {
         </p>
         <p style={{ color: 'var(--gray-400)', fontSize: 13 }}>
           For urgent inquiries, contact us at{' '}
-          <a href="mailto:support@branda.ng" style={{ color: 'var(--green)', textDecoration: 'none', fontWeight: 500 }}>
-            support@branda.ng
+          <a href="mailto:support@branda-five.vercel.app" style={{ color: 'var(--green)', textDecoration: 'none', fontWeight: 500 }}>
+            support@branda-five.vercel.app
           </a>
         </p>
       </div>

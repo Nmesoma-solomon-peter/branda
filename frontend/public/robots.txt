@@ -3,4 +3,4 @@ Allow: /
 Disallow: /manage/
 Disallow: /api/
 
-Sitemap: https://branda.ng/sitemap.xml
+Sitemap: https://branda-five.vercel.app/sitemap.xml

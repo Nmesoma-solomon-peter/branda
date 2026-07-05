@@ -4,7 +4,7 @@ const Post = require('../models/Post');
 
 router.get('/sitemap.xml', async (req, res) => {
   try {
-    const baseUrl = process.env.FRONTEND_URL || 'https://branda.com';
+    const baseUrl = process.env.FRONTEND_URL || 'https://branda-five.vercel.app';
     const posts = await Post.find({ published: true }).select('slug updatedAt createdAt').sort({ createdAt: -1 });
 
     let xml = '<?xml version="1.0" encoding="UTF-8"?>\n';

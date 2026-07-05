@@ -47,7 +47,7 @@ const AdminLogin = () => {
             )}
             <div style={{ marginBottom: 16 }}>
               <label style={{ display: 'block', fontSize: 14, fontWeight: 500, marginBottom: 6 }}>Email</label>
-              <input type="email" className="form-input" value={email} onChange={e => setEmail(e.target.value)} placeholder="admin@branda.com" required disabled={loading} style={{ width: '100%' }} />
+              <input type="email" className="form-input" value={email} onChange={e => setEmail(e.target.value)} placeholder="admin@branda-five.vercel.app" required disabled={loading} style={{ width: '100%' }} />
             </div>
             <div style={{ marginBottom: 24 }}>
               <label style={{ display: 'block', fontSize: 14, fontWeight: 500, marginBottom: 6 }}>Password</label>

@@ -5,7 +5,7 @@ const User = require('./models/User');
 const seedAdmin = async () => {
   await mongoose.connect(process.env.MONGODB_URI);
   
-  const email = process.env.ADMIN_EMAIL || 'admin@branda.com';
+  const email = process.env.ADMIN_EMAIL || 'admin@branda-five.vercel.app';
   const password = process.env.ADMIN_PASSWORD || 'admin123';
 
   const existing = await User.findOne({ email });

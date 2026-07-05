@@ -25,7 +25,7 @@ const Privacy = () => (
           <p>We retain your data for as long as your account is active. Upon account deletion, we remove your personal data within 30 days, except where retention is required by law.</p>
 
           <h2 style={{ fontSize: 18, marginTop: 24 }}>6. Your Rights (GDPR)</h2>
-          <p>You have the right to: access your data, correct inaccurate data, delete your account, export your data, and object to processing. Contact us at privacy@branda.ng to exercise these rights.</p>
+          <p>You have the right to: access your data, correct inaccurate data, delete your account, export your data, and object to processing. Contact us at privacy@branda-five.vercel.app to exercise these rights.</p>
 
           <h2 style={{ fontSize: 18, marginTop: 24 }}>7. Cookies</h2>
           <p>We use essential cookies for authentication and session management. We do not use tracking cookies or third-party analytics without your consent.</p>
@@ -37,7 +37,7 @@ const Privacy = () => (
           <p>Branda is not intended for users under 18. We do not knowingly collect data from children.</p>
 
           <h2 style={{ fontSize: 18, marginTop: 24 }}>10. Contact Us</h2>
-          <p>For privacy-related inquiries, contact us at privacy@branda.ng.</p>
+          <p>For privacy-related inquiries, contact us at privacy@branda-five.vercel.app.</p>
 
           <p style={{ marginTop: 32, color: 'var(--gray-400)', fontSize: 13 }}>Last updated: June 2026</p>
         </div>
