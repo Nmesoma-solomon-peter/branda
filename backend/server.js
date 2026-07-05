@@ -21,7 +21,7 @@ try {
   const { Server } = require('socket.io');
   const io = new Server(server, {
     cors: {
-      origin: process.env.FRONTEND_URL || 'http://localhost:3000',
+      origin: process.env.FRONTEND_URL || 'https://branda-five.vercel.app',
       methods: ['GET', 'POST']
     }
   });
@@ -46,7 +46,7 @@ try {
 app.use(helmet());
 
 app.use(cors({
-  origin: process.env.FRONTEND_URL || 'http://localhost:3000',
+  origin: process.env.FRONTEND_URL || 'https://branda-five.vercel.app',
   credentials: true
 }));
 

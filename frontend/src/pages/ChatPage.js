@@ -3,7 +3,7 @@ import { useAuth } from '../context/AuthContext';
 import api from '../api/axios';
 import { io } from 'socket.io-client';
 
-const socket = io(process.env.REACT_APP_API_URL || 'http://localhost:5000', { autoConnect: false });
+const socket = io(process.env.REACT_APP_API_URL || 'https://branda-backend.onrender.com', { autoConnect: false });
 
 const SendIcon = () => (
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" width="18" height="18">

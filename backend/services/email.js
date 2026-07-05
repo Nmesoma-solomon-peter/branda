@@ -73,7 +73,7 @@ const templates = {
       <p style="font-size:15px;color:#374151;line-height:1.6;margin:0 0 24px;">
         Get started by creating your first project or browsing available designers.
       </p>
-      <a href="${process.env.FRONTEND_URL || 'http://localhost:3000'}/dashboard" style="display:inline-block;padding:12px 28px;background:#6f9c3e;color:#fff;text-decoration:none;border-radius:6px;font-weight:600;font-size:14px;">Go to Dashboard</a>
+      <a href="${process.env.FRONTEND_URL || 'https://branda-five.vercel.app'}/dashboard" style="display:inline-block;padding:12px 28px;background:#6f9c3e;color:#fff;text-decoration:none;border-radius:6px;font-weight:600;font-size:14px;">Go to Dashboard</a>
     `)
   }),
 
@@ -87,7 +87,7 @@ const templates = {
       <p style="font-size:15px;color:#374151;line-height:1.6;margin:0 0 24px;">
         Once verified, you'll be matched with small businesses looking for logos, brand guides, and design assets.
       </p>
-      <a href="${process.env.FRONTEND_URL || 'http://localhost:3000'}/kyc" style="display:inline-block;padding:12px 28px;background:#6f9c3e;color:#fff;text-decoration:none;border-radius:6px;font-weight:600;font-size:14px;">Complete KYC</a>
+      <a href="${process.env.FRONTEND_URL || 'https://branda-five.vercel.app'}/kyc" style="display:inline-block;padding:12px 28px;background:#6f9c3e;color:#fff;text-decoration:none;border-radius:6px;font-weight:600;font-size:14px;">Complete KYC</a>
     `)
   }),
 
@@ -102,7 +102,7 @@ const templates = {
         <p style="margin:0 0 4px;font-size:14px;font-weight:600;color:#000;">${projectTitle}</p>
         <p style="margin:0;font-size:13px;color:#6b7280;">Client: ${smeName}</p>
       </div>
-      <a href="${process.env.FRONTEND_URL || 'http://localhost:3000'}/specialist-dashboard" style="display:inline-block;padding:12px 28px;background:#6f9c3e;color:#fff;text-decoration:none;border-radius:6px;font-weight:600;font-size:14px;">View Project</a>
+      <a href="${process.env.FRONTEND_URL || 'https://branda-five.vercel.app'}/specialist-dashboard" style="display:inline-block;padding:12px 28px;background:#6f9c3e;color:#fff;text-decoration:none;border-radius:6px;font-weight:600;font-size:14px;">View Project</a>
     `)
   }),
 
@@ -119,7 +119,7 @@ const templates = {
       <p style="font-size:15px;color:#374151;line-height:1.6;margin:0 0 24px;">
         Our team will review and assign a designer to your project shortly.
       </p>
-      <a href="${process.env.FRONTEND_URL || 'http://localhost:3000'}/dashboard" style="display:inline-block;padding:12px 28px;background:#6f9c3e;color:#fff;text-decoration:none;border-radius:6px;font-weight:600;font-size:14px;">View Dashboard</a>
+      <a href="${process.env.FRONTEND_URL || 'https://branda-five.vercel.app'}/dashboard" style="display:inline-block;padding:12px 28px;background:#6f9c3e;color:#fff;text-decoration:none;border-radius:6px;font-weight:600;font-size:14px;">View Dashboard</a>
     `)
   }),
 
@@ -146,7 +146,7 @@ const templates = {
       <p style="font-size:15px;color:#374151;line-height:1.6;margin:0 0 24px;">
         You can now receive project assignments. We'll match you with businesses based on your skills and availability.
       </p>
-      <a href="${process.env.FRONTEND_URL || 'http://localhost:3000'}/specialist-dashboard" style="display:inline-block;padding:12px 28px;background:#6f9c3e;color:#fff;text-decoration:none;border-radius:6px;font-weight:600;font-size:14px;">View Dashboard</a>
+      <a href="${process.env.FRONTEND_URL || 'https://branda-five.vercel.app'}/specialist-dashboard" style="display:inline-block;padding:12px 28px;background:#6f9c3e;color:#fff;text-decoration:none;border-radius:6px;font-weight:600;font-size:14px;">View Dashboard</a>
     `)
   }),
 
@@ -163,7 +163,7 @@ const templates = {
       <p style="font-size:15px;color:#374151;line-height:1.6;margin:0 0 24px;">
         Please update your documents and resubmit.
       </p>
-      <a href="${process.env.FRONTEND_URL || 'http://localhost:3000'}/kyc" style="display:inline-block;padding:12px 28px;background:#6f9c3e;color:#fff;text-decoration:none;border-radius:6px;font-weight:600;font-size:14px;">Resubmit KYC</a>
+      <a href="${process.env.FRONTEND_URL || 'https://branda-five.vercel.app'}/kyc" style="display:inline-block;padding:12px 28px;background:#6f9c3e;color:#fff;text-decoration:none;border-radius:6px;font-weight:600;font-size:14px;">Resubmit KYC</a>
     `)
   }),
 
@@ -177,7 +177,7 @@ const templates = {
       <div style="background:#f0fdf4;border:1px solid #bbf7d0;border-radius:6px;padding:16px;margin:0 0 24px;">
         <p style="margin:0;font-size:14px;font-weight:600;color:#000;">${subject}</p>
       </div>
-      <a href="${process.env.FRONTEND_URL || 'http://localhost:3000'}/messages" style="display:inline-block;padding:12px 28px;background:#6f9c3e;color:#fff;text-decoration:none;border-radius:6px;font-weight:600;font-size:14px;">Read Message</a>
+      <a href="${process.env.FRONTEND_URL || 'https://branda-five.vercel.app'}/messages" style="display:inline-block;padding:12px 28px;background:#6f9c3e;color:#fff;text-decoration:none;border-radius:6px;font-weight:600;font-size:14px;">Read Message</a>
     `)
   }),
 
@@ -192,7 +192,7 @@ const templates = {
         <p style="margin:0 0 4px;font-size:14px;font-weight:600;color:#000;">${projectTitle}</p>
         <p style="margin:0;font-size:13px;color:#6b7280;">Status: <span style="color:#6f9c3e;font-weight:600;text-transform:capitalize;">${newStatus}</span></p>
       </div>
-      <a href="${process.env.FRONTEND_URL || 'http://localhost:3000'}/dashboard" style="display:inline-block;padding:12px 28px;background:#6f9c3e;color:#fff;text-decoration:none;border-radius:6px;font-weight:600;font-size:14px;">View Project</a>
+      <a href="${process.env.FRONTEND_URL || 'https://branda-five.vercel.app'}/dashboard" style="display:inline-block;padding:12px 28px;background:#6f9c3e;color:#fff;text-decoration:none;border-radius:6px;font-weight:600;font-size:14px;">View Project</a>
     `)
   }),
 
@@ -206,7 +206,7 @@ const templates = {
       <p style="font-size:15px;color:#374151;line-height:1.6;margin:0 0 24px;">
         Click the button below to verify your email. This link expires in 24 hours.
       </p>
-      <a href="${process.env.FRONTEND_URL || 'http://localhost:3000'}/verify-email/${token}" style="display:inline-block;padding:12px 28px;background:#6f9c3e;color:#fff;text-decoration:none;border-radius:6px;font-weight:600;font-size:14px;">Verify Email</a>
+      <a href="${process.env.FRONTEND_URL || 'https://branda-five.vercel.app'}/verify-email/${token}" style="display:inline-block;padding:12px 28px;background:#6f9c3e;color:#fff;text-decoration:none;border-radius:6px;font-weight:600;font-size:14px;">Verify Email</a>
     `)
   }),
 
@@ -220,7 +220,7 @@ const templates = {
       <p style="font-size:15px;color:#374151;line-height:1.6;margin:0 0 24px;">
         Click the button below to reset your password. This link expires in 15 minutes.
       </p>
-      <a href="${process.env.FRONTEND_URL || 'http://localhost:3000'}/reset-password/${token}" style="display:inline-block;padding:12px 28px;background:#6f9c3e;color:#fff;text-decoration:none;border-radius:6px;font-weight:600;font-size:14px;">Reset Password</a>
+      <a href="${process.env.FRONTEND_URL || 'https://branda-five.vercel.app'}/reset-password/${token}" style="display:inline-block;padding:12px 28px;background:#6f9c3e;color:#fff;text-decoration:none;border-radius:6px;font-weight:600;font-size:14px;">Reset Password</a>
       <p style="font-size:13px;color:#9ca3af;margin:16px 0 0;">If you didn't request this, you can safely ignore this email.</p>
     `)
   }),
@@ -251,7 +251,7 @@ const templates = {
       <div style="background:#f9fafb;border:1px solid #e5e7eb;border-radius:6px;padding:16px;margin:0 0 24px;">
         <p style="margin:0;font-size:14px;font-weight:600;color:#000;">${projectTitle}</p>
       </div>
-      <a href="${process.env.FRONTEND_URL || 'http://localhost:3000'}/projects" style="display:inline-block;padding:12px 28px;background:#6f9c3e;color:#fff;text-decoration:none;border-radius:6px;font-weight:600;font-size:14px;">View Project</a>
+      <a href="${process.env.FRONTEND_URL || 'https://branda-five.vercel.app'}/projects" style="display:inline-block;padding:12px 28px;background:#6f9c3e;color:#fff;text-decoration:none;border-radius:6px;font-weight:600;font-size:14px;">View Project</a>
     `)
   }),
 
@@ -266,7 +266,7 @@ const templates = {
         <p style="margin:0 0 4px;font-size:14px;font-weight:600;color:#000;">${projectTitle}</p>
         <p style="margin:0;font-size:13px;color:#374151;">${note || 'No specific notes provided'}</p>
       </div>
-      <a href="${process.env.FRONTEND_URL || 'http://localhost:3000'}/projects" style="display:inline-block;padding:12px 28px;background:#6f9c3e;color:#fff;text-decoration:none;border-radius:6px;font-weight:600;font-size:14px;">View Project</a>
+      <a href="${process.env.FRONTEND_URL || 'https://branda-five.vercel.app'}/projects" style="display:inline-block;padding:12px 28px;background:#6f9c3e;color:#fff;text-decoration:none;border-radius:6px;font-weight:600;font-size:14px;">View Project</a>
     `)
   }),
 
@@ -280,7 +280,7 @@ const templates = {
       <div style="background:#f9fafb;border:1px solid #e5e7eb;border-radius:6px;padding:16px;margin:0 0 24px;">
         <p style="margin:0;font-size:14px;font-weight:600;color:#000;">${projectTitle}</p>
       </div>
-      <a href="${process.env.FRONTEND_URL || 'http://localhost:3000'}/projects" style="display:inline-block;padding:12px 28px;background:#6f9c3e;color:#fff;text-decoration:none;border-radius:6px;font-weight:600;font-size:14px;">View Deliverables</a>
+      <a href="${process.env.FRONTEND_URL || 'https://branda-five.vercel.app'}/projects" style="display:inline-block;padding:12px 28px;background:#6f9c3e;color:#fff;text-decoration:none;border-radius:6px;font-weight:600;font-size:14px;">View Deliverables</a>
     `)
   }),
 
@@ -294,7 +294,7 @@ const templates = {
       <div style="background:#f0fdf4;border:1px solid #bbf7d0;border-radius:6px;padding:16px;margin:0 0 24px;">
         <p style="margin:0;font-size:14px;font-weight:600;color:#000;">${projectTitle}</p>
       </div>
-      <a href="${process.env.FRONTEND_URL || 'http://localhost:3000'}/projects" style="display:inline-block;padding:12px 28px;background:#6f9c3e;color:#fff;text-decoration:none;border-radius:6px;font-weight:600;font-size:14px;">View Project</a>
+      <a href="${process.env.FRONTEND_URL || 'https://branda-five.vercel.app'}/projects" style="display:inline-block;padding:12px 28px;background:#6f9c3e;color:#fff;text-decoration:none;border-radius:6px;font-weight:600;font-size:14px;">View Project</a>
     `)
   }),
 

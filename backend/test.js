@@ -2,7 +2,7 @@ const http = require('http');
 const fs = require('fs');
 const path = require('path');
 
-const BASE = 'http://localhost:5000/api';
+const BASE = 'https://branda-backend.onrender.com/api';
 let smeToken = null;
 let specialistToken = null;
 let projectId = null;
