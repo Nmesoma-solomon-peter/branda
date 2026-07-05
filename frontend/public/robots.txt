@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /manage/
+Disallow: /api/
+
+Sitemap: https://branda.ng/sitemap.xml
