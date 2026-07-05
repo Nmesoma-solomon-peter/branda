@@ -1,6 +1,9 @@
 import axios from 'axios';
 
-const API_URL = process.env.REACT_APP_API_URL || 'https://branda-backend.onrender.com/api';
+const rawUrl = (process.env.REACT_APP_API_URL || 'https://branda-backend.onrender.com').replace(/\/+$/, '');
+const API_URL = rawUrl.endsWith('/api') ? rawUrl : rawUrl + '/api';
+
+export const BASE_URL = rawUrl.replace(/\/api$/, '');
 
 let logoutCallback = null;
 
