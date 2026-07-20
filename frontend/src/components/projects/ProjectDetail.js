@@ -5,6 +5,7 @@ import api from '../../api/axios';
 import ProjectStatusBadge from './ProjectStatusBadge';
 import AssetGallery from '../assets/AssetGallery';
 import FileUpload from '../assets/FileUpload';
+import ReviewForm from './ReviewForm';
 
 const formatCurrency = (amount) => {
   if (!amount) return 'Not set';
@@ -354,6 +355,15 @@ const ProjectDetail = () => {
           </h4>
           <FileUpload projectId={id} onUploaded={fetchData} />
         </div>
+      )}
+
+      {/* Review Section */}
+      {isOwner && project.status === 'completed' && (
+        <ReviewForm
+          projectId={id}
+          specialistId={project.assignedSpecialist?._id}
+          onReviewSubmitted={fetchData}
+        />
       )}
 
       {/* Payment Section (SME only) */}

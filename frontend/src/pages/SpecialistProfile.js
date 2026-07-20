@@ -29,7 +29,7 @@ const SpecialistProfile = () => {
   useEffect(() => {
     Promise.all([
       api.get(`/portfolio/specialist/${id}`),
-      api.get(`/portfolio/specialist/${id}/reviews`)
+      api.get(`/reviews/specialist/${id}`)
     ]).then(([profileRes, reviewsRes]) => {
       setSpecialist(profileRes.data.specialist);
       setPortfolio(profileRes.data.items);
@@ -38,10 +38,15 @@ const SpecialistProfile = () => {
   }, [id]);
 
   const submitReview = async () => {
-    if (!reviewForm.comment.trim()) return;
+    if (!reviewForm.comment.trim() || !reviewForm.rating) return;
     setSubmitting(true);
     try {
-      const res = await api.post(`/portfolio/specialist/${id}/reviews`, reviewForm);
+      const res = await api.post('/reviews', {
+        specialist: id,
+        project: reviewForm.projectId,
+        rating: reviewForm.rating,
+        comment: reviewForm.comment
+      });
       setReviews(prev => [res.data.review, ...prev]);
       setShowReviewForm(false);
       setReviewForm({ rating: 5, comment: '' });
@@ -142,26 +147,6 @@ const SpecialistProfile = () => {
 
         {activeTab === 'reviews' && (
           <>
-            {user && user.role === 'sme' && !showReviewForm && (
-              <button onClick={() => setShowReviewForm(true)} className="sp-msg-btn" style={{ marginBottom: 20 }}>Write a Review</button>
-            )}
-            {showReviewForm && (
-              <div className="sp-review-form">
-                <h4 style={{ margin: '0 0 12px', fontSize: 15 }}>Your Review</h4>
-                <div className="sp-stars-input">
-                  {[1, 2, 3, 4, 5].map(i => (
-                    <button key={i} className={i <= reviewForm.rating ? 'active' : ''} onClick={() => setReviewForm({ ...reviewForm, rating: i })}>
-                      <StarIcon filled={i <= reviewForm.rating} />
-                    </button>
-                  ))}
-                </div>
-                <textarea value={reviewForm.comment} onChange={e => setReviewForm({ ...reviewForm, comment: e.target.value })} placeholder="Share your experience working with this specialist..." style={{ width: '100%', padding: 12, border: '1px solid var(--gray-200)', borderRadius: 6, fontFamily: 'var(--font-body)', fontSize: 14, minHeight: 80, resize: 'vertical', outline: 'none', boxSizing: 'border-box' }} />
-                <div style={{ display: 'flex', gap: 8, marginTop: 12 }}>
-                  <button onClick={submitReview} disabled={submitting || !reviewForm.comment.trim()} style={{ padding: '8px 20px', background: 'var(--green)', color: 'var(--white)', border: 'none', borderRadius: 6, fontWeight: 600, fontSize: 13, cursor: 'pointer' }}>{submitting ? 'Submitting...' : 'Submit'}</button>
-                  <button onClick={() => setShowReviewForm(false)} style={{ padding: '8px 20px', border: '1px solid var(--gray-200)', borderRadius: 6, background: 'var(--white)', fontSize: 13, cursor: 'pointer' }}>Cancel</button>
-                </div>
-              </div>
-            )}
             {reviews.length === 0 ? (
               <div className="sp-empty">No reviews yet</div>
             ) : reviews.map(r => (
@@ -172,6 +157,11 @@ const SpecialistProfile = () => {
                 </div>
                 <div className="sp-review-text">{r.comment}</div>
                 <div className="sp-review-author">— {r.reviewer?.name || 'Anonymous'}</div>
+                {r.response?.text && (
+                  <div style={{ marginTop: 12, padding: 12, background: 'var(--gray-50)', borderRadius: 6, fontSize: 13, color: 'var(--gray-600)' }}>
+                    <strong style={{ color: 'var(--green)' }}>Response:</strong> {r.response.text}
+                  </div>
+                )}
               </div>
             ))}
           </>
