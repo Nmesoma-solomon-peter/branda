@@ -20,8 +20,27 @@ const connectDB = require('./config/db');
 const errorHandler = require('./middleware/errorHandler');
 const maintenanceMiddleware = require('./middleware/maintenance');
 const Settings = require('./models/Settings');
+const User = require('./models/User');
 
-connectDB();
+connectDB().then(async () => {
+  try {
+    const existing = await User.findOne({ email: 'support@branda.com' });
+    if (!existing) {
+      const bcrypt = require('bcryptjs');
+      const hashed = await bcrypt.hash('support123', 10);
+      await User.create({
+        name: 'Branda Support',
+        email: 'support@branda.com',
+        password: hashed,
+        role: 'admin',
+        isVerified: true
+      });
+      console.log('Support user created');
+    }
+  } catch (e) {
+    console.error('Failed to create support user:', e.message);
+  }
+});
 
 const app = express();
 const server = http.createServer(app);

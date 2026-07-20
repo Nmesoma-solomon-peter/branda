@@ -8,10 +8,29 @@ const upload = require('../middleware/upload');
 
 router.get('/', protect, async (req, res) => {
   try {
-    const chats = await Chat.find({ participants: req.user._id })
+    let chats = await Chat.find({ participants: req.user._id })
       .populate('participants', 'name email role profileImage')
       .populate('lastMessage')
       .sort({ updatedAt: -1 });
+
+    if (chats.length === 0) {
+      const supportUser = await User.findOne({ role: 'admin', email: 'support@branda.com' });
+      if (supportUser) {
+        const newChat = await Chat.create({
+          participants: [req.user._id, supportUser._id]
+        });
+        await ChatMessage.create({
+          chat: newChat._id,
+          sender: supportUser._id,
+          text: 'Welcome to Branda! How can we help you today? You can ask about your projects, report an issue, or get help with anything on the platform.',
+          read: false
+        });
+        chats = await Chat.find({ participants: req.user._id })
+          .populate('participants', 'name email role profileImage')
+          .populate('lastMessage')
+          .sort({ updatedAt: -1 });
+      }
+    }
 
     const chatsWithUnread = await Promise.all(chats.map(async (chat) => {
       const unread = await ChatMessage.countDocuments({

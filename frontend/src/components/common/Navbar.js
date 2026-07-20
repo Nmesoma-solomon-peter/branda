@@ -33,10 +33,14 @@ const Navbar = () => {
   const [notifications, setNotifications] = useState([]);
 
   useEffect(() => {
-    if (isAuthenticated) {
+    if (!isAuthenticated) return;
+    const fetchCounts = () => {
       api.get('/chats/unread/count').then(res => setUnreadCount(res.data.count)).catch(() => {});
       api.get('/notifications/unread/count').then(res => setNotifCount(res.data.count)).catch(() => {});
-    }
+    };
+    fetchCounts();
+    const interval = setInterval(fetchCounts, 15000);
+    return () => clearInterval(interval);
   }, [isAuthenticated]);
 
   const toggleNotifs = async () => {
