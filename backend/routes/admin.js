@@ -22,7 +22,8 @@ const logActivity = (action, entity, entityId, performedBy, details = {}) => {
 // ── Stats ──
 router.get('/stats', ...adminOnly, async (req, res) => {
   try {
-    const [users, projects, assets, subscribers, specialists, smes, activeProjects, completedProjects, pendingKyc] = await Promise.all([
+    const Proposal = require('../models/Proposal');
+    const [users, projects, assets, subscribers, specialists, smes, activeProjects, completedProjects, pendingKyc, openProjects, pendingProposals] = await Promise.all([
       User.countDocuments(),
       Project.countDocuments(),
       Asset.countDocuments(),
@@ -31,7 +32,9 @@ router.get('/stats', ...adminOnly, async (req, res) => {
       User.countDocuments({ role: 'sme' }),
       Project.countDocuments({ status: 'active' }),
       Project.countDocuments({ status: 'completed' }),
-      User.countDocuments({ role: 'specialist', 'kyc.status': 'pending' })
+      User.countDocuments({ role: 'specialist', 'kyc.status': 'pending' }),
+      Project.countDocuments({ status: 'open' }),
+      Proposal.countDocuments({ status: 'pending' })
     ]);
 
     const thirtyDaysAgo = new Date();
@@ -57,7 +60,7 @@ router.get('/stats', ...adminOnly, async (req, res) => {
     res.status(200).json({
       success: true, stats: {
         users, projects, assets, subscribers, specialists, smes,
-        activeProjects, completedProjects, pendingKyc,
+        activeProjects, completedProjects, pendingKyc, openProjects, pendingProposals,
         recentUsers, recentProjects, signupsByDay, projectsByStatus
       }
     });
@@ -535,6 +538,20 @@ router.get('/export/projects', ...adminOnly, async (req, res) => {
     projects.forEach(p => csv.push(`"${p.title}","${p.owner?.email || ''}","${p.assignedSpecialist?.email || 'Unassigned'}","${p.status}","${p.industry}","${p.createdAt.toISOString()}"`));
     res.setHeader('Content-Type', 'text/csv');
     res.setHeader('Content-Disposition', 'attachment; filename=projects.csv');
+    res.status(200).send(csv.join('\n'));
+  } catch (error) {
+    res.status(500).json({ success: false, error: 'Server error' });
+  }
+});
+
+router.get('/export/payments', ...adminOnly, async (req, res) => {
+  try {
+    const Payment = require('../models/Payment');
+    const payments = await Payment.find().populate('user', 'name email').populate({ path: 'project', select: 'title' }).sort({ createdAt: -1 });
+    const csv = ['User,Email,Project,Amount,Status,Reference,Created'];
+    payments.forEach(p => csv.push(`"${p.user?.name || ''}","${p.user?.email || ''}","${p.project?.title || ''}","${p.amount}","${p.status}","${p.reference || ''}","${p.createdAt.toISOString()}"`));
+    res.setHeader('Content-Type', 'text/csv');
+    res.setHeader('Content-Disposition', 'attachment; filename=payments.csv');
     res.status(200).send(csv.join('\n'));
   } catch (error) {
     res.status(500).json({ success: false, error: 'Server error' });
