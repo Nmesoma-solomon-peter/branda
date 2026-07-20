@@ -21,7 +21,10 @@ const PortfolioSchema = new mongoose.Schema({
   }],
   industry: {
     type: String,
-    enum: ['Fashion', 'Food', 'Technology', 'Retail', 'Manufacturing', 'Creative', 'Other', ''],
+    default: ''
+  },
+  category: {
+    type: String,
     default: ''
   },
   createdAt: {

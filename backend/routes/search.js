@@ -29,7 +29,7 @@ router.get('/specialists', async (req, res) => {
     }
 
     if (category && category !== 'All') {
-      const portfolioSpecialists = await Portfolio.distinct('specialist', { industry: category });
+      const portfolioSpecialists = await Portfolio.distinct('specialist', { category });
       if (matchFilter._id) {
         matchFilter._id = { $in: portfolioSpecialists };
       } else {
