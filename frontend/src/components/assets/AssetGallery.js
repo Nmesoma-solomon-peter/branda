@@ -19,7 +19,7 @@ const DeleteIcon = () => (
   </svg>
 );
 
-const AssetGallery = ({ assets, currentUser, onDelete }) => {
+const AssetGallery = ({ assets, currentUser, onDelete, projectOwnerId }) => {
   const [preview, setPreview] = useState(null);
   const [deleting, setDeleting] = useState(null);
 
@@ -29,7 +29,11 @@ const AssetGallery = ({ assets, currentUser, onDelete }) => {
 
   const canDelete = (asset) => {
     if (!currentUser) return false;
-    return asset.uploadedBy?._id === currentUser.id || asset.uploadedBy === currentUser.id;
+    if (currentUser.role === 'admin') return true;
+    const isUploader = asset.uploadedBy?._id === currentUser.id || asset.uploadedBy === currentUser.id;
+    if (isUploader) return true;
+    if (projectOwnerId && projectOwnerId === currentUser.id) return true;
+    return false;
   };
 
   const handleDelete = async (asset) => {

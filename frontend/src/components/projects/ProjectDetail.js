@@ -341,6 +341,7 @@ const ProjectDetail = () => {
         <AssetGallery
           assets={assets}
           currentUser={user}
+          projectOwnerId={project.owner._id}
           onDelete={(assetId) => setAssets(prev => prev.filter(a => a._id !== assetId))}
         />
       </div>
