@@ -9,9 +9,12 @@ const http = require('http');
 require('dotenv').config();
 
 const uploadsDir = path.join(__dirname, 'uploads');
-if (!fs.existsSync(uploadsDir)) {
-  fs.mkdirSync(uploadsDir, { recursive: true });
-}
+['business', 'specialist', 'admin', 'other'].forEach(sub => {
+  const dir = path.join(uploadsDir, sub);
+  if (!fs.existsSync(dir)) {
+    fs.mkdirSync(dir, { recursive: true });
+  }
+});
 
 const connectDB = require('./config/db');
 const errorHandler = require('./middleware/errorHandler');
