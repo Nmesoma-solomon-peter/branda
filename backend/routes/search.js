@@ -2,33 +2,72 @@ const express = require('express');
 const router = express.Router();
 const User = require('../models/User');
 const Project = require('../models/Project');
+const Review = require('../models/Review');
 const FAQ = require('../models/FAQ');
 const Portfolio = require('../models/Portfolio');
 const { protect, authorize } = require('../middleware/auth');
 
 router.get('/specialists', async (req, res) => {
   try {
-    const { q, industry, location } = req.query;
-    const filter = { role: 'specialist', 'kyc.status': 'approved' };
-    if (location) filter.location = new RegExp(location, 'i');
+    const { q, category, location } = req.query;
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 12;
+    const skip = (page - 1) * limit;
 
-    let specialists = await User.find(filter)
-      .select('name email profileImage location bio createdAt')
-      .sort({ createdAt: -1 });
+    let matchFilter = { role: 'specialist', 'kyc.status': 'approved' };
+    if (location) matchFilter.location = new RegExp(location, 'i');
+
+    let idFilter = null;
 
     if (q) {
       const regex = new RegExp(q, 'i');
-      specialists = specialists.filter(s =>
-        regex.test(s.name) || regex.test(s.location) || regex.test(s.bio)
-      );
+      matchFilter.$or = [
+        { name: regex },
+        { location: regex },
+        { bio: regex }
+      ];
     }
 
-    if (industry) {
-      const portfolioSpecialists = await Portfolio.distinct('specialist', { industry });
-      specialists = specialists.filter(s => portfolioSpecialists.includes(s._id.toString()));
+    if (category && category !== 'All') {
+      const portfolioSpecialists = await Portfolio.distinct('specialist', { industry: category });
+      if (matchFilter._id) {
+        matchFilter._id = { $in: portfolioSpecialists };
+      } else {
+        matchFilter._id = { $in: portfolioSpecialists };
+      }
     }
 
-    res.status(200).json({ success: true, specialists });
+    const [specialists, total] = await Promise.all([
+      User.find(matchFilter)
+        .select('name email profileImage location bio createdAt')
+        .sort({ createdAt: -1 })
+        .skip(skip)
+        .limit(limit)
+        .lean(),
+      User.countDocuments(matchFilter)
+    ]);
+
+    const specialistIds = specialists.map(s => s._id);
+    const ratings = await Review.aggregate([
+      { $match: { specialist: { $in: specialistIds } } },
+      { $group: { _id: '$specialist', averageRating: { $avg: '$rating' }, reviewCount: { $sum: 1 } } }
+    ]);
+
+    const ratingMap = {};
+    ratings.forEach(r => {
+      ratingMap[r._id.toString()] = {
+        averageRating: Math.round(r.averageRating * 10) / 10,
+        reviewCount: r.reviewCount
+      };
+    });
+
+    const result = specialists.map(s => ({
+      ...s,
+      averageRating: ratingMap[s._id.toString()]?.averageRating || 0,
+      reviewCount: ratingMap[s._id.toString()]?.reviewCount || 0
+    }));
+
+    res.status(200).json({ success: true, specialists: result, total });
   } catch (error) {
     res.status(500).json({ success: false, error: 'Server error' });
   }
