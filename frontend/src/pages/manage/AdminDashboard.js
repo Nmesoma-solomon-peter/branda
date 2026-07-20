@@ -1,5 +1,6 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../../context/AuthContext';
 import AdminOverview from './AdminOverview';
 import AdminUsers from './AdminUsers';
 import AdminProjects from './AdminProjects';
@@ -65,24 +66,16 @@ const CloseIcon = () => (
 
 const AdminDashboard = () => {
   const navigate = useNavigate();
+  const { user, loading } = useAuth();
   const [active, setActive] = useState('overview');
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const [user, setUser] = useState(null);
   const [showLogout, setShowLogout] = useState(false);
 
-  const checkAuth = useCallback(() => {
-    const token = localStorage.getItem('token');
-    const stored = JSON.parse(localStorage.getItem('user') || 'null');
-    if (token && stored?.role === 'admin') {
-      setUser(stored);
-      return true;
-    }
-    return false;
-  }, []);
-
   useEffect(() => {
-    if (!checkAuth()) navigate('/manage/login');
-  }, [checkAuth, navigate]);
+    if (!loading && (!user || user.role !== 'admin')) navigate('/manage/login');
+  }, [loading, user, navigate]);
+
+  if (loading || !user || user.role !== 'admin') return null;
 
   const handleLogout = () => {
     setShowLogout(false);

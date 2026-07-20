@@ -99,6 +99,17 @@ const AdminActivity = () => {
           <p style={{ fontSize: 13, color: 'var(--gray-400)', margin: '4px 0 0' }}>{pagination.total} total events</p>
         </div>
         <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
+          <a href="/admin/export/activity" target="_blank" rel="noreferrer" style={{
+            padding: '6px 14px', borderRadius: 6, fontSize: 13, fontWeight: 500,
+            background: 'var(--white)', color: 'var(--gray-600)', border: '1px solid var(--gray-300)',
+            cursor: 'pointer', fontFamily: 'var(--font-body)', textDecoration: 'none',
+            display: 'inline-flex', alignItems: 'center', gap: 5
+          }}>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" width="13" height="13">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/>
+            </svg>
+            Export CSV
+          </a>
           <select value={filter} onChange={e => setFilter(e.target.value)} style={{
             padding: '6px 12px', borderRadius: 6, border: '1px solid var(--gray-300)',
             fontSize: 13, fontFamily: 'var(--font-body)', background: 'var(--white)'

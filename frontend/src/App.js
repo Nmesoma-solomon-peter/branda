@@ -80,7 +80,7 @@ function App() {
               <Route path="/messages" element={<><Navbar /><PrivateRoute><MessagesPage /></PrivateRoute></>} />
               <Route path="/chat" element={<><Navbar /><PrivateRoute><ChatPage /></PrivateRoute></>} />
               <Route path="/portfolio" element={<><Navbar /><PrivateRoute role="specialist"><PortfolioManagement /></PrivateRoute></>} />
-              <Route path="/browse" element={<><Navbar /><PrivateRoute role="sme"><BrowseSpecialists /></PrivateRoute></>} />
+              <Route path="/browse" element={<><Navbar /><BrowseSpecialists /></>} />
               <Route path="/browse-projects" element={<><Navbar /><PrivateRoute role="specialist"><BrowseProjects /></PrivateRoute></>} />
               <Route path="/projects/:id/proposals" element={<><Navbar /><PrivateRoute><ProjectProposals /></PrivateRoute></>} />
               <Route path="/specialists/:id" element={<><Navbar /><SpecialistProfile /></>} />

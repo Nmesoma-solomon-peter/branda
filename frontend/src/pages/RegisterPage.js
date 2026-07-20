@@ -7,7 +7,10 @@ const RegisterPage = () => {
   const { isAuthenticated, loading, user } = useAuth();
 
   if (loading) return null;
-  if (isAuthenticated) return <Navigate to={user?.role === 'sme' ? '/dashboard' : '/specialist-dashboard'} replace />;
+  if (isAuthenticated) {
+    if (user?.role === 'admin') return <Navigate to="/manage/dashboard" replace />;
+    return <Navigate to={user?.role === 'sme' ? '/dashboard' : '/specialist-dashboard'} replace />;
+  }
 
   return (
     <div style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 120, background: 'var(--gray-50)' }}>

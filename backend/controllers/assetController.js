@@ -68,7 +68,7 @@ exports.getProjectAssets = async (req, res) => {
     }
 
     const assets = await Asset.find({ project: req.params.projectId })
-      .populate('uploadedBy', 'name')
+      .populate('uploadedBy', 'name role')
       .sort({ createdAt: -1 });
 
     res.status(200).json({ success: true, assets });

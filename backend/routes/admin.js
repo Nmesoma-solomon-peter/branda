@@ -23,32 +23,59 @@ const logActivity = (action, entity, entityId, performedBy, details = {}) => {
 router.get('/stats', ...adminOnly, async (req, res) => {
   try {
     const Proposal = require('../models/Proposal');
-    const [users, projects, assets, subscribers, specialists, smes, activeProjects, completedProjects, pendingKyc, openProjects, pendingProposals] = await Promise.all([
-      User.countDocuments(),
-      Project.countDocuments(),
-      Asset.countDocuments(),
-      Subscriber.countDocuments(),
-      User.countDocuments({ role: 'specialist' }),
-      User.countDocuments({ role: 'sme' }),
-      Project.countDocuments({ status: 'active' }),
-      Project.countDocuments({ status: 'completed' }),
-      User.countDocuments({ role: 'specialist', 'kyc.status': 'pending' }),
-      Project.countDocuments({ status: 'open' }),
-      Proposal.countDocuments({ status: 'pending' })
-    ]);
+    const Payment = require('../models/Payment');
+    const Review = require('../models/Review');
+    const Chat = require('../models/Chat');
+    const Ticket = require('../models/Ticket');
 
     const thirtyDaysAgo = new Date();
     thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
     const sevenDaysAgo = new Date();
     sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
 
-    const [recentUsers, recentProjects] = await Promise.all([
+    const [
+      users, projects, assets, subscribers, specialists, smes, admins,
+      activeProjects, completedProjects, openProjects, disputedProjects,
+      pendingKyc, kycApproved,
+      pendingProposals, totalProposals, acceptedProposals,
+      recentUsers, recentProjects,
+      totalRevenue,
+      totalReviews, reportedReviews,
+      openTickets,
+      totalChats
+    ] = await Promise.all([
+      User.countDocuments(),
+      Project.countDocuments(),
+      Asset.countDocuments(),
+      Subscriber.countDocuments(),
+      User.countDocuments({ role: 'specialist' }),
+      User.countDocuments({ role: 'sme' }),
+      User.countDocuments({ role: 'admin' }),
+      Project.countDocuments({ status: 'active' }),
+      Project.countDocuments({ status: 'completed' }),
+      Project.countDocuments({ status: 'open' }),
+      Project.countDocuments({ status: 'dispute' }),
+      User.countDocuments({ role: 'specialist', 'kyc.status': 'pending' }),
+      User.countDocuments({ role: 'specialist', 'kyc.status': 'approved' }),
+      Proposal.countDocuments({ status: 'pending' }),
+      Proposal.countDocuments(),
+      Proposal.countDocuments({ status: 'accepted' }),
       User.countDocuments({ createdAt: { $gte: thirtyDaysAgo } }),
-      Project.countDocuments({ createdAt: { $gte: thirtyDaysAgo } })
+      Project.countDocuments({ createdAt: { $gte: thirtyDaysAgo } }),
+      Payment.aggregate([{ $match: { status: 'success' } }, { $group: { _id: null, total: { $sum: '$amount' } } }]).then(r => r[0]?.total || 0),
+      Review.countDocuments(),
+      Review.countDocuments({ reported: true }),
+      Ticket.countDocuments({ status: { $in: ['open', 'in_progress'] } }),
+      Chat.countDocuments()
+    ]);
+
+    const [monthlyRevenueResult, pendingPayoutsResult] = await Promise.all([
+      Payment.aggregate([{ $match: { status: 'success', createdAt: { $gte: thirtyDaysAgo } } }, { $group: { _id: null, total: { $sum: '$amount' } } }]).then(r => r[0]?.total || 0),
+      Payment.aggregate([{ $match: { status: 'escrow' } }, { $group: { _id: null, total: { $sum: '$amount' } } }]).then(r => r[0]?.total || 0)
     ]);
 
     const signupsByDay = await User.aggregate([
-      { $match: { createdAt: { $gte: sevenDaysAgo } } },
+      { $match: { createdAt: { $gte: thirtyDaysAgo } } },
       { $group: { _id: { $dateToString: { format: '%Y-%m-%d', date: '$createdAt' } }, count: { $sum: 1 } } },
       { $sort: { _id: 1 } }
     ]);
@@ -57,14 +84,66 @@ router.get('/stats', ...adminOnly, async (req, res) => {
       { $group: { _id: '$status', count: { $sum: 1 } } }
     ]);
 
+    const revenueByDay = await Payment.aggregate([
+      { $match: { status: 'success', createdAt: { $gte: thirtyDaysAgo } } },
+      { $group: { _id: { $dateToString: { format: '%Y-%m-%d', date: '$createdAt' } }, revenue: { $sum: '$amount' } } },
+      { $sort: { _id: 1 } }
+    ]);
+
+    const avgRating = await Review.aggregate([
+      { $group: { _id: null, avg: { $avg: '$rating' } } }
+    ]).then(r => r[0]?.avg || 0);
+
+    const topSpecialists = await Project.aggregate([
+      { $match: { status: 'completed', assignedSpecialist: { $ne: null } } },
+      { $group: { _id: '$assignedSpecialist', projectsCompleted: { $sum: 1 } } },
+      { $sort: { projectsCompleted: -1 } },
+      { $limit: 5 },
+      {
+        $lookup: { from: 'users', localField: '_id', foreignField: '_id', as: 'specialist' }
+      },
+      { $unwind: '$specialist' },
+      {
+        $project: {
+          _id: 1, name: '$specialist.name', email: '$specialist.email',
+          projectsCompleted: 1, profileImage: '$specialist.profileImage'
+        }
+      }
+    ]);
+
+    const recentActivity = await Activity.find()
+      .sort({ createdAt: -1 })
+      .limit(10)
+      .populate('performedBy', 'name role')
+      .lean();
+
+    const recentSignups = await User.find()
+      .sort({ createdAt: -1 })
+      .limit(5)
+      .select('name email role createdAt')
+      .lean();
+
+    const projectCompletionRate = projects > 0 ? Math.round((completedProjects / projects) * 100) : 0;
+
     res.status(200).json({
       success: true, stats: {
-        users, projects, assets, subscribers, specialists, smes,
-        activeProjects, completedProjects, pendingKyc, openProjects, pendingProposals,
-        recentUsers, recentProjects, signupsByDay, projectsByStatus
+        users, projects, assets, subscribers, specialists, smes, admins,
+        activeProjects, completedProjects, openProjects, disputedProjects,
+        pendingKyc, kycApproved,
+        pendingProposals, totalProposals, acceptedProposals,
+        recentUsers, recentProjects,
+        totalRevenue, monthlyRevenue: monthlyRevenueResult, pendingPayouts: pendingPayoutsResult,
+        totalReviews, reportedReviews, avgRating: Math.round(avgRating * 10) / 10,
+        openTickets, totalChats,
+        projectCompletionRate,
+        signupsByDay, projectsByStatus, revenueByDay,
+        topSpecialists,
+        recentActivity,
+        recentSignups
       }
     });
   } catch (error) {
+    console.error('Admin stats error:', error);
     res.status(500).json({ success: false, error: 'Server error' });
   }
 });
@@ -552,6 +631,20 @@ router.get('/export/payments', ...adminOnly, async (req, res) => {
     payments.forEach(p => csv.push(`"${p.user?.name || ''}","${p.user?.email || ''}","${p.project?.title || ''}","${p.amount}","${p.status}","${p.reference || ''}","${p.createdAt.toISOString()}"`));
     res.setHeader('Content-Type', 'text/csv');
     res.setHeader('Content-Disposition', 'attachment; filename=payments.csv');
+    res.status(200).send(csv.join('\n'));
+  } catch (error) {
+    res.status(500).json({ success: false, error: 'Server error' });
+  }
+});
+
+router.get('/export/activity', ...adminOnly, async (req, res) => {
+  try {
+    const activities = await Activity.find().populate('performedBy', 'name email').sort({ createdAt: -1 }).limit(5000);
+    const labels = { 'user.register': 'New user registered', 'user.role_change': 'User role changed', 'user.delete': 'User deleted', 'project.create': 'Project created', 'project.assign': 'Project assigned', 'project.status_change': 'Project status changed', 'project.delete': 'Project deleted', 'kyc.submit': 'KYC submitted', 'kyc.approve': 'KYC approved', 'kyc.reject': 'KYC rejected', 'asset.upload': 'Asset uploaded', 'asset.delete': 'Asset deleted', 'settings.update': 'Settings updated' };
+    const csv = ['Action,Entity,PerformedBy,Email,Details,Created'];
+    activities.forEach(a => csv.push(`"${labels[a.action] || a.action}","${a.entity || ''}","${a.performedBy?.name || ''}","${a.performedBy?.email || ''}","${Object.values(a.details || {}).filter(Boolean).join(' ')}","${a.createdAt.toISOString()}"`));
+    res.setHeader('Content-Type', 'text/csv');
+    res.setHeader('Content-Disposition', 'attachment; filename=activity.csv');
     res.status(200).send(csv.join('\n'));
   } catch (error) {
     res.status(500).json({ success: false, error: 'Server error' });

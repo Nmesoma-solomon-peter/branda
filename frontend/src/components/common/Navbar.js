@@ -85,20 +85,19 @@ const Navbar = () => {
           {isAuthenticated ? (
             <>
               <li>
-                <Link to={user?.role === 'sme' ? '/dashboard' : '/specialist-dashboard'} onClick={closeMenu}>
+                <Link to={user?.role === 'admin' ? '/manage/dashboard' : user?.role === 'sme' ? '/dashboard' : '/specialist-dashboard'} onClick={closeMenu}>
                   Dashboard
                 </Link>
               </li>
               <li>
-                <Link to="/chat" onClick={closeMenu} style={{ position: 'relative' }}>
+                <Link to="/chat" onClick={closeMenu} style={{ position: 'relative', display: 'flex', alignItems: 'center', gap: 4 }}>
                   Messages
-                  {unreadCount > 0 && (
-                    <span style={{
-                      position: 'absolute', top: -4, right: -10, background: '#DC2626', color: 'var(--white)',
-                      borderRadius: '50%', width: 16, height: 16, display: 'flex', alignItems: 'center',
-                      justifyContent: 'center', fontSize: 9, fontWeight: 700, lineHeight: 1
-                    }}>{unreadCount > 9 ? '9+' : unreadCount}</span>
-                  )}
+                  <span style={{
+                    background: unreadCount > 0 ? '#DC2626' : 'var(--gray-300)',
+                    color: 'var(--white)',
+                    borderRadius: '50%', width: 16, height: 16, display: 'inline-flex', alignItems: 'center',
+                    justifyContent: 'center', fontSize: 9, fontWeight: 700, lineHeight: 1
+                  }}>{unreadCount > 9 ? '9+' : unreadCount}</span>
                 </Link>
               </li>
               <li style={{ position: 'relative' }}>
@@ -132,6 +131,9 @@ const Navbar = () => {
               <li>
                 <Link to="/profile" onClick={closeMenu}>Profile</Link>
               </li>
+              <li>
+                <Link to="/browse" onClick={closeMenu}>Find Specialists</Link>
+              </li>
               {user?.role === 'specialist' && (
                 <>
                   <li>
@@ -147,9 +149,6 @@ const Navbar = () => {
               )}
               {user?.role === 'sme' && (
                 <>
-                  <li>
-                    <Link to="/browse" onClick={closeMenu}>Find Specialists</Link>
-                  </li>
                   <li>
                     <Link to="/payments" onClick={closeMenu}>Payments</Link>
                   </li>
@@ -169,6 +168,7 @@ const Navbar = () => {
             </>
           ) : (
             <>
+              <li><Link to="/browse" onClick={closeMenu}>Find Specialists</Link></li>
               <li><Link to="/blog" onClick={closeMenu}>Blog</Link></li>
               <li><Link to="/faq" onClick={closeMenu}>FAQ</Link></li>
               <li><Link to="/contact" onClick={closeMenu}>Contact</Link></li>

@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import api from '../../api/axios';
+import { useNavigate, Link } from 'react-router-dom';
+import { useAuth } from '../../context/AuthContext';
 
 const AdminLogin = () => {
   const navigate = useNavigate();
+  const { login } = useAuth();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
@@ -14,14 +15,17 @@ const AdminLogin = () => {
     setLoading(true);
     setError('');
     try {
-      const res = await api.post('/auth/login', { email, password });
-      if (res.data.user.role !== 'admin') {
+      const data = await login(email, password);
+      if (data.requires2FA) {
+        setError('Two-factor authentication is not supported on this page. Please use the main login page.');
+        setLoading(false);
+        return;
+      }
+      if (data.user.role !== 'admin') {
         setError('This account is not an admin');
         setLoading(false);
         return;
       }
-      localStorage.setItem('token', res.data.token);
-      localStorage.setItem('user', JSON.stringify(res.data.user));
       navigate('/manage/dashboard');
     } catch (err) {
       setError(err.response?.data?.error || 'Login failed');
@@ -57,6 +61,12 @@ const AdminLogin = () => {
               {loading ? 'Signing in...' : 'Sign In'}
             </button>
           </form>
+          <div style={{ textAlign: 'center', marginTop: 16 }}>
+            <Link to="/" style={{ fontSize: 13, color: 'var(--green)', textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: 4 }}>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" width="14" height="14"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+              Back to Home
+            </Link>
+          </div>
         </div>
       </div>
     </div>

@@ -112,6 +112,23 @@ const AssetGallery = ({ assets, currentUser, onDelete, projectOwnerId }) => {
               <p style={{ fontSize: 12, color: 'var(--gray-600)', margin: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
                 {asset.originalName}
               </p>
+              {asset.uploadedBy?.name && (
+                <div style={{ display: 'flex', alignItems: 'center', gap: 4, marginTop: 4 }}>
+                  <span style={{
+                    display: 'inline-block', width: 6, height: 6, borderRadius: '50%',
+                    background: asset.uploadedBy.role === 'sme' ? '#4F46E5' : asset.uploadedBy.role === 'specialist' ? '#059669' : '#DC2626'
+                  }} />
+                  <span style={{ fontSize: 11, color: 'var(--gray-400)' }}>{asset.uploadedBy.name}</span>
+                  <span style={{
+                    fontSize: 10, fontWeight: 600, padding: '1px 5px', borderRadius: 3,
+                    background: asset.uploadedBy.role === 'sme' ? '#EEF2FF' : asset.uploadedBy.role === 'specialist' ? '#ECFDF5' : '#FEF2F2',
+                    color: asset.uploadedBy.role === 'sme' ? '#4F46E5' : asset.uploadedBy.role === 'specialist' ? '#059669' : '#DC2626',
+                    textTransform: 'capitalize'
+                  }}>
+                    {asset.uploadedBy.role === 'sme' ? 'Business' : asset.uploadedBy.role}
+                  </span>
+                </div>
+              )}
               <div style={{ display: 'flex', gap: 6, marginTop: 8 }}>
                 <a
                   href={asset.fileUrl}
