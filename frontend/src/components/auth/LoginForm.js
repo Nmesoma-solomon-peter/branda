@@ -26,7 +26,8 @@ const LoginForm = () => {
         setLoading(false);
         return;
       }
-      navigate(data.user.role === 'sme' ? '/dashboard' : '/specialist-dashboard');
+      if (data.user.role === 'admin') navigate('/manage/dashboard');
+      else navigate(data.user.role === 'sme' ? '/dashboard' : '/specialist-dashboard');
     } catch (err) {
       setError(err.response?.data?.error || 'Login failed. Please try again.');
     } finally {
@@ -41,7 +42,8 @@ const LoginForm = () => {
     try {
       const res = await api.post('/auth/login/2fa', { userId, token: twoFAToken });
       localStorage.setItem('token', res.data.token);
-      window.location.href = res.data.user.role === 'sme' ? '/dashboard' : '/specialist-dashboard';
+      if (res.data.user.role === 'admin') window.location.href = '/manage/dashboard';
+      else window.location.href = res.data.user.role === 'sme' ? '/dashboard' : '/specialist-dashboard';
     } catch (err) {
       setError(err.response?.data?.error || 'Invalid code. Please try again.');
     } finally {
