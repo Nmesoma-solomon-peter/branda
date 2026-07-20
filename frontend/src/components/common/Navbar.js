@@ -135,6 +135,9 @@ const Navbar = () => {
               {user?.role === 'specialist' && (
                 <>
                   <li>
+                    <Link to="/browse-projects" onClick={closeMenu}>Find Projects</Link>
+                  </li>
+                  <li>
                     <Link to="/kyc" onClick={closeMenu}>KYC</Link>
                   </li>
                   <li>

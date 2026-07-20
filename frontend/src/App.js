@@ -23,6 +23,8 @@ import MessagesPage from './pages/MessagesPage';
 import ChatPage from './pages/ChatPage';
 import PortfolioManagement from './pages/PortfolioManagement';
 import BrowseSpecialists from './pages/BrowseSpecialists';
+import BrowseProjects from './pages/BrowseProjects';
+import ProjectProposals from './pages/ProjectProposals';
 import SpecialistProfile from './pages/SpecialistProfile';
 import FAQ from './pages/FAQ';
 import Blog from './pages/Blog';
@@ -79,6 +81,8 @@ function App() {
               <Route path="/chat" element={<><Navbar /><PrivateRoute><ChatPage /></PrivateRoute></>} />
               <Route path="/portfolio" element={<><Navbar /><PrivateRoute role="specialist"><PortfolioManagement /></PrivateRoute></>} />
               <Route path="/browse" element={<><Navbar /><PrivateRoute role="sme"><BrowseSpecialists /></PrivateRoute></>} />
+              <Route path="/browse-projects" element={<><Navbar /><PrivateRoute role="specialist"><BrowseProjects /></PrivateRoute></>} />
+              <Route path="/projects/:id/proposals" element={<><Navbar /><PrivateRoute><ProjectProposals /></PrivateRoute></>} />
               <Route path="/specialists/:id" element={<><Navbar /><SpecialistProfile /></>} />
               <Route path="/faq" element={<><Navbar /><FAQ /></>} />
               <Route path="/blog" element={<><Navbar /><Blog /></>} />

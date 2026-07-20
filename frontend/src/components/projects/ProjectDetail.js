@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import api from '../../api/axios';
 import ProjectStatusBadge from './ProjectStatusBadge';
@@ -297,6 +297,17 @@ const ProjectDetail = () => {
           )}
         </div>
       </div>
+
+      {/* Proposals Link for Owner */}
+      {isOwner && project.status === 'open' && (
+        <div style={{ background: 'var(--gray-50)', borderRadius: 'var(--radius)', padding: 16, marginBottom: 24, display: 'flex', alignItems: 'center', gap: 12 }}>
+          <div style={{ flex: 1 }}>
+            <p style={{ fontSize: 14, fontWeight: 600, margin: '0 0 2px' }}>This project is open for proposals</p>
+            <p style={{ fontSize: 12, color: 'var(--gray-400)', margin: 0 }}>Review proposals from specialists and choose who to work with</p>
+          </div>
+          <Link to={`/projects/${id}/proposals`} style={{ padding: '8px 20px', background: 'var(--green)', color: 'var(--white)', borderRadius: 6, fontSize: 13, fontWeight: 600, textDecoration: 'none', whiteSpace: 'nowrap' }}>View Proposals</Link>
+        </div>
+      )}
 
       {/* Assigned Specialist Info */}
       {project.assignedSpecialist && (
