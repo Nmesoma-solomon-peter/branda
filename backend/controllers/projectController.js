@@ -52,6 +52,24 @@ exports.getProjects = async (req, res) => {
   }
 };
 
+exports.getOpenProjects = async (req, res) => {
+  try {
+    const { q, industry } = req.query;
+    const filter = { status: 'open' };
+    if (q) filter.title = new RegExp(q, 'i');
+    if (industry) filter.industry = industry;
+
+    const projects = await Project.find(filter)
+      .populate('owner', 'name')
+      .select('title description industry budget deadline createdAt')
+      .sort({ createdAt: -1 });
+
+    res.status(200).json({ success: true, projects });
+  } catch (error) {
+    res.status(500).json({ success: false, error: 'Server error' });
+  }
+};
+
 exports.getProject = async (req, res) => {
   try {
     const project = await Project.findById(req.params.id)

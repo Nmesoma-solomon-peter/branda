@@ -3,6 +3,7 @@ const router = express.Router();
 const {
   createProject,
   getProjects,
+  getOpenProjects,
   getProject,
   updateProject,
   deleteProject,
@@ -18,6 +19,7 @@ const { protect, authorize } = require('../middleware/auth');
 
 router.post('/', protect, authorize('sme'), createProject);
 router.get('/', protect, authorize('sme'), getProjects);
+router.get('/open', getOpenProjects);
 router.get('/specialist', protect, authorize('specialist'), getSpecialistProjects);
 router.get('/:id', protect, getProject);
 router.put('/:id', protect, authorize('sme'), updateProject);

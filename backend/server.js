@@ -178,6 +178,7 @@ app.use('/api/milestones', require('./routes/milestones'));
 app.use('/api/promo-codes', require('./routes/promoCodes'));
 app.use('/api/case-studies', require('./routes/caseStudies'));
 app.use('/api/tickets', require('./routes/tickets'));
+app.use('/api/proposals', require('./routes/proposals'));
 app.use('/api/contracts', require('./routes/contracts'));
 app.use('/api/reviews', require('./routes/reviews'));
 app.use('/api/review-reports', require('./routes/reviewReports'));

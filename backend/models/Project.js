@@ -33,8 +33,8 @@ const ProjectSchema = new mongoose.Schema({
   },
   status: {
     type: String,
-    enum: ['draft', 'active', 'in_progress', 'in_review', 'completed', 'revision', 'dispute', 'cancelled', 'approved'],
-    default: 'draft'
+    enum: ['draft', 'open', 'active', 'in_progress', 'in_review', 'completed', 'revision', 'dispute', 'cancelled', 'approved'],
+    default: 'open'
   },
   acceptanceStatus: {
     type: String,
