@@ -21,9 +21,6 @@ const SpecialistProfile = () => {
   const [portfolio, setPortfolio] = useState([]);
   const [reviews, setReviews] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [showReviewForm, setShowReviewForm] = useState(false);
-  const [reviewForm, setReviewForm] = useState({ rating: 5, comment: '' });
-  const [submitting, setSubmitting] = useState(false);
   const [activeTab, setActiveTab] = useState('portfolio');
 
   useEffect(() => {
@@ -36,18 +33,6 @@ const SpecialistProfile = () => {
       setReviews(reviewsRes.data.reviews);
     }).catch(() => {}).finally(() => setLoading(false));
   }, [id]);
-
-  const submitReview = async () => {
-    if (!reviewForm.comment.trim() || !reviewForm.rating) return;
-    setSubmitting(true);
-    try {
-      const res = await api.post('/reviews', {
-        specialist: id,
-        project: reviewForm.projectId,
-        rating: reviewForm.rating,
-        comment: reviewForm.comment
-      });
-      setReviews(prev => [res.data.review, ...prev]);
       setShowReviewForm(false);
       setReviewForm({ rating: 5, comment: '' });
     } catch {} finally { setSubmitting(false); }

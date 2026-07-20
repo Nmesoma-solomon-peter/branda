@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { useAuth } from '../context/AuthContext';
 import api from '../api/axios';
 
 const formatCurrency = (amount) => {
@@ -8,7 +7,6 @@ const formatCurrency = (amount) => {
 };
 
 const BrowseProjects = () => {
-  const { user } = useAuth();
   const [projects, setProjects] = useState([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState('');

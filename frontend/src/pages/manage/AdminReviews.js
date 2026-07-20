@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import api from '../../api/axios';
 
 const StarIcon = ({ filled }) => (
@@ -17,25 +17,25 @@ const AdminReviews = () => {
   const [total, setTotal] = useState(0);
   const limit = 20;
 
-  const loadReviews = () => {
+  const loadReviews = useCallback(() => {
     return api.get('/admin/reviews', { params: { page, limit } })
       .then(res => {
         setReviews(res.data.reviews || []);
         setTotal(res.data.total || 0);
       });
-  };
+  }, [page]);
 
-  const loadFlagged = () => {
+  const loadFlagged = useCallback(() => {
     return api.get('/admin/flagged-content')
       .then(res => setFlagged(res.data.reports || []));
-  };
+  }, []);
 
   useEffect(() => {
     setLoading(true);
     Promise.all([loadReviews(), loadFlagged()])
       .catch(() => {})
       .finally(() => setLoading(false));
-  }, [page]);
+  }, [loadReviews, loadFlagged]);
 
   const handleDelete = async (id) => {
     setDeleting(id);
