@@ -81,7 +81,8 @@ const SpecialistProfile = () => {
           <div className="sp-avatar">{getInitials(specialist.name)}</div>
         )}
         <h1 className="sp-name">{specialist.name}</h1>
-        <p className="sp-role">{specialist.role}</p>
+        <p className="sp-role">{specialist.role} • {specialist.location}</p>
+        {specialist.bio && <p style={{ maxWidth: 500, margin: '12px auto 0', color: 'var(--gray-500)', fontSize: 14, lineHeight: 1.6 }}>{specialist.bio}</p>}
         <div className="sp-stats">
           <div className="sp-stat">
             <div className="sp-stat-val">{portfolio.length}</div>
@@ -95,7 +96,24 @@ const SpecialistProfile = () => {
             <div className="sp-stat-val">{reviews.length > 0 ? (reviews.reduce((sum, r) => sum + r.rating, 0) / reviews.length).toFixed(1) : '—'}</div>
             <div className="sp-stat-label">Rating</div>
           </div>
+          {specialist.hourlyRate > 0 && (
+            <div className="sp-stat">
+              <div className="sp-stat-val">₦{specialist.hourlyRate.toLocaleString()}<span style={{ fontSize: 12, fontWeight: 400 }}>/hr</span></div>
+              <div className="sp-stat-label">Rate</div>
+            </div>
+          )}
+          {specialist.yearsExperience > 0 && (
+            <div className="sp-stat">
+              <div className="sp-stat-val">{specialist.yearsExperience}<span style={{ fontSize: 12, fontWeight: 400 }}>yrs</span></div>
+              <div className="sp-stat-label">Experience</div>
+            </div>
+          )}
         </div>
+        {specialist.skills?.length > 0 && (
+          <div style={{ display: 'flex', justifyContent: 'center', gap: 6, flexWrap: 'wrap', marginTop: 16 }}>
+            {specialist.skills.map(s => <span key={s} style={{ padding: '4px 12px', background: 'var(--white)', borderRadius: 20, fontSize: 12, color: 'var(--green)', border: '1px solid var(--green)' }}>{s}</span>)}
+          </div>
+        )}
         {user && user.role === 'sme' && (
           <Link to={`/chat`} className="sp-msg-btn">Send Message</Link>
         )}

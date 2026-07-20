@@ -223,14 +223,14 @@ router.get('/specialists', async (req, res) => {
   }
 });
 
-router.get('/specialists/:id', async (req, res) => {
+router.get('/specialist/:id', async (req, res) => {
   try {
     const specialist = await User.findById(req.params.id)
-      .select('name email profileImage location bio kyc createdAt');
+      .select('name email profileImage location bio kyc createdAt skills industries hourlyRate yearsExperience availability gender phone');
     if (!specialist || specialist.role !== 'specialist') {
       return res.status(404).json({ success: false, error: 'Specialist not found' });
     }
-    const [portfolio, reviewStats] = await Promise.all([
+    const [items, reviewStats] = await Promise.all([
       Portfolio.find({ specialist: specialist._id }).sort({ createdAt: -1 }),
       Review.aggregate([
         { $match: { specialist: specialist._id } },
@@ -240,7 +240,7 @@ router.get('/specialists/:id', async (req, res) => {
     res.status(200).json({
       success: true,
       specialist,
-      portfolio,
+      items,
       averageRating: reviewStats[0]?.avgRating || 0,
       reviewCount: reviewStats[0]?.count || 0
     });
