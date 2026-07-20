@@ -91,9 +91,10 @@ router.get('/:id/messages', protect, async (req, res) => {
       .skip(skip)
       .limit(limit);
 
+    const now = new Date();
     await ChatMessage.updateMany(
       { chat: req.params.id, sender: { $ne: req.user._id }, read: false },
-      { read: true }
+      { read: true, readAt: now }
     );
 
     res.status(200).json({ success: true, messages: messages.reverse() });
@@ -122,7 +123,8 @@ router.post('/:id/messages', protect, upload.single('file'), async (req, res) =>
       sender: req.user._id,
       text: text || '',
       file,
-      fileName
+      fileName,
+      deliveredAt: new Date()
     });
 
     chat.lastMessage = message._id;
@@ -141,6 +143,34 @@ router.post('/:id/messages', protect, upload.single('file'), async (req, res) =>
     }
 
     res.status(201).json({ success: true, message: populated });
+  } catch (error) {
+    res.status(500).json({ success: false, error: 'Server error' });
+  }
+});
+
+router.put('/:id/read', protect, async (req, res) => {
+  try {
+    const chat = await Chat.findById(req.params.id);
+    if (!chat || !chat.participants.includes(req.user._id)) {
+      return res.status(403).json({ success: false, error: 'Not authorized' });
+    }
+
+    const now = new Date();
+    const result = await ChatMessage.updateMany(
+      { chat: req.params.id, sender: { $ne: req.user._id }, read: false },
+      { read: true, readAt: now }
+    );
+
+    const io = req.app.get('io');
+    if (io && result.modifiedCount > 0) {
+      chat.participants.forEach(pid => {
+        if (pid.toString() !== req.user._id.toString()) {
+          io.to(pid.toString()).emit('messages_read', { chatId: chat._id, readBy: req.user._id, readAt: now });
+        }
+      });
+    }
+
+    res.status(200).json({ success: true });
   } catch (error) {
     res.status(500).json({ success: false, error: 'Server error' });
   }

@@ -29,14 +29,41 @@ const getInitials = (name) => {
 };
 
 const timeAgo = (date) => {
-  const seconds = Math.floor((Date.now() - new Date(date)) / 1000);
+  const d = new Date(date);
+  const now = new Date();
+  const diff = now - d;
+  const seconds = Math.floor(diff / 1000);
   if (seconds < 60) return 'now';
   const minutes = Math.floor(seconds / 60);
   if (minutes < 60) return `${minutes}m`;
   const hours = Math.floor(minutes / 60);
   if (hours < 24) return `${hours}h`;
-  return new Date(date).toLocaleDateString();
+  if (hours < 48) return 'yesterday';
+  if (d.getFullYear() === now.getFullYear()) return d.toLocaleDateString(undefined, { month: 'short', day: 'numeric' });
+  return d.toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' });
 };
+
+const formatTime = (date) => {
+  const d = new Date(date);
+  return d.toLocaleTimeString(undefined, { hour: '2-digit', minute: '2-digit' });
+};
+
+const formatMsgTime = (date) => {
+  const d = new Date(date);
+  const now = new Date();
+  const diff = now - d;
+  if (diff < 60000) return 'now';
+  if (diff < 86400000) return formatTime(date);
+  if (diff < 172800000) return 'yesterday ' + formatTime(date);
+  return d.toLocaleDateString(undefined, { month: 'short', day: 'numeric' }) + ' ' + formatTime(date);
+};
+
+const DoubleCheckIcon = ({ read }) => (
+  <svg viewBox="0 0 16 11" fill={read ? '#53BDEB' : '#999'} width="14" height="10" style={{ marginLeft: 3 }}>
+    <path d="M11.071.653a.457.457 0 00-.304-.102.493.493 0 00-.381.178l-6.19 7.636-2.011-2.095a.463.463 0 00-.336-.153.457.457 0 00-.359.164.539.539 0 00-.113.388c.023.14.09.267.19.36l2.448 2.55a.468.468 0 00.348.16.456.456 0 00.386-.187l6.47-7.987a.533.533 0 00.124-.39.453.453 0 00-.172-.322z"/>
+    <path d="M14.757.653a.457.457 0 00-.304-.102.493.493 0 00-.381.178l-6.19 7.636-1.084-1.13-.8.987 1.454 1.514a.468.468 0 00.348.16.456.456 0 00.386-.187l6.47-7.987a.533.533 0 00.124-.39.453.453 0 00-.172-.322z"/>
+  </svg>
+);
 
 const ChatPage = () => {
   const { user } = useAuth();
@@ -73,6 +100,9 @@ const ChatPage = () => {
       setChats(prev => prev.map(c =>
         c._id === data.chatId ? { ...c, lastMessage: data.message, updatedAt: new Date().toISOString() } : c
       ));
+      if (data.chatId === activeChat._id && data.message.sender._id !== user._id) {
+        api.put(`/chats/${activeChat._id}/read`).catch(() => {});
+      }
     };
     const handleTyping = (data) => {
       if (data.chatId === activeChat._id && data.userId !== user._id) {
@@ -80,11 +110,23 @@ const ChatPage = () => {
         setTimeout(() => setTyping(false), 2000);
       }
     };
+    const handleRead = (data) => {
+      if (data.chatId === activeChat._id) {
+        setMessages(prev => prev.map(msg => {
+          if (msg.sender._id === user._id) {
+            return { ...msg, read: true, readAt: data.readAt };
+          }
+          return msg;
+        }));
+      }
+    };
     socket.on('receive_message', handleReceive);
     socket.on('user_typing', handleTyping);
+    socket.on('messages_read', handleRead);
     return () => {
       socket.off('receive_message', handleReceive);
       socket.off('user_typing', handleTyping);
+      socket.off('messages_read', handleRead);
     };
   }, [activeChat, user]);
 
@@ -98,6 +140,7 @@ const ChatPage = () => {
     try {
       const res = await api.get(`/chats/${chat._id}/messages`);
       setMessages(res.data.messages);
+      api.put(`/chats/${chat._id}/read`).catch(() => {});
       setChats(prev => prev.map(c =>
         c._id === chat._id ? { ...c, unreadCount: 0 } : c
       ));
@@ -248,17 +291,23 @@ const ChatPage = () => {
                 </div>
 
                 <div className="chat-messages">
-                  {messages.map(msg => (
-                    <div key={msg._id} className={`chat-msg ${msg.sender._id === user._id ? 'sent' : 'received'}`}>
-                      {msg.text && <div>{msg.text}</div>}
-                      {msg.file && (
-                        <a href={msg.file} target="_blank" rel="noopener noreferrer" className="chat-msg-file">
-                          <PaperclipIcon /> {msg.fileName || 'File'}
-                        </a>
-                      )}
-                      <div className="chat-msg-time">{timeAgo(msg.createdAt)}</div>
-                    </div>
-                  ))}
+                  {messages.map(msg => {
+                    const isSent = msg.sender._id === user._id;
+                    return (
+                      <div key={msg._id} className={`chat-msg ${isSent ? 'sent' : 'received'}`}>
+                        {msg.text && <div>{msg.text}</div>}
+                        {msg.file && (
+                          <a href={msg.file} target="_blank" rel="noopener noreferrer" className="chat-msg-file">
+                            <PaperclipIcon /> {msg.fileName || 'File'}
+                          </a>
+                        )}
+                        <div className="chat-msg-time" style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end', gap: 2 }}>
+                          <span>{formatMsgTime(msg.createdAt)}</span>
+                          {isSent && <DoubleCheckIcon read={msg.read} />}
+                        </div>
+                      </div>
+                    );
+                  })}
                   <div ref={messagesEnd} />
                 </div>
 
