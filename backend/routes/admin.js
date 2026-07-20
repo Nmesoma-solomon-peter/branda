@@ -599,6 +599,34 @@ router.put('/specialists/:id/portfolio-approval', ...adminOnly, async (req, res)
   }
 });
 
+router.get('/reviews', ...adminOnly, async (req, res) => {
+  try {
+    const Review = require('../models/Review');
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 20;
+    const skip = (page - 1) * limit;
+    const { specialist, reported } = req.query;
+    const filter = {};
+    if (specialist) filter.specialist = specialist;
+    if (reported !== undefined) filter.reported = reported === 'true';
+
+    const [reviews, total] = await Promise.all([
+      Review.find(filter)
+        .populate('reviewer', 'name email profileImage')
+        .populate('specialist', 'name email')
+        .populate('project', 'title')
+        .sort({ createdAt: -1 })
+        .skip(skip)
+        .limit(limit),
+      Review.countDocuments(filter)
+    ]);
+
+    res.status(200).json({ success: true, reviews, total });
+  } catch (error) {
+    res.status(500).json({ success: false, error: 'Server error' });
+  }
+});
+
 router.get('/flagged-content', ...adminOnly, async (req, res) => {
   try {
     const ReviewReport = require('../models/ReviewReport');

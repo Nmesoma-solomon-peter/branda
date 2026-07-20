@@ -157,6 +157,7 @@ app.use('/api/promo-codes', require('./routes/promoCodes'));
 app.use('/api/case-studies', require('./routes/caseStudies'));
 app.use('/api/tickets', require('./routes/tickets'));
 app.use('/api/contracts', require('./routes/contracts'));
+app.use('/api/reviews', require('./routes/reviews'));
 app.use('/api/review-reports', require('./routes/reviewReports'));
 
 app.get('/api/health', (req, res) => {
