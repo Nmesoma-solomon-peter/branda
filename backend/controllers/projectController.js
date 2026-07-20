@@ -260,6 +260,18 @@ exports.acceptAssignment = async (req, res) => {
     }
     await project.save();
 
+    if (action === 'accepted') {
+      try {
+        const Chat = require('../models/Chat');
+        const existing = await Chat.findOne({ participants: { $all: [project.owner, project.assignedSpecialist] } });
+        if (!existing) {
+          await Chat.create({ participants: [project.owner, project.assignedSpecialist] });
+        }
+      } catch (e) {
+        console.error('Failed to create chat on accept:', e.message);
+      }
+    }
+
     if (action === 'declined') {
       const admin = await User.findOne({ role: 'admin' });
       if (admin?.email) {

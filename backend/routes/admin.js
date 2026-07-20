@@ -175,6 +175,16 @@ router.put('/projects/:id/assign', ...adminOnly, async (req, res) => {
       createNotification(project.assignedSpecialist._id, 'project_assigned', 'New Project Assigned', `You've been assigned "${project.title}"`, '/specialist-dashboard');
     }
 
+    try {
+      const Chat = require('../models/Chat');
+      const existing = await Chat.findOne({ participants: { $all: [project.owner._id, project.assignedSpecialist._id] } });
+      if (!existing) {
+        await Chat.create({ participants: [project.owner._id, project.assignedSpecialist._id] });
+      }
+    } catch (e) {
+      console.error('Failed to create chat on assignment:', e.message);
+    }
+
     res.status(200).json({ success: true, project });
   } catch (error) {
     res.status(500).json({ success: false, error: 'Server error' });
