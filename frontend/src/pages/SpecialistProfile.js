@@ -33,10 +33,6 @@ const SpecialistProfile = () => {
       setReviews(reviewsRes.data.reviews);
     }).catch(() => {}).finally(() => setLoading(false));
   }, [id]);
-      setShowReviewForm(false);
-      setReviewForm({ rating: 5, comment: '' });
-    } catch {} finally { setSubmitting(false); }
-  };
 
   if (loading) return <div style={{ padding: '100px 32px', textAlign: 'center', color: 'var(--gray-400)' }}>Loading...</div>;
   if (!specialist) return <div style={{ padding: '100px 32px', textAlign: 'center', color: 'var(--gray-400)' }}>Specialist not found</div>;
