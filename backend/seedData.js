@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-const bcrypt = require('bcryptjs');
 const path = require('path');
 require('dotenv').config({ path: path.join(__dirname, '.env') });
 
@@ -131,8 +130,6 @@ const seedData = async () => {
     await mongoose.connect(process.env.MONGO_URI || process.env.MONGODB_URI);
     console.log('Connected to MongoDB');
 
-    const hashedPassword = await bcrypt.hash('password123', 10);
-
     const createdSpecialists = [];
     for (const s of specialists) {
       const existing = await User.findOne({ email: s.email });
@@ -143,7 +140,7 @@ const seedData = async () => {
       const user = await User.create({
         name: s.name,
         email: s.email,
-        password: hashedPassword,
+        password: 'password123',
         role: 'specialist',
         location: s.location,
         bio: s.bio,
@@ -181,7 +178,7 @@ const seedData = async () => {
       const user = await User.create({
         name: s.name,
         email: s.email,
-        password: hashedPassword,
+        password: 'password123',
         role: 'sme',
         isVerified: true
       });
@@ -284,11 +281,22 @@ const seedData = async () => {
           'Very talented designer. The final output exceeded our expectations.',
           'Professional, timely, and incredibly skilled. A pleasure to work with.'
         ];
+        const reviewProjectNames = [
+          'Modern Logo for Fashion Boutique',
+          'Restaurant Brand Identity Package',
+          'E-commerce Website Design',
+          'Packaging Design for Skincare Line',
+          'Social Media Graphics Package',
+          'Complete Brand Guide for Retail Shop',
+          'Mobile App UI for Food Delivery Service',
+          'Brand Refresh for Tech Startup'
+        ];
+        const idx = i % reviewProjectNames.length;
         const reviewProject = await Project.create({
-          title: `Seed Review Project - ${Math.random().toString(36).slice(2, 6)}`,
-          description: `Placeholder project for review of ${spec.name}`,
+          title: reviewProjectNames[idx],
+          description: `A ${spec.industries[0]?.toLowerCase() || 'creative'} project completed by ${spec.name} for a client in need of professional brand design services.`,
           industry: spec.industries[0] || 'Creative',
-          budget: 50000,
+          budget: 50000 + Math.round(Math.random() * 150000),
           owner: reviewer._id,
           status: 'completed',
           assignedSpecialist: spec._id,
