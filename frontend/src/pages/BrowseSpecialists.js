@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import api from '../api/axios';
 
@@ -29,33 +29,39 @@ const BrowseSpecialists = () => {
   const [specialists, setSpecialists] = useState([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState('');
+  const [debouncedSearch, setDebouncedSearch] = useState('');
   const [category, setCategory] = useState('All');
   const [page, setPage] = useState(1);
   const [total, setTotal] = useState(0);
   const limit = 12;
 
-  useEffect(() => {
+  const fetchSpecialists = useCallback((pg, cat, q) => {
     setLoading(true);
-    const params = { page, limit };
-    if (search) params.q = search;
-    if (category !== 'All') params.category = category;
+    const params = { page: pg, limit };
+    if (q) params.q = q;
+    if (cat && cat !== 'All') params.category = cat;
     api.get('/search/specialists', { params })
       .then(res => { setSpecialists(res.data.specialists); setTotal(res.data.total); })
       .catch(() => {})
       .finally(() => setLoading(false));
-  }, [page, category]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setDebouncedSearch(search);
+      setPage(1);
+    }, 400);
+    return () => clearTimeout(timer);
+  }, [search]);
+
+  useEffect(() => {
+    fetchSpecialists(page, category, debouncedSearch);
+  }, [page, category, debouncedSearch, fetchSpecialists]);
 
   const handleSearch = (e) => {
     e.preventDefault();
+    setDebouncedSearch(search);
     setPage(1);
-    setLoading(true);
-    const params = { page: 1, limit };
-    if (search) params.q = search;
-    if (category !== 'All') params.category = category;
-    api.get('/search/specialists', { params })
-      .then(res => { setSpecialists(res.data.specialists); setTotal(res.data.total); })
-      .catch(() => {})
-      .finally(() => setLoading(false));
   };
 
   return (
