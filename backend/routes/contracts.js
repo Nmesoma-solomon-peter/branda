@@ -1,7 +1,21 @@
 const express = require('express');
 const router = express.Router();
 const Contract = require('../models/Contract');
-const { protect } = require('../middleware/auth');
+const User = require('../models/User');
+const Project = require('../models/Project');
+const { protect, authorize } = require('../middleware/auth');
+
+router.get('/', protect, authorize('admin'), async (req, res) => {
+  try {
+    const contracts = await Contract.find().sort({ createdAt: -1 })
+      .populate('client', 'name email')
+      .populate('specialist', 'name email')
+      .populate('project', 'title');
+    res.status(200).json({ success: true, contracts });
+  } catch (error) {
+    res.status(500).json({ success: false, error: 'Server error' });
+  }
+});
 
 router.get('/project/:projectId', protect, async (req, res) => {
   try {
