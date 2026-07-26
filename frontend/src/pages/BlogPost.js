@@ -27,6 +27,8 @@ const BlogPost = () => {
         .bp-back:hover { text-decoration: underline; }
         .bp-author { margin-top: 32px; padding-top: 24px; border-top: 1px solid var(--gray-200); font-size: 14px; color: var(--gray-500); }
         .bp-author strong { color: var(--gray-700); }
+        @media (max-width: 768px) { .bp-header { padding: 80px 20px 36px !important; } .bp-title { font-size: 26px !important; } .bp-body { padding: 24px 20px 60px !important; } }
+        @media (max-width: 480px) { .bp-header { padding: 70px 16px 28px !important; } .bp-title { font-size: 20px !important; } .bp-body { padding: 16px 12px 48px !important; } .bp-body img { max-height: 250px !important; } }
       `}</style>
 
       <div className="bp-header">

@@ -55,12 +55,14 @@ const ColorPaletteGenerator = () => {
   };
 
   return (
-    <div style={{ maxWidth: 700, margin: '0 auto', padding: '100px 32px 60px' }}>
+    <div className="cpg-page" style={{ maxWidth: 700, margin: '0 auto', padding: '100px 32px 60px' }}>
+      <style>{`@media (max-width: 768px) { .cpg-page { padding: 80px 20px 40px !important; } .cpg-controls { flex-direction: column !important; align-items: stretch !important; } .cpg-palette { height: 80px !important; } .cpg-colors { grid-template-columns: repeat(5, 1fr) !important; gap: 8px !important; } }
+@media (max-width: 480px) { .cpg-page { padding: 70px 12px 32px !important; } .cpg-page h1 { font-size: 22px !important; } .cpg-colors { grid-template-columns: repeat(3, 1fr) !important; } .cpg-palette { height: 60px !important; flex-direction: column !important; } }`}</style>
       <h1 style={{ fontFamily: 'var(--font-heading)', fontSize: 28, fontWeight: 700, marginBottom: 8 }}>Color Palette Generator</h1>
       <p style={{ color: 'var(--gray-500)', marginBottom: 32, fontSize: 15 }}>Generate color palettes for your brand.</p>
 
       <div style={{ background: 'var(--white)', border: '1px solid var(--gray-200)', borderRadius: 'var(--radius)', padding: 24, marginBottom: 24 }}>
-        <div style={{ display: 'flex', gap: 12, alignItems: 'flex-end' }}>
+        <div className="cpg-controls" style={{ display: 'flex', gap: 12, alignItems: 'flex-end' }}>
           <div style={{ flex: 1 }}>
             <label style={{ display: 'block', fontSize: 13, fontWeight: 500, color: 'var(--gray-500)', marginBottom: 6 }}>Industry</label>
             <select value={industry} onChange={e => setIndustry(e.target.value)} className="form-input" style={{ width: '100%' }}>
@@ -82,12 +84,12 @@ const ColorPaletteGenerator = () => {
 
       {palette && (
         <div>
-          <div style={{ display: 'flex', borderRadius: 'var(--radius)', overflow: 'hidden', height: 120, marginBottom: 16 }}>
+          <div className="cpg-palette" style={{ display: 'flex', borderRadius: 'var(--radius)', overflow: 'hidden', height: 120, marginBottom: 16 }}>
             {palette.map((color, i) => (
               <div key={i} style={{ flex: 1, background: color }} />
             ))}
           </div>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(5, 1fr)', gap: 12, marginBottom: 16 }}>
+          <div className="cpg-colors" style={{ display: 'grid', gridTemplateColumns: 'repeat(5, 1fr)', gap: 12, marginBottom: 16 }}>
             {palette.map((color, i) => (
               <div key={i} style={{ textAlign: 'center' }}>
                 <div style={{ width: '100%', height: 48, background: color, borderRadius: 6, border: '1px solid var(--gray-200)', marginBottom: 4 }} />

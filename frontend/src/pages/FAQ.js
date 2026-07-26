@@ -36,6 +36,8 @@ const FAQ = () => {
         .faq-contact p { font-size: 14px; color: var(--gray-500); margin: 0 0 16px; }
         .faq-contact a { color: var(--green); font-weight: 600; text-decoration: none; }
         .faq-contact a:hover { text-decoration: underline; }
+        @media (max-width: 768px) { .faq-hero { padding: 80px 20px 36px !important; } .faq-hero h1 { font-size: 28px !important; } .faq-content { padding: 24px 20px 60px !important; } }
+        @media (max-width: 480px) { .faq-hero { padding: 70px 16px 28px !important; } .faq-hero h1 { font-size: 22px !important; } .faq-content { padding: 16px 12px 48px !important; } .faq-item-header { padding: 14px 16px !important; } .faq-item-a { padding: 0 16px 14px !important; } }
       `}</style>
 
       <div className="faq-hero">

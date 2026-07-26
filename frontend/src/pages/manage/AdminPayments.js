@@ -82,7 +82,7 @@ const AdminPayments = () => {
         {payments.length === 0 ? (
           <div style={styles.empty}>No payment records yet</div>
         ) : (
-          <table style={styles.table}>
+          <div style={{ overflowX: 'auto' }}><table style={styles.table}>
             <thead>
               <tr>
                 <th style={styles.th}>Payer</th>
@@ -113,7 +113,7 @@ const AdminPayments = () => {
                 );
               })}
             </tbody>
-          </table>
+          </table></div>
         )}
       </div>
     </div>

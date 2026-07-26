@@ -92,6 +92,8 @@ const TwoFactorAuth = () => {
         .tfa-msg { padding: 10px 14px; border-radius: 6px; font-size: 13px; margin-bottom: 16px; }
         .tfa-msg.error { background: #FEF2F2; color: #991B1B; border: 1px solid #FECACA; }
         .tfa-msg.success { background: #F0FDF4; color: #166534; border: 1px solid #BBF7D0; }
+        @media (max-width: 768px) { .tfa-container { margin: 80px auto 40px !important; } }
+        @media (max-width: 480px) { .tfa-container { margin: 70px auto 32px !important; padding: 0 16px !important; } .tfa-card { padding: 24px 16px !important; } .tfa-title { font-size: 18px !important; } .tfa-input { font-size: 16px !important; letter-spacing: 6px !important; } }
       `}</style>
 
       <div className="tfa-container">

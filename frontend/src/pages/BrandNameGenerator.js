@@ -50,12 +50,14 @@ const BrandNameGenerator = () => {
   };
 
   return (
-    <div style={{ maxWidth: 700, margin: '0 auto', padding: '100px 32px 60px' }}>
+    <div className="bng-page" style={{ maxWidth: 700, margin: '0 auto', padding: '100px 32px 60px' }}>
+      <style>{`@media (max-width: 768px) { .bng-page { padding: 80px 20px 40px !important; } .bng-form-grid { grid-template-columns: 1fr !important; } .bng-names-grid { grid-template-columns: repeat(3, 1fr) !important; gap: 10px !important; } }
+@media (max-width: 480px) { .bng-page { padding: 70px 12px 32px !important; } .bng-page h1 { font-size: 22px !important; } .bng-names-grid { grid-template-columns: 1fr !important; } }`}</style>
       <h1 style={{ fontFamily: 'var(--font-heading)', fontSize: 28, fontWeight: 700, marginBottom: 8 }}>Brand Name Generator</h1>
       <p style={{ color: 'var(--gray-500)', marginBottom: 32, fontSize: 15 }}>Generate creative brand name ideas for your business.</p>
 
       <div style={{ background: 'var(--white)', border: '1px solid var(--gray-200)', borderRadius: 'var(--radius)', padding: 24, marginBottom: 24 }}>
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16, marginBottom: 16 }}>
+        <div className="bng-form-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16, marginBottom: 16 }}>
           <div>
             <label style={{ display: 'block', fontSize: 13, fontWeight: 500, color: 'var(--gray-500)', marginBottom: 6 }}>Industry</label>
             <select value={industry} onChange={e => setIndustry(e.target.value)} className="form-input" style={{ width: '100%' }}>
@@ -80,7 +82,7 @@ const BrandNameGenerator = () => {
       </div>
 
       {names.length > 0 && (
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 12 }}>
+        <div className="bng-names-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 12 }}>
           {names.map((name, i) => (
             <div key={i} style={{ background: 'var(--white)', border: '1px solid var(--gray-200)', borderRadius: 'var(--radius)', padding: '16px', textAlign: 'center' }}>
               <span style={{ fontSize: 16, fontWeight: 600, color: 'var(--gray-800)' }}>{name}</span>

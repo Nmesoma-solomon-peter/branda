@@ -44,6 +44,8 @@ const Contact = () => {
         .contact-info-value { font-size: 14px; color: var(--gray-700); font-weight: 500; }
         .contact-info-value a { color: var(--green); text-decoration: none; }
         .contact-info-value a:hover { text-decoration: underline; }
+        @media (max-width: 768px) { .contact-hero { padding: 80px 20px 36px !important; } .contact-hero h1 { font-size: 28px !important; } .contact-body { padding: 24px 20px 60px !important; } .contact-info { grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)) !important; gap: 16px !important; } }
+        @media (max-width: 480px) { .contact-hero { padding: 70px 16px 28px !important; } .contact-hero h1 { font-size: 22px !important; } .contact-body { padding: 16px 12px 48px !important; } }
       `}</style>
 
       <div className="contact-hero">

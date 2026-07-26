@@ -3,9 +3,11 @@ import Navbar from '../components/common/Navbar';
 import Footer from '../components/common/Footer';
 
 const Privacy = () => (
-  <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
+  <div className="pr-page" style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
+    <style>{`@media (max-width: 768px) { .pr-content { padding: 80px 20px 40px !important; } }
+@media (max-width: 480px) { .pr-content { padding: 70px 12px 32px !important; } .pr-page h1 { font-size: 22px !important; } h2 { font-size: 16px !important; } }`}</style>
     <Navbar />
-    <div style={{ flex: 1, padding: '100px 32px 60px' }}>
+    <div className="pr-content" style={{ flex: 1, padding: '100px 32px 60px' }}>
       <div style={{ maxWidth: 800, margin: '0 auto' }}>
         <h1 style={{ fontFamily: 'var(--font-heading)', fontSize: 28, fontWeight: 700, marginBottom: 24 }}>Privacy Policy</h1>
         <div style={{ fontSize: 15, lineHeight: 1.8, color: 'var(--gray-700)' }}>

@@ -82,6 +82,8 @@ const ReferralPage = () => {
         .ref-stat-val { font-size: 24px; font-weight: 700; color: var(--gray-800); }
         .ref-stat-label { font-size: 12px; color: var(--gray-400); }
         .ref-code-display { font-size: 28px; font-weight: 700; font-family: monospace; color: var(--green); letter-spacing: 4px; margin-bottom: 8px; }
+        @media (max-width: 768px) { .ref-container { margin: 80px auto 40px !important; } .ref-card { padding: 32px 24px !important; } .ref-share-grid { grid-template-columns: repeat(4, 1fr) !important; gap: 8px !important; } }
+        @media (max-width: 480px) { .ref-container { margin: 70px auto 32px !important; padding: 0 16px !important; } .ref-card { padding: 24px 16px !important; } .ref-title { font-size: 20px !important; } .ref-link-box { flex-direction: column !important; } .ref-link-input { width: 100% !important; } .ref-copy-btn { width: 100% !important; justify-content: center !important; } .ref-share-grid { grid-template-columns: repeat(2, 1fr) !important; } .ref-stats { gap: 24px !important; } }
       `}</style>
 
       <div className="ref-container">

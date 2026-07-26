@@ -42,8 +42,10 @@ const AdminKYC = () => {
   };
 
   return (
-    <>
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 24 }}>
+    <div className="adm-kyc">
+      <style>{`@media (max-width: 768px) { .adm-kyc .kyc-images { grid-template-columns: repeat(3, 1fr) !important; gap: 8px !important; } }
+@media (max-width: 480px) { .adm-kyc .kyc-header { flex-direction: column !important; gap: 12px !important; align-items: flex-start !important; } .adm-kyc .kyc-images { grid-template-columns: 1fr !important; } .adm-kyc .kyc-actions { flex-direction: column !important; } .adm-kyc .kyc-info-grid { grid-template-columns: 1fr !important; } }`}</style>
+      <div className="kyc-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 24 }}>
         <h3 style={{ fontFamily: 'var(--font-heading)', fontSize: 20, fontWeight: 700, margin: 0 }}>KYC Verification</h3>
         <div style={{ display: 'flex', gap: 6 }}>
           {['pending', 'all'].map(f => (
@@ -128,7 +130,7 @@ const AdminKYC = () => {
                 <span style={{ fontSize: 12, color: 'var(--gray-400)' }}>Full Name</span>
                 <p style={{ fontSize: 14, fontWeight: 500, margin: '2px 0 0' }}>{selected.kyc?.fullName}</p>
               </div>
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
+              <div className="kyc-info-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
                 <div>
                   <span style={{ fontSize: 12, color: 'var(--gray-400)' }}>Date of Birth</span>
                   <p style={{ fontSize: 14, fontWeight: 500, margin: '2px 0 0' }}>{selected.kyc?.dateOfBirth}</p>
@@ -144,7 +146,7 @@ const AdminKYC = () => {
               </div>
             </div>
 
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 12, marginBottom: 20 }}>
+            <div className="kyc-images" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 12, marginBottom: 20 }}>
               {[
                 { key: 'idImageFront', label: 'ID Front' },
                 { key: 'idImageBack', label: 'ID Back' },
@@ -176,7 +178,7 @@ const AdminKYC = () => {
                 placeholder="Reason for rejection..." style={{ width: '100%' }} />
             </div>
 
-            <div style={{ display: 'flex', gap: 10 }}>
+            <div className="kyc-actions" style={{ display: 'flex', gap: 10 }}>
               <button onClick={() => handleReview(selected._id, 'approved')} disabled={processing === selected._id}
                 style={{
                   flex: 1, padding: '10px 16px', borderRadius: 6, fontSize: 14, fontWeight: 500,
@@ -197,7 +199,7 @@ const AdminKYC = () => {
           </div>
         </div>
       )}
-    </>
+    </div>
   );
 };
 

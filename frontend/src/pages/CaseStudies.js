@@ -36,6 +36,8 @@ const CaseStudies = () => {
         .cs-detail .cs-result-label { font-size: 11px; color: var(--gray-500); margin-top: 4px; }
         .cs-back { display: inline-flex; align-items: center; gap: 6px; color: var(--green); font-size: 13px; font-weight: 600; cursor: pointer; margin-bottom: 24px; border: none; background: none; padding: 0; }
         .cs-empty { text-align: center; padding: 60px 20px; color: var(--gray-400); }
+        @media (max-width: 768px) { .cs-page { margin: 80px auto 40px !important; padding: 0 20px !important; } .cs-grid { gap: 16px !important; margin-top: 20px !important; } .cs-detail .cs-results { grid-template-columns: repeat(3, 1fr) !important; gap: 10px !important; } }
+        @media (max-width: 480px) { .cs-page { margin: 70px auto 32px !important; padding: 0 12px !important; } .cs-page h1 { font-size: 22px !important; } .cs-grid { grid-template-columns: 1fr !important; } .cs-detail .cs-results { grid-template-columns: 1fr !important; } }
       `}</style>
 
       <div className="cs-page">

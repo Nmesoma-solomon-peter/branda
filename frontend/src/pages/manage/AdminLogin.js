@@ -35,7 +35,9 @@ const AdminLogin = () => {
   };
 
   return (
-    <div style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 120, background: 'var(--gray-50)' }}>
+    <div className="adm-login" style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 120, background: 'var(--gray-50)' }}>
+      <style>{`@media (max-width: 768px) { .adm-login { padding: 80px 20px !important; } }
+@media (max-width: 480px) { .adm-login { padding: 60px 16px !important; } .adm-login h2 { font-size: 22px !important; } .adm-login form > div { padding: 24px 16px !important; } }`}</style>
       <div style={{ width: '100%', maxWidth: 420 }}>
         <div style={{ textAlign: 'center', marginBottom: 32 }}>
           <img src="/logo/logo.png" alt="Branda" width="48" height="48" style={{ borderRadius: 8, marginBottom: 16 }} />

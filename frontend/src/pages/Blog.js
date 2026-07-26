@@ -30,6 +30,8 @@ const Blog = () => {
         .blog-card-link { display: inline-block; margin-top: 12px; color: var(--green); font-weight: 600; font-size: 14px; text-decoration: none; }
         .blog-card-link:hover { text-decoration: underline; }
         .blog-empty { text-align: center; padding: 60px; color: var(--gray-400); }
+        @media (max-width: 768px) { .blog-hero { padding: 80px 20px 36px !important; } .blog-hero h1 { font-size: 28px !important; } .blog-content { padding: 24px 20px 60px !important; } .blog-grid { grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)) !important; gap: 16px !important; } }
+        @media (max-width: 480px) { .blog-hero { padding: 70px 16px 28px !important; } .blog-hero h1 { font-size: 22px !important; } .blog-content { padding: 16px 12px 48px !important; } .blog-grid { grid-template-columns: 1fr !important; } }
       `}</style>
 
       <div className="blog-hero">
