@@ -42,8 +42,12 @@ const BrowseProjects = () => {
   };
 
   return (
-    <div style={{ maxWidth: 1100, margin: '0 auto', padding: '100px 32px 60px' }}>
-      <h1 style={{ fontFamily: 'var(--font-heading)', fontSize: 28, fontWeight: 700, marginBottom: 8 }}>Open Projects</h1>
+    <div className="bp-page" style={{ maxWidth: 1100, margin: '0 auto', padding: '100px 32px 60px' }}>
+      <style>{`
+        @media (max-width: 768px) { .bp-page { padding: 80px 20px 40px !important; } .bp-header { font-size: 26px !important; } .bp-card-header { flex-direction: column !important; gap: 8px !important; } .bp-card-header-right { align-self: flex-start !important; } .bp-proposal-fields { flex-direction: column !important; gap: 12px !important; } .bp-proposal-actions { flex-direction: column !important; } .bp-proposal-actions button { width: 100% !important; } }
+        @media (max-width: 480px) { .bp-page { padding: 70px 12px 32px !important; } .bp-header { font-size: 22px !important; } }
+      `}</style>
+      <h1 className="bp-header" style={{ fontFamily: 'var(--font-heading)', fontSize: 28, fontWeight: 700, marginBottom: 8 }}>Open Projects</h1>
       <p style={{ color: 'var(--gray-500)', marginBottom: 24 }}>Browse projects and submit your proposal</p>
 
       <input
@@ -66,8 +70,8 @@ const BrowseProjects = () => {
       ) : (
         <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
           {projects.map(p => (
-            <div key={p._id} style={{ background: 'var(--white)', border: '1px solid var(--gray-200)', borderRadius: 'var(--radius)', padding: 20 }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 12 }}>
+              <div key={p._id} style={{ background: 'var(--white)', border: '1px solid var(--gray-200)', borderRadius: 'var(--radius)', padding: 20 }}>
+              <div className="bp-card-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 12 }}>
                 <div>
                   <h3 style={{ fontSize: 16, fontWeight: 600, margin: '0 0 4px' }}>{p.title}</h3>
                   <p style={{ fontSize: 13, color: 'var(--gray-400)', margin: 0 }}>
@@ -75,7 +79,7 @@ const BrowseProjects = () => {
                   </p>
                 </div>
                 {p.deadline && (
-                  <span style={{ fontSize: 12, color: 'var(--gray-400)', whiteSpace: 'nowrap' }}>
+                  <span className="bp-card-header-right" style={{ fontSize: 12, color: 'var(--gray-400)', whiteSpace: 'nowrap' }}>
                     Due: {new Date(p.deadline).toLocaleDateString()}
                   </span>
                 )}
@@ -100,7 +104,7 @@ const BrowseProjects = () => {
                       }}
                     />
                   </div>
-                  <div style={{ display: 'flex', gap: 16, marginBottom: 16 }}>
+                  <div className="bp-proposal-fields" style={{ display: 'flex', gap: 16, marginBottom: 16 }}>
                     <div style={{ flex: 1 }}>
                       <label style={{ display: 'block', fontSize: 13, fontWeight: 500, marginBottom: 4 }}>Your Bid (NGN)</label>
                       <input
@@ -128,7 +132,7 @@ const BrowseProjects = () => {
                       />
                     </div>
                   </div>
-                  <div style={{ display: 'flex', gap: 8 }}>
+                  <div className="bp-proposal-actions" style={{ display: 'flex', gap: 8 }}>
                     <button
                       onClick={() => submitProposal(p._id)}
                       disabled={submitting || !coverLetter.trim() || !bidAmount}

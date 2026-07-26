@@ -72,6 +72,8 @@ const SpecialistProfile = () => {
         .sp-empty { text-align: center; padding: 40px; color: var(--gray-400); font-size: 14px; }
         .sp-msg-btn { display: inline-flex; align-items: center; gap: 6px; padding: 10px 24px; background: var(--green); color: var(--white); border: none; border-radius: 8px; font-weight: 600; font-size: 14px; cursor: pointer; margin-top: 16px; }
         .sp-msg-btn:hover { opacity: 0.9; }
+        @media (max-width: 768px) { .sp-header { padding: 80px 20px 32px; } .sp-avatar { width: 72px !important; height: 72px !important; font-size: 26px !important; } .sp-name { font-size: 24px; } .sp-stats { gap: 20px; flex-wrap: wrap; } .sp-body { padding: 20px; } .sp-portfolio-grid { grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); } }
+        @media (max-width: 480px) { .sp-header { padding: 70px 16px 24px; } .sp-avatar { width: 64px !important; height: 64px !important; font-size: 22px !important; } .sp-name { font-size: 20px; } .sp-stats { gap: 12px; } .sp-stat-val { font-size: 18px; } .sp-stat-label { font-size: 11px; } .sp-body { padding: 16px; } .sp-portfolio-grid { grid-template-columns: 1fr; } .sp-tab { padding: 10px 16px; font-size: 13px; } }
       `}</style>
 
       <div className="sp-header">

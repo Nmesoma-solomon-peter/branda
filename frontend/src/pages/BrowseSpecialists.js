@@ -94,6 +94,8 @@ const BrowseSpecialists = () => {
         .bs-page-btn { padding: 8px 14px; border: 1px solid var(--gray-200); border-radius: 6px; background: var(--white); cursor: pointer; font-size: 13px; }
         .bs-page-btn.active { background: var(--green); color: var(--white); border-color: var(--green); }
         .bs-page-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+        @media (max-width: 768px) { .bs-hero { padding: 100px 20px 40px; } .bs-hero h1 { font-size: 28px; } .bs-content { padding: 20px; } .bs-grid { grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); } }
+        @media (max-width: 480px) { .bs-hero { padding: 80px 16px 32px; } .bs-hero h1 { font-size: 24px; } .bs-hero p { font-size: 14px; } .bs-search-bar { flex-direction: column; } .bs-search-bar button { width: 100%; justify-content: center; } .bs-content { padding: 16px; } .bs-grid { grid-template-columns: 1fr; } }
       `}</style>
 
       <div className="bs-hero">

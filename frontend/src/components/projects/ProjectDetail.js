@@ -213,27 +213,31 @@ const ProjectDetail = () => {
   const successfulPaymentTotal = payments.filter(p => p.status === 'success').reduce((sum, p) => sum + p.amount, 0);
 
   return (
-    <div style={{ maxWidth: 800, fontFamily: 'var(--font-body)' }}>
+    <div className="pd-inner" style={{ maxWidth: 800, fontFamily: 'var(--font-body)' }}>
+      <style>{`
+        @media (max-width: 768px) { .pd-inner { width: 100%; } .pd-header { flex-direction: column !important; gap: 12px !important; } .pd-info-grid { grid-template-columns: 1fr !important; } .pd-payment-summary { grid-template-columns: 1fr 1fr !important; } .pd-payment-form { flex-direction: column !important; } .pd-comment-form { flex-direction: column !important; } .pd-comment-form button { width: 100% !important; } .pd-actions { flex-direction: column !important; } .pd-actions button { width: 100% !important; } .pd-modal-inner { padding: 24px 20px !important; } }
+        @media (max-width: 480px) { .pd-payment-summary { grid-template-columns: 1fr !important; } .pd-header-actions { width: 100% !important; } .pd-header-actions button { width: 100% !important; } }
+      `}</style>
       {/* Delete Modal */}
       {showDeleteModal && (
         <div style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.5)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 1000, padding: 20 }}>
-          <div style={{ background: 'var(--white)', borderRadius: 'var(--radius)', padding: 32, maxWidth: 400, width: '100%', textAlign: 'center' }}>
-            <h3 style={{ fontFamily: 'var(--font-heading)', fontSize: 20, fontWeight: 700, marginBottom: 12 }}>Delete Project</h3>
-            <p style={{ fontSize: 15, color: 'var(--gray-500)', marginBottom: 24, lineHeight: 1.6 }}>
-              Are you sure you want to delete this project? This will remove all uploaded files and cannot be undone.
-            </p>
-            <div style={{ display: 'flex', gap: 12 }}>
-              <button onClick={() => setShowDeleteModal(false)} disabled={deleteLoading} style={{ flex: 1, padding: '10px 16px', borderRadius: 'var(--radius)', border: '1px solid var(--gray-300)', background: 'var(--white)', fontSize: 14, fontWeight: 500, cursor: 'pointer', fontFamily: 'var(--font-body)' }}>Cancel</button>
-              <button onClick={handleDelete} disabled={deleteLoading} style={{ flex: 1, padding: '10px 16px', borderRadius: 'var(--radius)', border: 'none', background: '#DC2626', color: 'var(--white)', fontSize: 14, fontWeight: 500, cursor: 'pointer', opacity: deleteLoading ? 0.6 : 1, fontFamily: 'var(--font-body)' }}>{deleteLoading ? 'Deleting...' : 'Delete'}</button>
+            <div className="pd-modal-inner" style={{ background: 'var(--white)', borderRadius: 'var(--radius)', padding: 32, maxWidth: 400, width: '100%', textAlign: 'center' }}>
+              <h3 style={{ fontFamily: 'var(--font-heading)', fontSize: 20, fontWeight: 700, marginBottom: 12 }}>Delete Project</h3>
+              <p style={{ fontSize: 15, color: 'var(--gray-500)', marginBottom: 24, lineHeight: 1.6 }}>
+                Are you sure you want to delete this project? This will remove all uploaded files and cannot be undone.
+              </p>
+              <div style={{ display: 'flex', gap: 12 }}>
+                <button onClick={() => setShowDeleteModal(false)} disabled={deleteLoading} style={{ flex: 1, padding: '10px 16px', borderRadius: 'var(--radius)', border: '1px solid var(--gray-300)', background: 'var(--white)', fontSize: 14, fontWeight: 500, cursor: 'pointer', fontFamily: 'var(--font-body)' }}>Cancel</button>
+                <button onClick={handleDelete} disabled={deleteLoading} style={{ flex: 1, padding: '10px 16px', borderRadius: 'var(--radius)', border: 'none', background: '#DC2626', color: 'var(--white)', fontSize: 14, fontWeight: 500, cursor: 'pointer', opacity: deleteLoading ? 0.6 : 1, fontFamily: 'var(--font-body)' }}>{deleteLoading ? 'Deleting...' : 'Delete'}</button>
+              </div>
             </div>
           </div>
-        </div>
-      )}
+        )}
 
-      {/* Dispute Modal */}
-      {showDisputeModal && (
-        <div style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.5)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 1000, padding: 20 }}>
-          <div style={{ background: 'var(--white)', borderRadius: 'var(--radius)', padding: 32, maxWidth: 400, width: '100%', textAlign: 'center' }}>
+        {/* Dispute Modal */}
+        {showDisputeModal && (
+          <div style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.5)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 1000, padding: 20 }}>
+            <div className="pd-modal-inner" style={{ background: 'var(--white)', borderRadius: 'var(--radius)', padding: 32, maxWidth: 400, width: '100%', textAlign: 'center' }}>
             <h3 style={{ fontFamily: 'var(--font-heading)', fontSize: 20, fontWeight: 700, marginBottom: 12 }}>Report Issue</h3>
             <p style={{ fontSize: 15, color: 'var(--gray-500)', marginBottom: 24, lineHeight: 1.6 }}>
               Are you sure you want to flag this project for dispute? An admin will review the case and mediate.
@@ -247,12 +251,12 @@ const ProjectDetail = () => {
       )}
 
       {/* Header */}
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 24 }}>
+      <div className="pd-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 24 }}>
         <div>
           <h2 style={{ fontFamily: 'var(--font-heading)', fontSize: 28, fontWeight: 700, marginBottom: 8 }}>{project.title}</h2>
           <ProjectStatusBadge status={project.status} />
         </div>
-        <div style={{ display: 'flex', gap: 8, flexShrink: 0 }}>
+        <div className="pd-header-actions" style={{ display: 'flex', gap: 8, flexShrink: 0 }}>
           {isOwner && (
             <button onClick={() => setShowDeleteModal(true)} style={{ background: 'none', border: '1px solid var(--gray-300)', borderRadius: 'var(--radius)', padding: '8px 16px', fontSize: 13, color: '#DC2626', cursor: 'pointer', fontFamily: 'var(--font-body)' }}>
               Delete
@@ -336,7 +340,7 @@ const ProjectDetail = () => {
         <div style={{ background: '#EEF2FF', border: '1px solid #C7D2FE', borderRadius: 'var(--radius)', padding: 20, marginBottom: 24 }}>
           <h4 style={{ fontSize: 14, fontWeight: 600, marginBottom: 8 }}>Project Assignment</h4>
           <p style={{ fontSize: 14, color: 'var(--gray-500)', marginBottom: 16 }}>You have been assigned this project. Please accept or decline.</p>
-          <div style={{ display: 'flex', gap: 12 }}>
+          <div className="pd-actions" style={{ display: 'flex', gap: 12 }}>
             <button onClick={() => handleAcceptDecline('accepted')} disabled={acceptLoading} style={{ padding: '10px 24px', borderRadius: 'var(--radius)', border: 'none', background: 'var(--green)', color: 'var(--white)', fontSize: 14, fontWeight: 600, cursor: acceptLoading ? 'not-allowed' : 'pointer', opacity: acceptLoading ? 0.6 : 1, fontFamily: 'var(--font-body)' }}>
               {acceptLoading ? 'Processing...' : 'Accept'}
             </button>
@@ -388,7 +392,7 @@ const ProjectDetail = () => {
           </div>
 
           {/* Payment summary */}
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 12, marginBottom: 16 }}>
+          <div className="pd-payment-summary" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 12, marginBottom: 16 }}>
             <div style={{ textAlign: 'center', padding: 12, background: 'var(--gray-50)', borderRadius: 'var(--radius)' }}>
               <p style={{ fontSize: 12, color: 'var(--gray-400)', margin: 0 }}>Total Budget</p>
               <p style={{ fontSize: 16, fontWeight: 700, color: 'var(--black)', margin: '4px 0 0' }}>{formatCurrency(project.budget)}</p>
@@ -404,7 +408,7 @@ const ProjectDetail = () => {
           </div>
 
           {showPaymentForm && (
-            <div style={{ display: 'flex', gap: 12, alignItems: 'flex-end', padding: 16, background: 'var(--gray-50)', borderRadius: 'var(--radius)' }}>
+            <div className="pd-payment-form" style={{ display: 'flex', gap: 12, alignItems: 'flex-end', padding: 16, background: 'var(--gray-50)', borderRadius: 'var(--radius)' }}>
               <div style={{ flex: 1 }}>
                 <label style={{ display: 'block', fontSize: 13, fontWeight: 500, marginBottom: 4 }}>Amount (NGN)</label>
                 <input type="number" className="form-input" value={paymentAmount} onChange={e => setPaymentAmount(e.target.value)} min="1" style={{ width: '100%' }} />
@@ -476,7 +480,7 @@ const ProjectDetail = () => {
           <h4 style={{ fontSize: 14, fontWeight: 600, color: '#92400E', marginBottom: 8 }}>Review Deliverables</h4>
           <p style={{ fontSize: 14, color: '#78350F', marginBottom: 12 }}>The specialist has submitted their work. Please review and either approve or request revisions.</p>
           {!showRevisionForm ? (
-            <div style={{ display: 'flex', gap: 12 }}>
+            <div className="pd-actions" style={{ display: 'flex', gap: 12 }}>
               <button onClick={() => handleStatusUpdate('completed')} disabled={statusLoading} style={{ padding: '10px 20px', borderRadius: 'var(--radius)', border: 'none', background: 'var(--green)', color: 'var(--white)', fontSize: 14, fontWeight: 600, cursor: statusLoading ? 'not-allowed' : 'pointer', fontFamily: 'var(--font-body)' }}>
                 Approve
               </button>
@@ -487,7 +491,7 @@ const ProjectDetail = () => {
           ) : (
             <div>
               <textarea className="form-input" value={revisionNote} onChange={e => setRevisionNote(e.target.value)} placeholder="Describe what needs to be changed..." rows={3} style={{ width: '100%', resize: 'vertical', marginBottom: 12 }} />
-              <div style={{ display: 'flex', gap: 12 }}>
+              <div className="pd-actions" style={{ display: 'flex', gap: 12 }}>
                 <button onClick={handleRevisionRequest} disabled={revisionLoading || !revisionNote.trim()} style={{ padding: '10px 20px', borderRadius: 'var(--radius)', border: 'none', background: '#D97706', color: 'var(--white)', fontSize: 14, fontWeight: 500, cursor: revisionLoading || !revisionNote.trim() ? 'not-allowed' : 'pointer', opacity: revisionLoading || !revisionNote.trim() ? 0.6 : 1, fontFamily: 'var(--font-body)' }}>
                   {revisionLoading ? 'Submitting...' : 'Submit Revision Request'}
                 </button>
@@ -515,7 +519,7 @@ const ProjectDetail = () => {
 
         {/* Add Comment Form */}
         {(isOwner || isSpecialist || isAdmin) && (
-          <form onSubmit={handleAddComment} style={{ display: 'flex', gap: 12, marginBottom: 20 }}>
+          <form onSubmit={handleAddComment} className="pd-comment-form" style={{ display: 'flex', gap: 12, marginBottom: 20 }}>
             <input
               type="text"
               className="form-input"
