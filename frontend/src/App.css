@@ -362,15 +362,19 @@ ul {
 
 .nav-user-menu {
   position: absolute;
-  top: calc(100% + 8px);
+  top: 100%;
   right: 0;
+  padding-top: 8px;
+  z-index: 1001;
+}
+
+.nav-user-menu-inner {
   background: var(--white);
   border: 1px solid var(--gray-200);
   border-radius: var(--radius);
   box-shadow: 0 8px 24px rgba(0,0,0,0.1);
   min-width: 180px;
   padding: 6px;
-  z-index: 1001;
 }
 
 .nav-user-menu a,

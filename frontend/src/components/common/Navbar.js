@@ -138,14 +138,16 @@ const Navbar = () => {
                 </button>
                 {userMenuOpen && (
                   <div className="nav-user-menu">
-                    <Link to="/profile" onClick={() => setUserMenuOpen(false)}>Profile</Link>
-                    {user?.role === 'specialist' && <><Link to="/kyc" onClick={() => setUserMenuOpen(false)}>KYC</Link><Link to="/portfolio" onClick={() => setUserMenuOpen(false)}>Portfolio</Link></>}
-                    {user?.role === 'sme' && <Link to="/payments" onClick={() => setUserMenuOpen(false)}>Payments</Link>}
-                    <div className="nav-user-divider" />
-                    <Link to="/terms" onClick={() => setUserMenuOpen(false)}>Terms</Link>
-                    <Link to="/privacy" onClick={() => setUserMenuOpen(false)}>Privacy</Link>
-                    <div className="nav-user-divider" />
-                    <button onClick={() => { setUserMenuOpen(false); setShowLogout(true); }}>Logout</button>
+                    <div className="nav-user-menu-inner">
+                      <Link to="/profile" onClick={() => setUserMenuOpen(false)}>Profile</Link>
+                      {user?.role === 'specialist' && <><Link to="/kyc" onClick={() => setUserMenuOpen(false)}>KYC</Link><Link to="/portfolio" onClick={() => setUserMenuOpen(false)}>Portfolio</Link></>}
+                      {user?.role === 'sme' && <Link to="/payments" onClick={() => setUserMenuOpen(false)}>Payments</Link>}
+                      <div className="nav-user-divider" />
+                      <Link to="/terms" onClick={() => setUserMenuOpen(false)}>Terms</Link>
+                      <Link to="/privacy" onClick={() => setUserMenuOpen(false)}>Privacy</Link>
+                      <div className="nav-user-divider" />
+                      <button onClick={() => { setUserMenuOpen(false); setShowLogout(true); }}>Logout</button>
+                    </div>
                   </div>
                 )}
               </div>
