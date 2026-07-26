@@ -27,6 +27,10 @@ const PortfolioSchema = new mongoose.Schema({
     type: String,
     default: ''
   },
+  projectUrl: {
+    type: String,
+    default: ''
+  },
   createdAt: {
     type: Date,
     default: Date.now

@@ -6,19 +6,19 @@ const User = require('../models/User');
 const { protect, authorize } = require('../middleware/auth');
 const upload = require('../middleware/upload');
 
-router.post('/', protect, authorize('specialist'), upload.array('images', 5), async (req, res) => {
+router.post('/', protect, authorize('specialist'), async (req, res) => {
   try {
-    const { title, description, industry } = req.body;
+    const { title, description, category, imageUrl, projectUrl } = req.body;
     if (!title) {
       return res.status(400).json({ success: false, error: 'Title is required' });
     }
-    const images = req.files ? req.files.map(f => `/uploads/${f.filename}`) : [];
     const item = await Portfolio.create({
       specialist: req.user._id,
       title,
       description: description || '',
-      images,
-      industry: industry || ''
+      images: imageUrl ? [imageUrl] : [],
+      category: category || '',
+      projectUrl: projectUrl || ''
     });
     res.status(201).json({ success: true, item });
   } catch (error) {
@@ -51,9 +51,10 @@ router.put('/:id', protect, authorize('specialist'), async (req, res) => {
     if (item.specialist.toString() !== req.user._id.toString()) {
       return res.status(403).json({ success: false, error: 'Not authorized' });
     }
-    const allowed = ['title', 'description', 'industry'];
+    const allowed = ['title', 'description', 'category', 'projectUrl'];
     const updates = {};
     allowed.forEach(f => { if (req.body[f] !== undefined) updates[f] = req.body[f]; });
+    if (req.body.imageUrl) updates.images = [req.body.imageUrl];
     const updated = await Portfolio.findByIdAndUpdate(req.params.id, updates, { new: true });
     res.status(200).json({ success: true, item: updated });
   } catch (error) {
@@ -226,7 +227,7 @@ router.get('/specialists', async (req, res) => {
 router.get('/specialist/:id', async (req, res) => {
   try {
     const specialist = await User.findById(req.params.id)
-      .select('name email profileImage location bio kyc createdAt skills industries hourlyRate yearsExperience availability gender phone');
+      .select('name email profileImage location bio role kyc createdAt skills industries hourlyRate yearsExperience availability gender phone');
     if (!specialist || specialist.role !== 'specialist') {
       return res.status(404).json({ success: false, error: 'Specialist not found' });
     }

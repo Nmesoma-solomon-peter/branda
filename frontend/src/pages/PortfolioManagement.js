@@ -64,8 +64,8 @@ const PortfolioManagement = () => {
 
   const openEdit = (item) => {
     setEditItem(item);
-    setForm({ title: item.title, description: item.description, category: item.category, imageUrl: item.imageUrl || '', projectUrl: item.projectUrl || '' });
-    setImagePreview(item.imageUrl || '');
+    setForm({ title: item.title, description: item.description, category: item.category, imageUrl: item.images?.[0] || '', projectUrl: item.projectUrl || '' });
+    setImagePreview(item.images?.[0] || '');
     setImageFile(null);
     setShowModal(true);
   };
@@ -170,8 +170,8 @@ const PortfolioManagement = () => {
           <div className="pm-grid">
             {items.map(item => (
               <div key={item._id} className="pm-card">
-                {item.imageUrl ? (
-                  <img src={item.imageUrl} alt={item.title} className="pm-card-img" />
+                {item.images?.[0] ? (
+                  <img src={item.images[0]} alt={item.title} className="pm-card-img" />
                 ) : (
                   <div className="pm-card-img" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--gray-300)', fontSize: 32 }}>No Image</div>
                 )}
