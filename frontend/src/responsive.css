@@ -1,0 +1,36 @@
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+table {
+  width: 100%;
+  overflow-x: auto;
+  display: block;
+}
+
+input, select, textarea, button {
+  font-size: 16px;
+}
+
+@media (max-width: 768px) {
+  :root {
+    --page-padding: 60px 16px 40px;
+    --card-padding: 16px;
+    --radius-sm: 6px;
+  }
+
+  h1 { font-size: 24px !important; }
+  h2 { font-size: 20px !important; }
+  h3 { font-size: 17px !important; }
+}
+
+@media (max-width: 480px) {
+  :root {
+    --page-padding: 40px 12px 32px;
+  }
+
+  h1 { font-size: 20px !important; }
+  h2 { font-size: 17px !important; }
+  h3 { font-size: 15px !important; }
+}
