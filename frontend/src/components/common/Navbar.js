@@ -31,6 +31,7 @@ const Navbar = () => {
   const [showLogout, setShowLogout] = useState(false);
   const [showNotifs, setShowNotifs] = useState(false);
   const [notifications, setNotifications] = useState([]);
+  const [userMenuOpen, setUserMenuOpen] = useState(false);
 
   useEffect(() => {
     if (!isAuthenticated) return;
@@ -70,6 +71,8 @@ const Navbar = () => {
 
   const closeMenu = () => { setMenuOpen(false); document.body.classList.remove('menu-open'); };
 
+  const dashboardLink = user?.role === 'admin' ? '/manage/dashboard' : user?.role === 'sme' ? '/dashboard' : '/specialist-dashboard';
+
   return (
     <nav className="navbar">
       <div className="navbar-inner">
@@ -82,53 +85,24 @@ const Navbar = () => {
         </button>
 
         {menuOpen && <div className="navbar-overlay" onClick={closeMenu} />}
+
+        {/* -------- MOBILE DRAWER -------- */}
         <ul className={`navbar-links ${menuOpen ? 'open' : ''}`}>
           <li className="drawer-close">
             <button onClick={closeMenu} aria-label="Close menu"><CloseIcon /></button>
           </li>
           {isAuthenticated ? (
             <>
-              <li>
-                <Link to={user?.role === 'admin' ? '/manage/dashboard' : user?.role === 'sme' ? '/dashboard' : '/specialist-dashboard'} onClick={closeMenu}>
-                  Dashboard
-                </Link>
-              </li>
-              <li>
-                <Link to="/chat" onClick={closeMenu} className="drawer-with-badge">
-                  Messages
-                  <span className={`drawer-badge ${unreadCount > 0 ? 'drawer-badge-active' : ''}`}>{unreadCount > 9 ? '9+' : unreadCount}</span>
-                </Link>
-              </li>
-              <li>
-                <button onClick={() => { closeMenu(); toggleNotifs(); }} className="drawer-link-btn">
-                  <BellIcon />
-                  Notifications
-                  {notifCount > 0 && <span className="drawer-badge drawer-badge-active">{notifCount > 9 ? '9+' : notifCount}</span>}
-                </button>
-              </li>
-              <li>
-                <Link to="/profile" onClick={closeMenu}>Profile</Link>
-              </li>
-              <li>
-                <Link to="/browse" onClick={closeMenu}>Find Specialists</Link>
-              </li>
-              {user?.role === 'specialist' && (
-                <>
-                  <li><Link to="/browse-projects" onClick={closeMenu}>Find Projects</Link></li>
-                  <li><Link to="/kyc" onClick={closeMenu}>KYC</Link></li>
-                  <li><Link to="/portfolio" onClick={closeMenu}>Portfolio</Link></li>
-                </>
-              )}
-              {user?.role === 'sme' && (
-                <li><Link to="/payments" onClick={closeMenu}>Payments</Link></li>
-              )}
+              <li><Link to={dashboardLink} onClick={closeMenu}>Dashboard</Link></li>
+              <li><Link to="/chat" onClick={closeMenu} className="drawer-with-badge">Messages<span className={`drawer-badge ${unreadCount > 0 ? 'drawer-badge-active' : ''}`}>{unreadCount > 9 ? '9+' : unreadCount}</span></Link></li>
+              <li><button onClick={() => { closeMenu(); toggleNotifs(); }} className="drawer-link-btn"><BellIcon /> Notifications{notifCount > 0 && <span className="drawer-badge drawer-badge-active">{notifCount > 9 ? '9+' : notifCount}</span>}</button></li>
+              <li><Link to="/profile" onClick={closeMenu}>Profile</Link></li>
+              <li><Link to="/browse" onClick={closeMenu}>Find Specialists</Link></li>
+              {user?.role === 'specialist' && <><li><Link to="/browse-projects" onClick={closeMenu}>Find Projects</Link></li><li><Link to="/kyc" onClick={closeMenu}>KYC</Link></li><li><Link to="/portfolio" onClick={closeMenu}>Portfolio</Link></li></>}
+              {user?.role === 'sme' && <li><Link to="/payments" onClick={closeMenu}>Payments</Link></li>}
               <li><Link to="/terms" onClick={closeMenu}>Terms</Link></li>
               <li><Link to="/privacy" onClick={closeMenu}>Privacy</Link></li>
-              <li>
-                <button onClick={() => { closeMenu(); setShowLogout(true); }} className="drawer-link-btn">
-                  Logout
-                </button>
-              </li>
+              <li><button onClick={() => { closeMenu(); setShowLogout(true); }} className="drawer-link-btn">Logout</button></li>
             </>
           ) : (
             <>
@@ -139,12 +113,54 @@ const Navbar = () => {
               <li><Link to="/terms" onClick={closeMenu}>Terms</Link></li>
               <li><Link to="/privacy" onClick={closeMenu}>Privacy</Link></li>
               <li><Link to="/login" onClick={closeMenu}>Login</Link></li>
-              <li>
-                <Link to="/register" className="navbar-cta" onClick={closeMenu} style={{ background: 'var(--green)', color: 'var(--white)' }}>Get Started</Link>
-              </li>
+              <li><Link to="/register" className="navbar-cta" onClick={closeMenu} style={{ background: 'var(--green)', color: 'var(--white)' }}>Get Started</Link></li>
             </>
           )}
         </ul>
+
+        {/* -------- DESKTOP NAV -------- */}
+        <div className="navbar-desktop">
+          {isAuthenticated ? (
+            <>
+              <Link to={dashboardLink} className="nav-desktop-link">Dashboard</Link>
+              <Link to="/chat" className="nav-desktop-link nav-desktop-with-badge">Messages{unreadCount > 0 && <span className="nav-desktop-badge">{unreadCount > 9 ? '9+' : unreadCount}</span>}</Link>
+              <Link to="/browse" className="nav-desktop-link">Find Specialists</Link>
+              {user?.role === 'specialist' && <Link to="/browse-projects" className="nav-desktop-link">Find Projects</Link>}
+              <button onClick={toggleNotifs} className="nav-desktop-icon-btn" aria-label="Notifications">
+                <BellIcon />
+                {notifCount > 0 && <span className="nav-desktop-badge">{notifCount > 9 ? '9+' : notifCount}</span>}
+              </button>
+              <div className="nav-user-dropdown" onMouseEnter={() => setUserMenuOpen(true)} onMouseLeave={() => setUserMenuOpen(false)}>
+                <button className="nav-user-btn" onClick={() => setUserMenuOpen(!userMenuOpen)}>
+                  <div className="nav-user-avatar">{user?.name?.charAt(0)?.toUpperCase() || 'U'}</div>
+                  <span className="nav-user-name">{user?.name?.split(' ')[0] || 'User'}</span>
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" width="14" height="14"><polyline points="6 9 12 15 18 9"/></svg>
+                </button>
+                {userMenuOpen && (
+                  <div className="nav-user-menu">
+                    <Link to="/profile" onClick={() => setUserMenuOpen(false)}>Profile</Link>
+                    {user?.role === 'specialist' && <><Link to="/kyc" onClick={() => setUserMenuOpen(false)}>KYC</Link><Link to="/portfolio" onClick={() => setUserMenuOpen(false)}>Portfolio</Link></>}
+                    {user?.role === 'sme' && <Link to="/payments" onClick={() => setUserMenuOpen(false)}>Payments</Link>}
+                    <div className="nav-user-divider" />
+                    <Link to="/terms" onClick={() => setUserMenuOpen(false)}>Terms</Link>
+                    <Link to="/privacy" onClick={() => setUserMenuOpen(false)}>Privacy</Link>
+                    <div className="nav-user-divider" />
+                    <button onClick={() => { setUserMenuOpen(false); setShowLogout(true); }}>Logout</button>
+                  </div>
+                )}
+              </div>
+            </>
+          ) : (
+            <>
+              <Link to="/browse" className="nav-desktop-link">Find Specialists</Link>
+              <Link to="/blog" className="nav-desktop-link">Blog</Link>
+              <Link to="/faq" className="nav-desktop-link">FAQ</Link>
+              <Link to="/contact" className="nav-desktop-link">Contact</Link>
+              <Link to="/login" className="nav-desktop-link">Login</Link>
+              <Link to="/register" className="navbar-cta">Get Started</Link>
+            </>
+          )}
+        </div>
 
         {showNotifs && !menuOpen && (
           <div className="notif-dropdown" style={{
