@@ -3,7 +3,8 @@ import { Link } from 'react-router-dom';
 
 const Footer = () => (
   <footer style={{ background: 'var(--black)', color: 'var(--white)', padding: '40px 32px 24px' }}>
-    <div style={{ maxWidth: '1120px', margin: '0 auto', display: 'flex', flexWrap: 'wrap', gap: '40px', justifyContent: 'space-between' }}>
+    <style>{`@media (max-width: 640px) { .footer-cols { flex-direction: column; gap: 24px !important; } .footer-cols > div { min-width: 0 !important; } footer { padding: 32px 16px 24px !important; } }`}</style>
+    <div className="footer-cols" style={{ maxWidth: '1120px', margin: '0 auto', display: 'flex', flexWrap: 'wrap', gap: '40px', justifyContent: 'space-between' }}>
       <div style={{ minWidth: '200px' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '12px' }}>
           <img src="/logo/favicon.png" alt="Branda" width="32" height="32" />

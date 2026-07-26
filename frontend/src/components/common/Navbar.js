@@ -68,16 +68,37 @@ const Navbar = () => {
     navigate('/');
   };
 
-  const closeMenu = () => setMenuOpen(false);
+  const closeMenu = () => { setMenuOpen(false); document.body.classList.remove('menu-open'); };
 
   return (
     <nav className="navbar">
+      <style>{`
+        .navbar-links { transition: transform 0.25s ease, opacity 0.2s ease; }
+        @media (max-width: 768px) {
+          .navbar-links {
+            position: fixed; top: 0; right: 0; bottom: 0; width: 280px;
+            background: var(--white); flex-direction: column !important;
+            padding: 80px 24px 24px; box-shadow: -4px 0 20px rgba(0,0,0,0.15);
+            transform: translateX(100%); opacity: 0; z-index: 99;
+            overflow-y: auto; align-items: stretch !important; gap: 4px !important;
+          }
+          .navbar-links.open { transform: translateX(0); opacity: 1; }
+          body.menu-open { overflow: hidden; }
+          .navbar-links li a, .navbar-links li button { padding: 12px 16px !important; font-size: 15px !important; }
+          .navbar-links .navbar-cta { text-align: center; margin-top: 8px; }
+          .notif-dropdown { position: fixed !important; top: auto !important; right: 12px !important; left: 12px !important; width: auto !important; margin-top: 4px !important; }
+        }
+        @media (min-width: 769px) {
+          .navbar-toggle { display: none !important; }
+          .navbar-links { display: flex !important; }
+        }
+      `}</style>
       <div className="navbar-inner">
         <Link to="/" className="navbar-brand" onClick={closeMenu}>
           <img src="/logo/logo.png" alt="Branda logo" width="36" height="36" />
         </Link>
 
-        <button className="navbar-toggle" onClick={() => setMenuOpen(!menuOpen)} aria-label="Toggle menu">
+        <button className="navbar-toggle" onClick={() => { setMenuOpen(!menuOpen); document.body.classList.toggle('menu-open'); }} aria-label="Toggle menu">
           {menuOpen ? <CloseIcon /> : <MenuIcon />}
         </button>
 
@@ -112,7 +133,7 @@ const Navbar = () => {
                   )}
                 </button>
                 {showNotifs && (
-                  <div style={{
+                  <div className="notif-dropdown" style={{
                     position: 'absolute', top: '100%', right: 0, background: '#fff', border: '1px solid var(--gray-200)',
                     borderRadius: '8px', width: '320px', maxHeight: '400px', overflowY: 'auto', boxShadow: '0 4px 12px rgba(0,0,0,0.1)', zIndex: 1000, marginTop: '8px'
                   }}>
