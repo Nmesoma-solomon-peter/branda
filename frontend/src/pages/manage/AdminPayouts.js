@@ -18,7 +18,8 @@ const AdminPayouts = () => {
   if (loading) return <div style={{ padding: '40px', textAlign: 'center', color: '#888' }}>Loading...</div>;
 
   return (
-    <div>
+    <div className="ad-wrap">
+      <style>{`@media (max-width: 480px) { .ad-item { flex-direction: column !important; gap: 8px !important; align-items: flex-start !important; } .payout-actions { flex-direction: column !important; width: 100% !important; } .payout-actions button { width: 100% !important; } }`}</style>
       <div style={{ display: 'flex', gap: 8, marginBottom: 20, flexWrap: 'wrap' }}>
         {[['pending', 'Pending'], ['processing', 'Processing'], ['completed', 'Completed'], ['rejected', 'Rejected'], ['all', 'All']].map(([f, l]) => (
           <button key={f} onClick={() => setFilter(f)} style={{ padding: '6px 14px', border: '1px solid var(--gray-200)', borderRadius: 6, background: filter === f ? 'var(--green)' : 'var(--white)', color: filter === f ? 'var(--white)' : 'var(--gray-600)', fontSize: 12, fontWeight: 600, cursor: 'pointer' }}>{l}</button>
@@ -30,7 +31,7 @@ const AdminPayouts = () => {
       ) : (
         <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
           {filtered.map(w => (
-            <div key={w._id} style={{ background: 'var(--white)', border: '1px solid var(--gray-200)', borderRadius: 'var(--radius)', padding: 16, display: 'flex', alignItems: 'center', gap: 16 }}>
+            <div key={w._id} className="ad-item" style={{ background: 'var(--white)', border: '1px solid var(--gray-200)', borderRadius: 'var(--radius)', padding: 16, display: 'flex', alignItems: 'center', gap: 16 }}>
               <div style={{ flex: 1 }}>
                 <div style={{ fontSize: 14, fontWeight: 600 }}>₦{w.amount.toLocaleString()}</div>
                 <div style={{ fontSize: 12, color: '#888' }}>{w.bankName} &bull; {w.accountNumber} &bull; {w.accountName}</div>
@@ -38,14 +39,14 @@ const AdminPayouts = () => {
               </div>
               <span style={{ padding: '3px 8px', borderRadius: 4, fontSize: 10, fontWeight: 700, textTransform: 'uppercase', background: w.status === 'completed' ? '#DCFCE7' : w.status === 'pending' ? '#FEF3C7' : w.status === 'processing' ? '#DBEAFE' : '#FEE2E2', color: w.status === 'completed' ? '#166534' : w.status === 'pending' ? '#92400E' : w.status === 'processing' ? '#1E40AF' : '#991B1B' }}>{w.status}</span>
               {w.status === 'pending' && (
-                <div style={{ display: 'flex', gap: 6 }}>
+                <div className="payout-actions" style={{ display: 'flex', gap: 6 }}>
                   <button onClick={() => handleAction(w._id, 'processing')} style={{ padding: '6px 12px', border: '1px solid #DBEAFE', borderRadius: 4, background: '#EFF6FF', color: '#1E40AF', fontSize: 11, fontWeight: 600, cursor: 'pointer' }}>Process</button>
                   <button onClick={() => handleAction(w._id, 'completed')} style={{ padding: '6px 12px', border: '1px solid #BBF7D0', borderRadius: 4, background: '#F0FDF4', color: '#166534', fontSize: 11, fontWeight: 600, cursor: 'pointer' }}>Complete</button>
                   <button onClick={() => handleAction(w._id, 'rejected')} style={{ padding: '6px 12px', border: '1px solid #FECACA', borderRadius: 4, background: '#FEF2F2', color: '#991B1B', fontSize: 11, fontWeight: 600, cursor: 'pointer' }}>Reject</button>
                 </div>
               )}
               {w.status === 'processing' && (
-                <div style={{ display: 'flex', gap: 6 }}>
+                <div className="payout-actions" style={{ display: 'flex', gap: 6 }}>
                   <button onClick={() => handleAction(w._id, 'completed')} style={{ padding: '6px 12px', border: '1px solid #BBF7D0', borderRadius: 4, background: '#F0FDF4', color: '#166534', fontSize: 11, fontWeight: 600, cursor: 'pointer' }}>Mark Complete</button>
                   <button onClick={() => handleAction(w._id, 'rejected')} style={{ padding: '6px 12px', border: '1px solid #FECACA', borderRadius: 4, background: '#FEF2F2', color: '#991B1B', fontSize: 11, fontWeight: 600, cursor: 'pointer' }}>Reject</button>
                 </div>

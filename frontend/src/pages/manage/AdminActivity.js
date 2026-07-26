@@ -92,13 +92,14 @@ const AdminActivity = () => {
   const filterOptions = Object.entries(ACTION_LABELS).map(([value, label]) => ({ value, label }));
 
   return (
-    <div>
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 24, flexWrap: 'wrap', gap: 12 }}>
+    <div className="ad-wrap">
+      <style>{`@media (max-width: 480px) { .ad-wrap .act-controls { flex-direction: column !important; align-items: stretch !important; } .ad-wrap .act-controls > * { width: 100% !important; } }`}</style>
+      <div className="ad-hdr" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 24, flexWrap: 'wrap', gap: 12 }}>
         <div>
           <h3 style={{ fontFamily: 'var(--font-heading)', fontSize: 20, fontWeight: 700, margin: 0 }}>Activity Logs</h3>
           <p style={{ fontSize: 13, color: 'var(--gray-400)', margin: '4px 0 0' }}>{pagination.total} total events</p>
         </div>
-        <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
+        <div className="act-controls" style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
           <a href="/admin/export/activity" target="_blank" rel="noreferrer" style={{
             padding: '6px 14px', borderRadius: 6, fontSize: 13, fontWeight: 500,
             background: 'var(--white)', color: 'var(--gray-600)', border: '1px solid var(--gray-300)',

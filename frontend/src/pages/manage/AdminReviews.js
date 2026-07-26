@@ -61,10 +61,11 @@ const AdminReviews = () => {
   if (loading) return <div style={{ padding: 40, textAlign: 'center', color: '#888' }}>Loading...</div>;
 
   return (
-    <div>
+    <div className="ad-wrap">
+      <style>{`@media (max-width: 480px) { .ad-wrap .rev-header-info { flex-direction: column !important; gap: 8px !important; align-items: flex-start !important; } .ad-wrap .rev-flagged-actions { flex-direction: column !important; } .ad-wrap .rev-flagged-actions button { width: 100% !important; } }`}</style>
       <h3 style={{ fontSize: 18, fontWeight: 700, marginBottom: 16 }}>Reviews & Ratings</h3>
 
-      <div style={{ display: 'flex', gap: 8, marginBottom: 20 }}>
+      <div style={{ display: 'flex', gap: 8, marginBottom: 20, flexWrap: 'wrap' }}>
         <button
           onClick={() => setTab('all')}
           style={{
@@ -93,7 +94,7 @@ const AdminReviews = () => {
             <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
               {reviews.map(r => (
                 <div key={r._id} style={{ background: 'var(--white)', border: '1px solid var(--gray-200)', borderRadius: 'var(--radius)', padding: 16 }}>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 8 }}>
+                  <div className="rev-header-info" style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 8 }}>
                     <div>
                       <span style={{ fontWeight: 600, fontSize: 13 }}>{r.reviewer?.name || 'Unknown'}</span>
                       <span style={{ fontSize: 12, color: '#888', margin: '0 8px' }}>reviewed</span>
@@ -148,7 +149,7 @@ const AdminReviews = () => {
                   </div>
                   <p style={{ fontSize: 13, color: '#555', margin: '0 0 8px', fontStyle: 'italic' }}>"{r.review?.comment}"</p>
                   <div style={{ fontSize: 12, color: '#888', marginBottom: 12 }}>Reason: {r.reason} &bull; Reported by: {r.reportedBy?.name || 'Unknown'}</div>
-                  <div style={{ display: 'flex', gap: 8 }}>
+                  <div className="rev-flagged-actions" style={{ display: 'flex', gap: 8 }}>
                     <button
                       onClick={() => handleFlagAction(r._id, 'dismissed')}
                       style={{ padding: '6px 16px', fontSize: 12, color: 'var(--green)', background: '#ECFDF5', border: 'none', borderRadius: 4, cursor: 'pointer', fontFamily: 'var(--font-body)' }}

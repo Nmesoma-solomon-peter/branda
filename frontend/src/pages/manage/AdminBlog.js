@@ -28,8 +28,9 @@ const AdminBlog = () => {
   if (loading) return <div style={{ padding: 40, textAlign: 'center', color: '#888' }}>Loading...</div>;
 
   return (
-    <div>
-      <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 16 }}>
+    <div className="ad-wrap">
+      <style>{`@media (max-width: 480px) { .ad-hdr { flex-direction: column !important; gap: 12px !important; align-items: flex-start !important; } .ad-item { flex-direction: column !important; gap: 8px !important; align-items: flex-start !important; } .ad-item-actions { width: 100% !important; display: flex !important; gap: 8px !important; flex-wrap: wrap !important; } }`}</style>
+      <div className="ad-hdr" style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 16 }}>
         <h3 style={{ fontSize: 18, fontWeight: 700, margin: 0 }}>Blog Posts</h3>
         <button onClick={() => setShowModal(true)} style={{ padding: '8px 16px', background: 'var(--green)', color: 'white', border: 'none', borderRadius: 6, fontWeight: 600, fontSize: 13, cursor: 'pointer' }}>+ New Post</button>
       </div>
@@ -39,18 +40,20 @@ const AdminBlog = () => {
       ) : (
         <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
           {posts.map(p => (
-            <div key={p._id} style={{ background: 'var(--white)', border: '1px solid var(--gray-200)', borderRadius: 'var(--radius)', padding: 16, display: 'flex', alignItems: 'center', gap: 16 }}>
+            <div key={p._id} className="ad-item" style={{ background: 'var(--white)', border: '1px solid var(--gray-200)', borderRadius: 'var(--radius)', padding: 16, display: 'flex', alignItems: 'center', gap: 16 }}>
               <div style={{ flex: 1 }}>
                 <div style={{ fontSize: 14, fontWeight: 600 }}>{p.title}</div>
                 <div style={{ fontSize: 12, color: '#888', marginTop: 4 }}>{p.category} &bull; {new Date(p.createdAt).toLocaleDateString()}</div>
               </div>
               <span style={{ padding: '3px 8px', borderRadius: 4, fontSize: 10, fontWeight: 700, textTransform: 'uppercase', background: p.status === 'published' ? '#DCFCE7' : '#FEF3C7', color: p.status === 'published' ? '#166534' : '#92400E' }}>{p.status}</span>
-              {p.status === 'draft' ? (
-                <button onClick={() => handlePublish(p._id, 'published')} style={{ padding: '4px 10px', border: '1px solid #BBF7D0', borderRadius: 4, background: '#F0FDF4', color: '#166534', fontSize: 11, fontWeight: 600, cursor: 'pointer' }}>Publish</button>
-              ) : (
-                <button onClick={() => handlePublish(p._id, 'draft')} style={{ padding: '4px 10px', border: '1px solid var(--gray-200)', borderRadius: 4, background: 'white', color: '#666', fontSize: 11, fontWeight: 600, cursor: 'pointer' }}>Unpublish</button>
-              )}
-              <button onClick={() => handleDelete(p._id)} style={{ padding: '4px 10px', border: '1px solid #FECACA', borderRadius: 4, background: 'white', color: '#991B1B', fontSize: 11, fontWeight: 600, cursor: 'pointer' }}>Delete</button>
+              <div className="ad-item-actions" style={{ display: 'flex', gap: 6 }}>
+                {p.status === 'draft' ? (
+                  <button onClick={() => handlePublish(p._id, 'published')} style={{ padding: '4px 10px', border: '1px solid #BBF7D0', borderRadius: 4, background: '#F0FDF4', color: '#166534', fontSize: 11, fontWeight: 600, cursor: 'pointer' }}>Publish</button>
+                ) : (
+                  <button onClick={() => handlePublish(p._id, 'draft')} style={{ padding: '4px 10px', border: '1px solid var(--gray-200)', borderRadius: 4, background: 'white', color: '#666', fontSize: 11, fontWeight: 600, cursor: 'pointer' }}>Unpublish</button>
+                )}
+                <button onClick={() => handleDelete(p._id)} style={{ padding: '4px 10px', border: '1px solid #FECACA', borderRadius: 4, background: 'white', color: '#991B1B', fontSize: 11, fontWeight: 600, cursor: 'pointer' }}>Delete</button>
+              </div>
             </div>
           ))}
         </div>

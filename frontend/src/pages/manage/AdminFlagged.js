@@ -15,13 +15,14 @@ const AdminFlagged = () => {
   if (loading) return <div style={{ padding: '40px', textAlign: 'center', color: '#888' }}>Loading...</div>;
 
   return (
-    <div>
+    <div className="ad-wrap">
+      <style>{`@media (max-width: 480px) { .ad-flag-item .flag-actions { flex-direction: column !important; } .ad-flag-item .flag-actions button { width: 100% !important; } }`}</style>
       {reports.length === 0 ? (
         <div style={{ textAlign: 'center', padding: 40, color: '#888' }}>No flagged content</div>
       ) : (
         <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
           {reports.map(r => (
-            <div key={r._id} style={{ background: 'var(--white)', border: '1px solid var(--gray-200)', borderRadius: 'var(--radius)', padding: 16 }}>
+            <div key={r._id} className="ad-flag-item" style={{ background: 'var(--white)', border: '1px solid var(--gray-200)', borderRadius: 'var(--radius)', padding: 16 }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 8 }}>
                 <div>
                   <div style={{ fontSize: 13, fontWeight: 600 }}>Review by {r.review?.reviewer?.name || 'Unknown'}</div>
@@ -33,7 +34,7 @@ const AdminFlagged = () => {
               <div style={{ fontSize: 12, color: '#888', marginBottom: 12 }}>Reason: {r.reason}</div>
               <div style={{ fontSize: 11, color: '#aaa', marginBottom: 12 }}>Reported by: {r.reportedBy?.name || 'Unknown'} &bull; {new Date(r.createdAt).toLocaleDateString()}</div>
               {r.status === 'pending' && (
-                <div style={{ display: 'flex', gap: 8 }}>
+                <div className="flag-actions" style={{ display: 'flex', gap: 8 }}>
                   <button onClick={() => handleAction(r._id, 'reviewed')} style={{ padding: '6px 14px', border: '1px solid #DBEAFE', borderRadius: 4, background: '#EFF6FF', color: '#1E40AF', fontSize: 11, fontWeight: 600, cursor: 'pointer' }}>Mark Reviewed</button>
                   <button onClick={() => handleAction(r._id, 'dismissed')} style={{ padding: '6px 14px', border: '1px solid var(--gray-200)', borderRadius: 4, background: 'var(--white)', color: '#666', fontSize: 11, fontWeight: 600, cursor: 'pointer' }}>Dismiss</button>
                 </div>

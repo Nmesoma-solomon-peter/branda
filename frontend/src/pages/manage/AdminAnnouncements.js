@@ -30,8 +30,9 @@ const AdminAnnouncements = () => {
   const typeColor = { info: '#3B82F6', warning: '#D97706', success: '#16A34A', error: '#DC2626' };
 
   return (
-    <div>
-      <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 16 }}>
+    <div className="ad-wrap">
+      <style>{`@media (max-width: 480px) { .ad-hdr { flex-direction: column !important; gap: 12px !important; align-items: flex-start !important; } .ad-item { flex-direction: column !important; gap: 8px !important; align-items: flex-start !important; } .ad-item-actions { width: 100% !important; display: flex !important; gap: 8px !important; } }`}</style>
+      <div className="ad-hdr" style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 16 }}>
         <h3 style={{ fontSize: 18, fontWeight: 700, margin: 0 }}>Announcements</h3>
         <button onClick={() => setShowModal(true)} style={{ padding: '8px 16px', background: 'var(--green)', color: 'white', border: 'none', borderRadius: 6, fontWeight: 600, fontSize: 13, cursor: 'pointer' }}>+ New</button>
       </div>
@@ -41,14 +42,16 @@ const AdminAnnouncements = () => {
       ) : (
         <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
           {announcements.map(a => (
-            <div key={a._id} style={{ background: 'var(--white)', border: '1px solid var(--gray-200)', borderRadius: 'var(--radius)', padding: 16, display: 'flex', alignItems: 'center', gap: 16 }}>
+            <div key={a._id} className="ad-item" style={{ background: 'var(--white)', border: '1px solid var(--gray-200)', borderRadius: 'var(--radius)', padding: 16, display: 'flex', alignItems: 'center', gap: 16 }}>
               <div style={{ width: 4, height: 36, borderRadius: 2, background: typeColor[a.type] || '#3B82F6', flexShrink: 0 }} />
               <div style={{ flex: 1 }}>
                 <div style={{ fontSize: 14, fontWeight: 600 }}>{a.title}</div>
                 <div style={{ fontSize: 12, color: '#888', marginTop: 2 }}>{a.message?.substring(0, 80)}... &bull; Target: {a.target} &bull; {a.expiresAt ? `Expires ${new Date(a.expiresAt).toLocaleDateString()}` : 'No expiry'}</div>
               </div>
-              <button onClick={() => handleToggle(a._id, a.isActive)} style={{ padding: '4px 10px', border: '1px solid var(--gray-200)', borderRadius: 4, background: a.isActive ? '#DCFCE7' : '#F3F4F6', color: a.isActive ? '#166534' : '#6B7280', fontSize: 11, fontWeight: 600, cursor: 'pointer' }}>{a.isActive ? 'Active' : 'Inactive'}</button>
-              <button onClick={() => handleDelete(a._id)} style={{ padding: '4px 10px', border: '1px solid #FECACA', borderRadius: 4, background: 'white', color: '#991B1B', fontSize: 11, fontWeight: 600, cursor: 'pointer' }}>Delete</button>
+              <div className="ad-item-actions" style={{ display: 'flex', gap: 6 }}>
+                <button onClick={() => handleToggle(a._id, a.isActive)} style={{ padding: '4px 10px', border: '1px solid var(--gray-200)', borderRadius: 4, background: a.isActive ? '#DCFCE7' : '#F3F4F6', color: a.isActive ? '#166534' : '#6B7280', fontSize: 11, fontWeight: 600, cursor: 'pointer' }}>{a.isActive ? 'Active' : 'Inactive'}</button>
+                <button onClick={() => handleDelete(a._id)} style={{ padding: '4px 10px', border: '1px solid #FECACA', borderRadius: 4, background: 'white', color: '#991B1B', fontSize: 11, fontWeight: 600, cursor: 'pointer' }}>Delete</button>
+              </div>
             </div>
           ))}
         </div>

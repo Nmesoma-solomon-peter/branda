@@ -24,8 +24,9 @@ const AdminCaseStudies = () => {
   if (loading) return <div style={{ padding: 40, textAlign: 'center', color: '#888' }}>Loading...</div>;
 
   return (
-    <div>
-      <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 16 }}>
+    <div className="ad-wrap">
+      <style>{`@media (max-width: 480px) { .ad-hdr { flex-direction: column !important; gap: 12px !important; align-items: flex-start !important; } .ad-item { flex-direction: column !important; gap: 8px !important; align-items: flex-start !important; } }`}</style>
+      <div className="ad-hdr" style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 16 }}>
         <h3 style={{ fontSize: 18, fontWeight: 700, margin: 0 }}>Case Studies</h3>
         <button onClick={() => setShowModal(true)} style={{ padding: '8px 16px', background: 'var(--green)', color: 'white', border: 'none', borderRadius: 6, fontWeight: 600, fontSize: 13, cursor: 'pointer' }}>+ New</button>
       </div>
@@ -35,7 +36,7 @@ const AdminCaseStudies = () => {
       ) : (
         <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
           {caseStudies.map(cs => (
-            <div key={cs._id} style={{ background: 'var(--white)', border: '1px solid var(--gray-200)', borderRadius: 'var(--radius)', padding: 16, display: 'flex', alignItems: 'center', gap: 16 }}>
+            <div key={cs._id} className="ad-item" style={{ background: 'var(--white)', border: '1px solid var(--gray-200)', borderRadius: 'var(--radius)', padding: 16, display: 'flex', alignItems: 'center', gap: 16 }}>
               <div style={{ flex: 1 }}>
                 <div style={{ fontSize: 14, fontWeight: 600 }}>{cs.title}</div>
                 <div style={{ fontSize: 12, color: '#888', marginTop: 4 }}>{cs.industry} &bull; {cs.views || 0} views</div>

@@ -27,7 +27,8 @@ const AdminAssets = () => {
   if (loading) return <div className="skeleton" style={{ height: 300 }} />;
 
   return (
-    <div>
+    <div className="ad-wrap">
+      <style>{`@media (max-width: 480px) { .ad-wrap > div:last-child { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)) !important; gap: 8px !important; } }`}</style>
       {preview && (
         <div onClick={() => setPreview(null)} style={{
           position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.85)',

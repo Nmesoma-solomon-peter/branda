@@ -17,14 +17,15 @@ const AdminContracts = () => {
   const statusColor = { draft: '#6B7280', pending: '#D97706', signed: '#16A34A', terminated: '#DC2626' };
 
   return (
-    <div>
+    <div className="ad-wrap">
+      <style>{`@media (max-width: 480px) { .ad-item { flex-direction: column !important; gap: 8px !important; align-items: flex-start !important; } }`}</style>
       <h3 style={{ fontSize: 18, fontWeight: 700, marginBottom: 16 }}>Contracts</h3>
       {contracts.length === 0 ? (
         <div style={{ textAlign: 'center', padding: 40, color: '#888', background: 'var(--white)', borderRadius: 'var(--radius)', border: '1px solid var(--gray-200)' }}>No contracts yet</div>
       ) : (
         <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
           {contracts.map(c => (
-            <div key={c._id} style={{ background: 'var(--white)', border: '1px solid var(--gray-200)', borderRadius: 'var(--radius)', padding: 16, display: 'flex', alignItems: 'center', gap: 16 }}>
+            <div key={c._id} className="ad-item" style={{ background: 'var(--white)', border: '1px solid var(--gray-200)', borderRadius: 'var(--radius)', padding: 16, display: 'flex', alignItems: 'center', gap: 16 }}>
               <div style={{ flex: 1 }}>
                 <div style={{ fontSize: 14, fontWeight: 600 }}>{c.project?.title || 'Untitled'}</div>
                 <div style={{ fontSize: 12, color: '#888', marginTop: 4 }}>Amount: ₦{c.amount?.toLocaleString()} &bull; Scope: {c.scope?.substring(0, 80)}...</div>

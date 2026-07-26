@@ -128,8 +128,9 @@ const AdminOverview = () => {
   ].filter(r => r.value > 0);
 
   return (
-    <div>
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 24 }}>
+    <div className="ad-wrap">
+      <style>{`@media (max-width: 768px) { .ad-g2 { grid-template-columns: 1fr !important; } }`}</style>
+      <div className="ad-hdr" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 24 }}>
         <h3 style={{ fontFamily: 'var(--font-heading)', fontSize: 20, fontWeight: 700 }}>Platform Overview</h3>
       </div>
 
@@ -181,7 +182,7 @@ const AdminOverview = () => {
       )}
 
       {/* Charts Row 1 */}
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16, marginBottom: 16 }}>
+      <div className="ad-g2" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16, marginBottom: 16 }}>
         <Card title="Projects by Status">
           {statusData.length > 0 ? (
             <ResponsiveContainer width="100%" height={240}>
@@ -214,7 +215,7 @@ const AdminOverview = () => {
       </div>
 
       {/* Charts Row 2 */}
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16, marginBottom: 16 }}>
+      <div className="ad-g2" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16, marginBottom: 16 }}>
         <Card title="Revenue (Last 30 Days)">
           {revenueData.length > 0 ? (
             <ResponsiveContainer width="100%" height={240}>
@@ -251,7 +252,7 @@ const AdminOverview = () => {
       </div>
 
       {/* Bottom Grid: Activity + Top Specialists + Recent Signups */}
-      <div style={{ display: 'grid', gridTemplateColumns: '1.5fr 1fr', gap: 16, marginBottom: 16 }}>
+      <div className="ad-g2" style={{ display: 'grid', gridTemplateColumns: '1.5fr 1fr', gap: 16, marginBottom: 16 }}>
         <Card title="Recent Activity">
           {stats.recentActivity?.length > 0 ? (
             <div style={{ display: 'flex', flexDirection: 'column' }}>

@@ -93,8 +93,9 @@ const AdminSettings = () => {
   };
 
   return (
-    <div>
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 24, flexWrap: 'wrap', gap: 12 }}>
+    <div className="ad-wrap">
+      <style>{`@media (max-width: 480px) { .ad-wrap .smtp-grid { grid-template-columns: 1fr !important; } }`}</style>
+      <div className="ad-hdr" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 24, flexWrap: 'wrap', gap: 12 }}>
         <h3 style={{ fontFamily: 'var(--font-heading)', fontSize: 20, fontWeight: 700 }}>Settings</h3>
         <button onClick={handleSave} disabled={saving} className="btn btn-primary" style={{ padding: '8px 20px', fontSize: 13 }}>
           {saving ? 'Saving...' : saved ? 'Saved!' : 'Save Changes'}
@@ -169,7 +170,7 @@ const AdminSettings = () => {
           <Toggle checked={settings.smtpEnabled} onChange={v => handleChange('smtpEnabled', v)} label="Enable email notifications" />
           {settings.smtpEnabled && (
             <>
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
+              <div className="smtp-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
                 <Field label="SMTP Host">
                   <input className="form-input" value={settings.smtpHost || ''} onChange={e => handleChange('smtpHost', e.target.value)} style={{ width: '100%' }} />
                 </Field>

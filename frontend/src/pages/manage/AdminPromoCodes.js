@@ -24,7 +24,8 @@ const AdminPromoCodes = () => {
   if (loading) return <div style={{ padding: '40px', textAlign: 'center', color: '#888' }}>Loading...</div>;
 
   return (
-    <div>
+    <div className="ad-wrap">
+      <style>{`@media (max-width: 480px) { .ad-item { flex-direction: column !important; gap: 8px !important; align-items: flex-start !important; } }`}</style>
       <button onClick={() => setShowModal(true)} style={{ padding: '8px 16px', background: 'var(--green)', color: 'white', border: 'none', borderRadius: 6, fontWeight: 600, fontSize: 13, cursor: 'pointer', marginBottom: 16 }}>+ New Promo Code</button>
 
       {promos.length === 0 ? (
@@ -32,7 +33,7 @@ const AdminPromoCodes = () => {
       ) : (
         <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
           {promos.map(p => (
-            <div key={p._id} style={{ background: 'var(--white)', border: '1px solid var(--gray-200)', borderRadius: 'var(--radius)', padding: 16, display: 'flex', alignItems: 'center', gap: 16 }}>
+            <div key={p._id} className="ad-item" style={{ background: 'var(--white)', border: '1px solid var(--gray-200)', borderRadius: 'var(--radius)', padding: 16, display: 'flex', alignItems: 'center', gap: 16 }}>
               <div style={{ flex: 1 }}>
                 <div style={{ fontSize: 15, fontWeight: 700, fontFamily: 'monospace', letterSpacing: 1 }}>{p.code}</div>
                 <div style={{ fontSize: 12, color: '#888', marginTop: 4 }}>{p.discountPercent}% off &bull; Used {p.usedCount || 0}/{p.maxUses} times</div>
