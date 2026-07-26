@@ -44,10 +44,12 @@ const SpecialistProfile = () => {
         .sp-avatar { width: 88px; height: 88px; border-radius: 50%; background: var(--green); color: var(--white); display: flex; align-items: center; justify-content: center; font-size: 32px; font-weight: 700; margin: 0 auto 16px; }
         .sp-name { font-family: var(--font-heading); font-size: 28px; font-weight: 700; margin: 0; }
         .sp-role { font-size: 14px; color: var(--gray-500); text-transform: capitalize; margin-top: 4px; }
-        .sp-stats { display: flex; justify-content: center; gap: 32px; margin-top: 20px; }
-        .sp-stat { text-align: center; }
-        .sp-stat-val { font-size: 22px; font-weight: 700; color: var(--gray-800); }
-        .sp-stat-label { font-size: 12px; color: var(--gray-400); }
+        .sp-stats { display: flex; justify-content: center; gap: 16px; margin-top: 24px; flex-wrap: wrap; }
+        .sp-stat { background: var(--white); border: 1px solid var(--gray-200); border-radius: 12px; padding: 14px 22px; min-width: 100px; text-align: center; transition: box-shadow 0.15s; }
+        .sp-stat:hover { box-shadow: 0 4px 12px rgba(0,0,0,0.06); }
+        .sp-stat-icon { width: 32px; height: 32px; border-radius: 8px; display: inline-flex; align-items: center; justify-content: center; margin-bottom: 6px; }
+        .sp-stat-val { font-size: 20px; font-weight: 700; color: var(--gray-800); line-height: 1.2; }
+        .sp-stat-label { font-size: 11px; color: var(--gray-400); font-weight: 500; text-transform: uppercase; letter-spacing: 0.3px; }
         .sp-body { max-width: 900px; margin: 0 auto; padding: 32px; }
         .sp-tabs { display: flex; gap: 0; border-bottom: 2px solid var(--gray-200); margin-bottom: 24px; }
         .sp-tab { padding: 12px 24px; background: none; border: none; border-bottom: 2px solid transparent; margin-bottom: -2px; font-size: 14px; font-weight: 600; cursor: pointer; color: var(--gray-500); }
@@ -87,26 +89,41 @@ const SpecialistProfile = () => {
         {specialist.bio && <p style={{ maxWidth: 500, margin: '12px auto 0', color: 'var(--gray-500)', fontSize: 14, lineHeight: 1.6 }}>{specialist.bio}</p>}
         <div className="sp-stats">
           <div className="sp-stat">
+            <div className="sp-stat-icon" style={{ background: '#EEF2FF', color: '#6366F1' }}>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" width="16" height="16"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+            </div>
             <div className="sp-stat-val">{portfolio.length}</div>
             <div className="sp-stat-label">Projects</div>
           </div>
           <div className="sp-stat">
+            <div className="sp-stat-icon" style={{ background: '#FEF3C7', color: '#D97706' }}>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" width="16" height="16"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            </div>
             <div className="sp-stat-val">{reviews.length}</div>
             <div className="sp-stat-label">Reviews</div>
           </div>
           <div className="sp-stat">
+            <div className="sp-stat-icon" style={{ background: '#F0FDF4', color: '#16A34A' }}>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" width="16" height="16"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89L17 22l-5-3-5 3 1.523-9.11"/></svg>
+            </div>
             <div className="sp-stat-val">{reviews.length > 0 ? (reviews.reduce((sum, r) => sum + r.rating, 0) / reviews.length).toFixed(1) : '—'}</div>
             <div className="sp-stat-label">Rating</div>
           </div>
           {specialist.hourlyRate > 0 && (
             <div className="sp-stat">
-              <div className="sp-stat-val">₦{specialist.hourlyRate.toLocaleString()}<span style={{ fontSize: 12, fontWeight: 400 }}>/hr</span></div>
+              <div className="sp-stat-icon" style={{ background: '#F3E8FF', color: '#9333EA' }}>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" width="16" height="16"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+              </div>
+              <div className="sp-stat-val">₦{specialist.hourlyRate.toLocaleString()}<span style={{ fontSize: 11, fontWeight: 400, color: 'var(--gray-400)' }}>/hr</span></div>
               <div className="sp-stat-label">Rate</div>
             </div>
           )}
           {specialist.yearsExperience > 0 && (
             <div className="sp-stat">
-              <div className="sp-stat-val">{specialist.yearsExperience}<span style={{ fontSize: 12, fontWeight: 400 }}>yrs</span></div>
+              <div className="sp-stat-icon" style={{ background: '#E0F2FE', color: '#0284C7' }}>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" width="16" height="16"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+              </div>
+              <div className="sp-stat-val">{specialist.yearsExperience}<span style={{ fontSize: 11, fontWeight: 400, color: 'var(--gray-400)' }}> yrs</span></div>
               <div className="sp-stat-label">Experience</div>
             </div>
           )}
