@@ -54,10 +54,11 @@ const KYCPage = () => {
       fd.append('idImageFront', files.idImageFront);
       fd.append('idImageBack', files.idImageBack);
       fd.append('selfieWithId', files.selfieWithId);
-      const res = await api.post('/kyc', fd, { headers: { 'Content-Type': 'multipart/form-data' } });
+      const res = await api.post('/kyc', fd);
       setKyc(res.data.kyc);
       setSuccess('KYC submitted successfully! Under review.');
     } catch (err) {
+      console.error('KYC submit error:', err.response?.data || err.message);
       setError(err.response?.data?.error || 'Submission failed');
     } finally { setSubmitting(false); }
   };
