@@ -31,8 +31,9 @@ const ForgotPassword = () => {
   return (
     <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
       <Navbar />
-      <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '120px 20px', background: 'var(--gray-50)' }}>
-        <div style={{ background: '#fff', borderRadius: '8px', padding: '40px', maxWidth: '440px', width: '100%', boxShadow: '0 1px 3px rgba(0,0,0,0.1)' }}>
+      <div className="auth-page" style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '120px 20px', background: 'var(--gray-50)' }}>
+        <style>{`@media (max-width:480px){.auth-page{padding:80px 16px !important}.auth-card{max-width:100% !important;padding:24px 16px !important}}`}</style>
+        <div className="auth-card" style={{ background: '#fff', borderRadius: '8px', padding: '40px', maxWidth: '440px', width: '100%', boxShadow: '0 1px 3px rgba(0,0,0,0.1)' }}>
           {sent ? (
             <div style={{ textAlign: 'center' }}>
               <div style={{ width: '48px', height: '48px', borderRadius: '50%', background: '#EDF3E2', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 16px' }}>

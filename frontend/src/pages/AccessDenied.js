@@ -3,8 +3,9 @@ import { Link } from 'react-router-dom';
 
 const AccessDenied = () => {
   return (
-    <div style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 120, background: 'var(--gray-50)' }}>
-      <div style={{ textAlign: 'center', maxWidth: 400 }}>
+    <div className="auth-page" style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 120, background: 'var(--gray-50)' }}>
+      <style>{`@media (max-width:480px){.auth-page{padding:80px 16px !important}.auth-card{max-width:100% !important}}`}</style>
+      <div className="auth-card" style={{ textAlign: 'center', maxWidth: 400 }}>
         <div style={{
           width: 64, height: 64, background: '#FEF2F2', borderRadius: '50%',
           display: 'flex', alignItems: 'center', justifyContent: 'center',

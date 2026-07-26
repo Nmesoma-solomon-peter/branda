@@ -3,8 +3,9 @@ import { Link } from 'react-router-dom';
 
 const NotFound = () => {
   return (
-    <div style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 120, background: 'var(--gray-50)' }}>
-      <div style={{ textAlign: 'center', maxWidth: 400 }}>
+    <div className="auth-page" style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 120, background: 'var(--gray-50)' }}>
+      <style>{`@media (max-width:480px){.auth-page{padding:80px 16px !important}.auth-card{max-width:100% !important}}`}</style>
+      <div className="auth-card" style={{ textAlign: 'center', maxWidth: 400 }}>
         <div style={{
           width: 80, height: 80, background: 'var(--gray-100)', borderRadius: '50%',
           display: 'flex', alignItems: 'center', justifyContent: 'center',

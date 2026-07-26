@@ -26,8 +26,9 @@ const VerifyEmail = () => {
   return (
     <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
       <Navbar />
-      <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '120px 20px', background: 'var(--gray-50)' }}>
-        <div style={{ background: '#fff', borderRadius: '8px', padding: '40px', maxWidth: '440px', width: '100%', textAlign: 'center', boxShadow: '0 1px 3px rgba(0,0,0,0.1)' }}>
+      <div className="auth-page" style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '120px 20px', background: 'var(--gray-50)' }}>
+        <style>{`@media (max-width:480px){.auth-page{padding:80px 16px !important}.auth-card{max-width:100% !important;padding:24px 16px !important}}`}</style>
+        <div className="auth-card" style={{ background: '#fff', borderRadius: '8px', padding: '40px', maxWidth: '440px', width: '100%', textAlign: 'center', boxShadow: '0 1px 3px rgba(0,0,0,0.1)' }}>
           {status === 'verifying' && (
             <>
               <div style={{ width: '40px', height: '40px', border: '3px solid #e5e7eb', borderTopColor: '#6f9c3e', borderRadius: '50%', animation: 'spin 1s linear infinite', margin: '0 auto 16px' }} />
