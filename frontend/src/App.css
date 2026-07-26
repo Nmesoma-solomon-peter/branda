@@ -256,6 +256,50 @@ ul {
   display: none;
 }
 
+.navbar-links .drawer-link-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  font-size: 14px;
+  font-weight: 500;
+  font-family: var(--font-body);
+  color: var(--gray-600);
+  transition: color var(--transition);
+}
+
+.navbar-links .drawer-link-btn:hover {
+  color: var(--green);
+}
+
+.navbar-links .drawer-badge {
+  background: var(--gray-300);
+  color: var(--white);
+  border-radius: 50%;
+  width: 18px;
+  height: 18px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 9px;
+  font-weight: 700;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.navbar-links .drawer-badge.drawer-badge-active {
+  background: #DC2626;
+}
+
+.navbar-links .drawer-with-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
 .navbar-links a {
   font-size: 14px;
   font-weight: 500;
@@ -265,6 +309,44 @@ ul {
 
 .navbar-links a:hover {
   color: var(--green);
+}
+
+.navbar-links button {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--gray-600);
+  background: none;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0;
+  font-family: var(--font-body);
+  transition: color var(--transition);
+}
+
+.navbar-links button:hover {
+  color: var(--green);
+}
+
+.navbar-links .desktop-badge {
+  background: var(--gray-300);
+  color: var(--white);
+  border-radius: 50%;
+  width: 18px;
+  height: 18px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 9px;
+  font-weight: 700;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.navbar-links .desktop-badge.active {
+  background: #DC2626;
 }
 
 .navbar-cta {

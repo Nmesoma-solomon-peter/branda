@@ -125,7 +125,7 @@ const Navbar = () => {
               <li><Link to="/terms" onClick={closeMenu}>Terms</Link></li>
               <li><Link to="/privacy" onClick={closeMenu}>Privacy</Link></li>
               <li>
-                <button onClick={() => { closeMenu(); setShowLogout(true); }} className="drawer-link-btn" style={{ color: 'var(--gray-600)' }}>
+                <button onClick={() => { closeMenu(); setShowLogout(true); }} className="drawer-link-btn">
                   Logout
                 </button>
               </li>
