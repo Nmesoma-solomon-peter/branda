@@ -32,7 +32,8 @@ const ProjectMilestones = ({ projectId, onUpdate }) => {
   if (loading) return <div style={{ padding: 16, color: '#888', fontSize: 13 }}>Loading milestones...</div>;
 
   return (
-    <div style={{ background: 'var(--white)', border: '1px solid var(--gray-200)', borderRadius: 'var(--radius)', padding: 20 }}>
+    <div className="ms-container" style={{ background: 'var(--white)', border: '1px solid var(--gray-200)', borderRadius: 'var(--radius)', padding: 20 }}>
+      <style>{`@media (max-width: 480px) { .ms-item { flex-wrap: wrap !important; gap: 8px !important; } .ms-item > div:first-child { width: 100% !important; } }`}</style>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16 }}>
         <div>
           <h3 style={{ margin: 0, fontSize: 15, fontWeight: 700 }}>Milestones</h3>
@@ -46,7 +47,7 @@ const ProjectMilestones = ({ projectId, onUpdate }) => {
       ) : (
         <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
           {milestones.map(m => (
-            <div key={m._id} style={{ padding: 12, border: '1px solid var(--gray-100)', borderRadius: 6, display: 'flex', alignItems: 'center', gap: 12 }}>
+            <div key={m._id} className="ms-item" style={{ padding: 12, border: '1px solid var(--gray-100)', borderRadius: 6, display: 'flex', alignItems: 'center', gap: 12 }}>
               <div style={{ width: 4, height: 40, borderRadius: 2, background: statusColor[m.status] || '#888', flexShrink: 0 }} />
               <div style={{ flex: 1 }}>
                 <div style={{ fontSize: 13, fontWeight: 600 }}>{m.title}</div>

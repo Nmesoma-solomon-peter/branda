@@ -68,6 +68,8 @@ const SpecialistPackages = () => {
         .pkg-modal-btns button { padding: 10px 18px; border-radius: 6px; font-size: 13px; font-weight: 600; cursor: pointer; border: none; }
         .pkg-modal-btns .save { background: var(--green); color: var(--white); }
         .pkg-modal-btns .cancel { background: var(--gray-100); color: var(--gray-600); }
+        @media (max-width: 768px) { .pkg-container { padding: 0 20px !important; margin-top: 80px !important; } .pkg-container > div:first-child { flex-direction: column !important; gap: 12px !important; align-items: flex-start !important; } .pkg-grid { grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)) !important; } }
+        @media (max-width: 480px) { .pkg-container { padding: 0 12px !important; margin-top: 70px !important; } .pkg-container h1 { font-size: 22px !important; } .pkg-grid { grid-template-columns: 1fr !important; } .pkg-modal { padding: 20px !important; } .pkg-modal-btns { flex-direction: column !important; } .pkg-modal-btns button { width: 100% !important; } }
       `}</style>
 
       <div className="pkg-container">

@@ -146,9 +146,11 @@ const PortfolioManagement = () => {
         .pm-image-upload img { width: 100%; height: 100%; object-fit: cover; }
         .pm-image-upload span { font-size: 13px; color: var(--gray-400); }
         .pm-modal-footer { display: flex; gap: 10px; justify-content: flex-end; padding: 16px 24px; border-top: 1px solid var(--gray-200); }
+        @media (max-width: 768px) { .pm-page { padding: 80px 20px 40px !important; } .pm-page > div:first-child { flex-direction: column !important; gap: 12px !important; align-items: flex-start !important; } .pm-grid { grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)) !important; } }
+        @media (max-width: 480px) { .pm-page { padding: 70px 12px 32px !important; } .pm-page h1 { font-size: 22px !important; } .pm-grid { grid-template-columns: 1fr !important; } .pm-modal-body { padding: 16px !important; } .pm-modal-footer { flex-direction: column !important; } .pm-modal-footer button { width: 100% !important; } }
       `}</style>
 
-      <div style={{ maxWidth: 1100, margin: '0 auto', padding: '100px 32px 60px' }}>
+      <div className="pm-page" style={{ maxWidth: 1100, margin: '0 auto', padding: '100px 32px 60px' }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
           <div>
             <h1 style={{ fontFamily: 'var(--font-heading)', fontSize: 28, fontWeight: 700, margin: 0 }}>My Portfolio</h1>

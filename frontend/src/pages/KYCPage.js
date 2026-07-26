@@ -70,7 +70,11 @@ const KYCPage = () => {
   const canSubmit = !isApproved && !isPending;
 
   return (
-    <div style={{ maxWidth: 700, margin: '0 auto', padding: '100px 32px 60px' }}>
+    <div className="kyc-page" style={{ maxWidth: 700, margin: '0 auto', padding: '100px 32px 60px' }}>
+      <style>{`
+        @media (max-width: 768px) { .kyc-page { padding: 80px 20px 40px !important; } .kyc-grid { grid-template-columns: 1fr !important; } .kyc-upload-grid { grid-template-columns: 1fr !important; } }
+        @media (max-width: 480px) { .kyc-page { padding: 70px 12px 32px !important; } .kyc-page h1 { font-size: 22px !important; } }
+      `}</style>
       <h1 style={{ fontFamily: 'var(--font-heading)', fontSize: 28, fontWeight: 700, marginBottom: 8 }}>KYC Verification</h1>
       <p style={{ color: 'var(--gray-500)', fontSize: 15, marginBottom: 32 }}>Complete identity verification to start receiving projects.</p>
 
@@ -107,7 +111,7 @@ const KYCPage = () => {
 
           <div style={{ background: 'var(--white)', border: '1px solid var(--gray-200)', borderRadius: 'var(--radius)', padding: 24, marginBottom: 20 }}>
             <h3 style={{ fontFamily: 'var(--font-heading)', fontSize: 16, fontWeight: 700, marginBottom: 20 }}>Personal Details</h3>
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
+            <div className="kyc-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
               <div>
                 <label style={{ display: 'block', fontSize: 13, fontWeight: 500, color: 'var(--gray-500)', marginBottom: 6 }}>Full Legal Name</label>
                 <input className="form-input" value={form.fullName} onChange={e => setForm(p => ({ ...p, fullName: e.target.value }))} style={{ width: '100%' }} />
@@ -134,7 +138,7 @@ const KYCPage = () => {
 
           <div style={{ background: 'var(--white)', border: '1px solid var(--gray-200)', borderRadius: 'var(--radius)', padding: 24, marginBottom: 20 }}>
             <h3 style={{ fontFamily: 'var(--font-heading)', fontSize: 16, fontWeight: 700, marginBottom: 20 }}>Upload Documents</h3>
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 16 }}>
+            <div className="kyc-upload-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 16 }}>
               {[
                 { key: 'idImageFront', label: 'ID Front' },
                 { key: 'idImageBack', label: 'ID Back' },

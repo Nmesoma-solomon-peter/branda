@@ -58,13 +58,17 @@ const PaymentHistory = () => {
   const totalPending = payments.filter(p => p.status === 'pending').reduce((s, p) => s + p.amount, 0);
 
   return (
-    <div style={styles.page}>
+    <div className="pay-page" style={styles.page}>
+      <style>{`
+        @media (max-width: 768px) { .pay-page { padding: 80px 20px 40px !important; } .pay-stats { grid-template-columns: repeat(2, 1fr) !important; } .pay-table-wrap { overflow-x: auto !important; -webkit-overflow-scrolling: touch; } .pay-table-wrap table { min-width: 500px; } }
+        @media (max-width: 480px) { .pay-page { padding: 70px 12px 32px !important; } .pay-page h1 { font-size: 22px !important; } .pay-stats { grid-template-columns: 1fr !important; } }
+      `}</style>
       <div style={styles.header}>
         <h1 style={styles.title}>Payment History</h1>
         <p style={styles.subtitle}>Track all your project payments</p>
       </div>
 
-      <div style={styles.statsRow}>
+      <div className="pay-stats" style={styles.statsRow}>
         <div style={styles.statCard}>
           <div style={styles.statNumber}>{payments.length}</div>
           <div style={styles.statLabel}>Total Transactions</div>
@@ -92,7 +96,7 @@ const PaymentHistory = () => {
           <Link to="/dashboard" style={{ display: 'inline-block', marginTop: 16, padding: '10px 20px', background: 'var(--green)', color: 'var(--white)', borderRadius: 'var(--radius)', fontSize: 14, fontWeight: 500, textDecoration: 'none' }}>Go to Dashboard</Link>
         </div>
       ) : (
-        <div style={{ background: 'var(--white)', border: '1px solid var(--gray-200)', borderRadius: 'var(--radius)', overflow: 'hidden' }}>
+        <div className="pay-table-wrap" style={{ background: 'var(--white)', border: '1px solid var(--gray-200)', borderRadius: 'var(--radius)', overflow: 'hidden' }}>
           <table style={styles.table}>
             <thead>
               <tr>

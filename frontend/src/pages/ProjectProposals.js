@@ -61,7 +61,11 @@ const ProjectProposals = () => {
   const decided = proposals.filter(p => p.status !== 'pending');
 
   return (
-    <div style={{ maxWidth: 900, margin: '0 auto', padding: '100px 32px 60px' }}>
+    <div className="prop-page" style={{ maxWidth: 900, margin: '0 auto', padding: '100px 32px 60px' }}>
+      <style>{`
+        @media (max-width: 768px) { .prop-page { padding: 80px 20px 40px !important; } .prop-item { flex-direction: column !important; gap: 12px !important; } .prop-item-info { flex-direction: column !important; align-items: flex-start !important; gap: 8px !important; } .prop-item-actions { flex-direction: column !important; } .prop-item-actions button { width: 100% !important; } .prop-reviewed-item { flex-direction: column !important; gap: 8px !important; } .prop-reviewed-right { width: 100% !important; justify-content: space-between !important; } }
+        @media (max-width: 480px) { .prop-page { padding: 70px 12px 32px !important; } .prop-page h1 { font-size: 22px !important; } }
+      `}</style>
       <Link to={`/projects/${id}`} style={{ color: 'var(--green)', fontSize: 13, textDecoration: 'none', display: 'inline-block', marginBottom: 16 }}>
         &larr; Back to Project
       </Link>
@@ -77,8 +81,8 @@ const ProjectProposals = () => {
           <div style={{ display: 'flex', flexDirection: 'column', gap: 12, marginBottom: 32 }}>
             {pending.map(p => (
               <div key={p._id} style={{ background: 'var(--white)', border: '1px solid var(--gray-200)', borderRadius: 'var(--radius)', padding: 20 }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 12 }}>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+                <div className="prop-item" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 12 }}>
+                  <div className="prop-item-info" style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
                     <div style={{ width: 40, height: 40, borderRadius: '50%', background: 'var(--green)', color: 'var(--white)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 16, fontWeight: 700 }}>
                       {p.specialist?.name?.charAt(0) || '?'}
                     </div>
@@ -93,7 +97,7 @@ const ProjectProposals = () => {
                   </div>
                 </div>
                 <p style={{ fontSize: 14, color: 'var(--gray-600)', lineHeight: 1.6, margin: '0 0 16px' }}>{p.coverLetter}</p>
-                <div style={{ display: 'flex', gap: 8 }}>
+                <div className="prop-item-actions" style={{ display: 'flex', gap: 8 }}>
                   <button
                     onClick={() => handleAccept(p._id)}
                     disabled={actionLoading === p._id}
@@ -125,14 +129,14 @@ const ProjectProposals = () => {
           <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
             {decided.map(p => (
               <div key={p._id} style={{ background: 'var(--gray-50)', border: '1px solid var(--gray-200)', borderRadius: 'var(--radius)', padding: 16, opacity: 0.7 }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                <div className="prop-reviewed-item" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                   <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
                     <div style={{ width: 32, height: 32, borderRadius: '50%', background: 'var(--gray-300)', color: 'var(--white)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 13, fontWeight: 700 }}>
                       {p.specialist?.name?.charAt(0) || '?'}
                     </div>
                     <span style={{ fontSize: 13, fontWeight: 500 }}>{p.specialist?.name}</span>
                   </div>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
+                  <div className="prop-reviewed-right" style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
                     <span style={{ fontSize: 14, fontWeight: 600 }}>{formatCurrency(p.bidAmount)}</span>
                     <span style={{
                       fontSize: 12, padding: '2px 10px', borderRadius: 10,

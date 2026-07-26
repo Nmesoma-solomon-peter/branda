@@ -60,10 +60,12 @@ const SpecialistEarnings = () => {
         .earn-modal-btns .save { background: var(--green); color: var(--white); }
         .earn-modal-btns .cancel { background: var(--gray-100); color: var(--gray-600); }
         .earn-empty { text-align: center; padding: 40px; color: var(--gray-400); font-size: 14px; }
+        @media (max-width: 768px) { .earn-container { padding: 0 20px !important; margin-top: 80px !important; } .earn-stats { grid-template-columns: repeat(2, 1fr) !important; } .earn-table-wrap { overflow-x: auto !important; -webkit-overflow-scrolling: touch; } .earn-table-wrap table { min-width: 450px; } .earn-header { flex-direction: column !important; gap: 12px !important; align-items: flex-start !important; } }
+        @media (max-width: 480px) { .earn-container { padding: 0 12px !important; margin-top: 70px !important; } .earn-container h1 { font-size: 22px !important; } .earn-stats { grid-template-columns: 1fr !important; } }
       `}</style>
 
       <div className="earn-container">
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 24 }}>
+        <div className="earn-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 24 }}>
           <h1 style={{ fontFamily: 'var(--font-heading)', fontSize: 28, fontWeight: 700, margin: 0 }}>Earnings</h1>
           <button className="earn-btn" onClick={() => setShowWithdraw(true)} disabled={data.earnings.available <= 0}>Withdraw Funds</button>
         </div>
@@ -87,7 +89,7 @@ const SpecialistEarnings = () => {
         {data.withdrawals.length === 0 ? (
           <div className="earn-empty">No withdrawals yet</div>
         ) : (
-          <table className="earn-table">
+          <div className="earn-table-wrap"><table className="earn-table">
             <thead><tr><th>Amount</th><th>Bank</th><th>Account</th><th>Status</th><th>Date</th></tr></thead>
             <tbody>
               {data.withdrawals.map(w => (
@@ -100,7 +102,7 @@ const SpecialistEarnings = () => {
                 </tr>
               ))}
             </tbody>
-          </table>
+          </table></div>
         )}
       </div>
 

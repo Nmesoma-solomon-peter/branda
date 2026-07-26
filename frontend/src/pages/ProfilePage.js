@@ -86,11 +86,15 @@ const ProfilePage = () => {
   const completion = getCompletion();
 
   return (
-    <div style={{ maxWidth: 700, margin: '0 auto', padding: '100px 32px 60px' }}>
+    <div className="prof-page" style={{ maxWidth: 700, margin: '0 auto', padding: '100px 32px 60px' }}>
+      <style>{`
+        @media (max-width: 768px) { .prof-page { padding: 80px 20px 40px !important; } .prof-grid { grid-template-columns: 1fr !important; } .prof-danger { flex-direction: column !important; } .prof-danger > div { width: 100% !important; } .prof-danger button { width: 100% !important; } .prof-avatar-wrap { flex-direction: column !important; text-align: center !important; } }
+        @media (max-width: 480px) { .prof-page { padding: 70px 12px 32px !important; } .prof-page h1 { font-size: 22px !important; } }
+      `}</style>
       <h1 style={{ fontFamily: 'var(--font-heading)', fontSize: 28, fontWeight: 700, marginBottom: 32 }}>My Profile</h1>
 
       <div style={{ background: 'var(--white)', border: '1px solid var(--gray-200)', borderRadius: 'var(--radius)', padding: 24, marginBottom: 20 }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 20, marginBottom: 24 }}>
+        <div className="prof-avatar-wrap" style={{ display: 'flex', alignItems: 'center', gap: 20, marginBottom: 24 }}>
           <div style={{ position: 'relative' }}>
             <div style={{ width: 80, height: 80, borderRadius: '50%', background: 'var(--gray-100)', overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
               {user.profileImage ? (
@@ -150,7 +154,7 @@ const ProfilePage = () => {
 
       <div style={{ background: 'var(--white)', border: '1px solid var(--gray-200)', borderRadius: 'var(--radius)', padding: 24, marginBottom: 20 }}>
         <h3 style={{ fontFamily: 'var(--font-heading)', fontSize: 16, fontWeight: 700, marginBottom: 20 }}>Personal Information</h3>
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
+        <div className="prof-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
           <div>
             <label style={{ display: 'block', fontSize: 13, fontWeight: 500, color: 'var(--gray-500)', marginBottom: 6 }}>Full Name</label>
             <input className="form-input" value={form.name} onChange={e => handleChange('name', e.target.value)} style={{ width: '100%' }} />
@@ -198,7 +202,7 @@ const ProfilePage = () => {
             Delete Account
           </button>
         ) : (
-          <div style={{ display: 'flex', gap: 12, alignItems: 'flex-end' }}>
+          <div className="prof-danger" style={{ display: 'flex', gap: 12, alignItems: 'flex-end' }}>
             <div style={{ flex: 1 }}>
               <label style={{ display: 'block', fontSize: 13, fontWeight: 500, color: 'var(--gray-500)', marginBottom: 6 }}>Confirm with password</label>
               <input

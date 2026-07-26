@@ -57,6 +57,8 @@ const SpecialistAvailability = () => {
         .avail-status input[type="radio"] { display: none; }
         .avail-status input[type="radio"]:checked + span { color: var(--green); font-weight: 700; }
         .avail-status label:has(input:checked) { border-color: var(--green); background: var(--green-light); }
+        @media (max-width: 768px) { .avail-page { padding: 0 20px !important; margin-top: 80px !important; } }
+        @media (max-width: 480px) { .avail-page { padding: 0 12px !important; margin-top: 70px !important; } .avail-card { padding: 24px 20px !important; } .avail-status { flex-wrap: wrap !important; } }
       `}</style>
 
       <div className="avail-page">
