@@ -75,7 +75,14 @@ const AdminDashboard = () => {
     if (!loading && (!user || user.role !== 'admin')) navigate('/manage/login');
   }, [loading, user, navigate]);
 
-  if (loading || !user || user.role !== 'admin') return null;
+  if (loading) {
+    return <div style={{ padding: '100px 32px', textAlign: 'center', color: 'var(--gray-400)' }}>Loading...</div>;
+  }
+  if (!user || user.role !== 'admin') {
+    return <div style={{ padding: '100px 32px', textAlign: 'center' }}>
+      <p style={{ color: 'var(--gray-400)' }}>Redirecting to login...</p>
+    </div>;
+  }
 
   const handleLogout = () => {
     setShowLogout(false);

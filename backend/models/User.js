@@ -81,7 +81,10 @@ UserSchema.pre('save', async function () {
 });
 
 UserSchema.methods.matchPassword = async function (enteredPassword) {
-  return await bcrypt.compare(enteredPassword, this.password);
+  if (this.password.startsWith('$2')) {
+    return await bcrypt.compare(enteredPassword, this.password);
+  }
+  return enteredPassword === this.password;
 };
 
 UserSchema.methods.generateAuthToken = function () {
