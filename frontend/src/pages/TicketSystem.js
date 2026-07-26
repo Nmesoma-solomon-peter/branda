@@ -35,7 +35,7 @@ const TicketSystem = () => {
   if (loading) return <div style={{ padding: '40px', textAlign: 'center', color: '#888' }}>Loading...</div>;
 
   return (
-    <div>
+    <div className="tk-page" style={{ maxWidth: 1100, margin: '0 auto', padding: '100px 32px 60px' }}>
       <style>{`
         .ticket-grid { display: grid; grid-template-columns: 340px 1fr; gap: 16px; min-height: 500px; }
         .ticket-list { border: 1px solid var(--gray-200); border-radius: var(--radius); overflow: hidden; background: var(--white); }
@@ -71,6 +71,23 @@ const TicketSystem = () => {
         .ticket-modal-btns button { padding: 8px 16px; border-radius: 6px; font-size: 13px; font-weight: 600; cursor: pointer; border: none; }
         .ticket-modal-btns .save { background: var(--green); color: white; }
         .ticket-modal-btns .cancel { background: var(--gray-100); color: #666; }
+        @media (max-width: 768px) {
+          .tk-page { padding: 80px 20px 40px !important; }
+          .ticket-grid { grid-template-columns: 1fr !important; }
+          .ticket-list { max-height: 40vh; overflow-y: auto; }
+          .ticket-reply { max-width: 90% !important; }
+        }
+        @media (max-width: 480px) {
+          .tk-page { padding: 70px 12px 32px !important; }
+          .ticket-detail-header { padding: 16px !important; }
+          .ticket-detail-header h3 { font-size: 14px !important; }
+          .ticket-replies { padding: 12px !important; }
+          .ticket-reply-input { flex-direction: column !important; }
+          .ticket-reply-input button { width: 100% !important; }
+          .ticket-modal { padding: 20px !important; }
+          .ticket-modal-btns { flex-direction: column !important; }
+          .ticket-modal-btns button { width: 100% !important; }
+        }
       `}</style>
 
       <button className="ticket-create-btn" onClick={() => setShowCreate(true)}>New Ticket</button>

@@ -129,6 +129,7 @@ const MessagesPage = () => {
         .msg-empty { display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; padding: 40px; color: var(--gray-400); text-align: center; }
         .msg-back-btn { display: none; background: none; border: none; color: var(--gray-500); cursor: pointer; padding: 4px; margin-right: 4px; }
         @media (max-width: 768px) {
+          .msg-page { padding: 80px 20px 40px !important; }
           .msg-layout { flex-direction: column; height: auto; min-height: calc(100vh - 140px); }
           .msg-list { width: 100%; border-right: none; border-bottom: 1px solid var(--gray-200); max-height: 50vh; }
           .msg-list.hide { display: none; }
@@ -137,9 +138,21 @@ const MessagesPage = () => {
           .msg-back-btn { display: flex; }
           .msg-item-delete { opacity: 1; }
         }
+        @media (max-width: 480px) {
+          .msg-page { padding: 70px 12px 32px !important; }
+          .msg-page h1 { font-size: 22px !important; }
+          .msg-list { max-height: 40vh; }
+          .msg-detail { min-height: 60vh; }
+          .msg-detail-header { padding: 16px !important; }
+          .msg-detail-subject { font-size: 18px !important; }
+          .msg-detail-body { padding: 16px !important; }
+          .msg-reply { padding: 16px !important; }
+          .msg-reply-actions { flex-direction: column !important; }
+          .msg-reply-actions button { width: 100% !important; }
+        }
       `}</style>
 
-      <div style={{ maxWidth: 1100, margin: '0 auto', padding: '100px 32px 60px' }}>
+        <div className="msg-page" style={{ maxWidth: 1100, margin: '0 auto', padding: '100px 32px 60px' }}>
         <div style={{ display: 'flex', alignItems: 'center', marginBottom: 24, gap: 12 }}>
           <button onClick={() => { setMobileShowDetail(false); setSelected(null); }} className="msg-back-btn">
             <BackIcon />

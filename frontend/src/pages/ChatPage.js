@@ -229,6 +229,7 @@ const ChatPage = () => {
         .chat-empty { display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; color: var(--gray-400); }
         .chat-back-btn { display: none; background: none; border: none; color: var(--gray-500); cursor: pointer; padding: 4px; }
         @media (max-width: 768px) {
+          .chat-page { padding: 80px 20px 40px !important; }
           .chat-layout { flex-direction: column; height: auto; min-height: calc(100vh - 140px); }
           .chat-list { width: 100%; border-right: none; border-bottom: 1px solid var(--gray-200); max-height: 45vh; }
           .chat-list.hide { display: none; }
@@ -236,9 +237,20 @@ const ChatPage = () => {
           .chat-detail.hide { display: none; }
           .chat-back-btn { display: flex; }
         }
+        @media (max-width: 480px) {
+          .chat-page { padding: 70px 12px 32px !important; }
+          .chat-page h1 { font-size: 22px !important; }
+          .chat-list { max-height: 35vh; }
+          .chat-detail { min-height: 65vh; }
+          .chat-detail-header { padding: 12px 16px !important; }
+          .chat-messages { padding: 12px !important; }
+          .chat-msg { max-width: 85% !important; font-size: 13px !important; }
+          .chat-input { padding: 10px 12px !important; }
+          .chat-input input { font-size: 13px !important; }
+        }
       `}</style>
 
-      <div style={{ maxWidth: 1100, margin: '0 auto', padding: '100px 32px 60px' }}>
+        <div className="chat-page" style={{ maxWidth: 1100, margin: '0 auto', padding: '100px 32px 60px' }}>
         <div style={{ display: 'flex', alignItems: 'center', marginBottom: 24, gap: 12 }}>
           <button onClick={() => { setMobileShowDetail(false); setActiveChat(null); }} className="chat-back-btn">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" width="20" height="20"><polyline points="15 18 9 12 15 6"/></svg>
