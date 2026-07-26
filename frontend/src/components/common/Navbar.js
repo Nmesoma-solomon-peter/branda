@@ -81,7 +81,11 @@ const Navbar = () => {
           {menuOpen ? <CloseIcon /> : <MenuIcon />}
         </button>
 
+        {menuOpen && <div className="navbar-overlay" onClick={closeMenu} />}
         <ul className={`navbar-links ${menuOpen ? 'open' : ''}`}>
+          <li className="drawer-close">
+            <button onClick={closeMenu} aria-label="Close menu"><CloseIcon /></button>
+          </li>
           {isAuthenticated ? (
             <>
               <li>
@@ -90,43 +94,17 @@ const Navbar = () => {
                 </Link>
               </li>
               <li>
-                <Link to="/chat" onClick={closeMenu} style={{ position: 'relative', display: 'flex', alignItems: 'center', gap: 4 }}>
+                <Link to="/chat" onClick={closeMenu} className="drawer-with-badge">
                   Messages
-                  <span style={{
-                    background: unreadCount > 0 ? '#DC2626' : 'var(--gray-300)',
-                    color: 'var(--white)',
-                    borderRadius: '50%', width: 16, height: 16, display: 'inline-flex', alignItems: 'center',
-                    justifyContent: 'center', fontSize: 9, fontWeight: 700, lineHeight: 1
-                  }}>{unreadCount > 9 ? '9+' : unreadCount}</span>
+                  <span className={`drawer-badge ${unreadCount > 0 ? 'drawer-badge-active' : ''}`}>{unreadCount > 9 ? '9+' : unreadCount}</span>
                 </Link>
               </li>
-              <li style={{ position: 'relative' }}>
-                <button onClick={toggleNotifs} style={{ background: 'none', border: 'none', cursor: 'pointer', padding: '10px 0', color: 'inherit', position: 'relative', display: 'flex', alignItems: 'center' }}>
+              <li>
+                <button onClick={() => { closeMenu(); toggleNotifs(); }} className="drawer-link-btn">
                   <BellIcon />
-                  {notifCount > 0 && (
-                    <span style={{
-                      position: 'absolute', top: 2, right: -4, background: '#DC2626', color: 'var(--white)',
-                      borderRadius: '50%', width: 16, height: 16, display: 'flex', alignItems: 'center',
-                      justifyContent: 'center', fontSize: 9, fontWeight: 700, lineHeight: 1
-                    }}>{notifCount > 9 ? '9+' : notifCount}</span>
-                  )}
+                  Notifications
+                  {notifCount > 0 && <span className="drawer-badge drawer-badge-active">{notifCount > 9 ? '9+' : notifCount}</span>}
                 </button>
-                {showNotifs && (
-                  <div className="notif-dropdown" style={{
-                    position: 'absolute', top: '100%', right: 0, background: '#fff', border: '1px solid var(--gray-200)',
-                    borderRadius: '8px', width: '320px', maxHeight: '400px', overflowY: 'auto', boxShadow: '0 4px 12px rgba(0,0,0,0.1)', zIndex: 1000, marginTop: '8px'
-                  }}>
-                    <div style={{ padding: '12px 16px', borderBottom: '1px solid var(--gray-100)', fontWeight: 600, fontSize: '14px' }}>Notifications</div>
-                    {notifications.length === 0 ? (
-                      <div style={{ padding: '24px 16px', textAlign: 'center', color: 'var(--gray-400)', fontSize: '13px' }}>No notifications</div>
-                    ) : notifications.map(n => (
-                      <div key={n._id} style={{ padding: '12px 16px', borderBottom: '1px solid var(--gray-50)', background: n.read ? 'transparent' : '#f0fdf4' }}>
-                        <p style={{ margin: 0, fontSize: '13px', fontWeight: 500, color: 'var(--gray-800)' }}>{n.title}</p>
-                        <p style={{ margin: '4px 0 0', fontSize: '12px', color: 'var(--gray-400)' }}>{n.message}</p>
-                      </div>
-                    ))}
-                  </div>
-                )}
               </li>
               <li>
                 <Link to="/profile" onClick={closeMenu}>Profile</Link>
@@ -136,32 +114,18 @@ const Navbar = () => {
               </li>
               {user?.role === 'specialist' && (
                 <>
-                  <li>
-                    <Link to="/browse-projects" onClick={closeMenu}>Find Projects</Link>
-                  </li>
-                  <li>
-                    <Link to="/kyc" onClick={closeMenu}>KYC</Link>
-                  </li>
-                  <li>
-                    <Link to="/portfolio" onClick={closeMenu}>Portfolio</Link>
-                  </li>
+                  <li><Link to="/browse-projects" onClick={closeMenu}>Find Projects</Link></li>
+                  <li><Link to="/kyc" onClick={closeMenu}>KYC</Link></li>
+                  <li><Link to="/portfolio" onClick={closeMenu}>Portfolio</Link></li>
                 </>
               )}
               {user?.role === 'sme' && (
-                <>
-                  <li>
-                    <Link to="/payments" onClick={closeMenu}>Payments</Link>
-                  </li>
-                </>
+                <li><Link to="/payments" onClick={closeMenu}>Payments</Link></li>
               )}
+              <li><Link to="/terms" onClick={closeMenu}>Terms</Link></li>
+              <li><Link to="/privacy" onClick={closeMenu}>Privacy</Link></li>
               <li>
-                <Link to="/terms" onClick={closeMenu} style={{ fontSize: 13 }}>Terms</Link>
-              </li>
-              <li>
-                <Link to="/privacy" onClick={closeMenu} style={{ fontSize: 13 }}>Privacy</Link>
-              </li>
-              <li>
-                <button onClick={() => setShowLogout(true)} className="navbar-cta" style={{ background: 'none', color: 'var(--gray-600)', padding: '10px 0' }}>
+                <button onClick={() => { closeMenu(); setShowLogout(true); }} className="drawer-link-btn" style={{ color: 'var(--gray-600)' }}>
                   Logout
                 </button>
               </li>
@@ -181,6 +145,43 @@ const Navbar = () => {
             </>
           )}
         </ul>
+
+        {showNotifs && !menuOpen && (
+          <div className="notif-dropdown" style={{
+            position: 'absolute', top: '100%', right: 32, background: '#fff', border: '1px solid var(--gray-200)',
+            borderRadius: '8px', width: '320px', maxHeight: '400px', overflowY: 'auto', boxShadow: '0 4px 12px rgba(0,0,0,0.1)', zIndex: 1000, marginTop: '8px'
+          }}>
+            <div style={{ padding: '12px 16px', borderBottom: '1px solid var(--gray-100)', fontWeight: 600, fontSize: '14px' }}>Notifications</div>
+            {notifications.length === 0 ? (
+              <div style={{ padding: '24px 16px', textAlign: 'center', color: 'var(--gray-400)', fontSize: '13px' }}>No notifications</div>
+            ) : notifications.map(n => (
+              <div key={n._id} style={{ padding: '12px 16px', borderBottom: '1px solid var(--gray-50)', background: n.read ? 'transparent' : '#f0fdf4' }}>
+                <p style={{ margin: 0, fontSize: '13px', fontWeight: 500, color: 'var(--gray-800)' }}>{n.title}</p>
+                <p style={{ margin: '4px 0 0', fontSize: '12px', color: 'var(--gray-400)' }}>{n.message}</p>
+              </div>
+            ))}
+          </div>
+        )}
+
+        {showNotifs && menuOpen && (
+          <div className="notif-dropdown" style={{
+            position: 'fixed', top: '70px', left: '12px', right: '12px', background: '#fff', border: '1px solid var(--gray-200)',
+            borderRadius: '8px', maxHeight: '60vh', overflowY: 'auto', boxShadow: '0 4px 12px rgba(0,0,0,0.15)', zIndex: 1001
+          }}>
+            <div style={{ padding: '12px 16px', borderBottom: '1px solid var(--gray-100)', fontWeight: 600, fontSize: '14px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+              Notifications
+              <button onClick={() => setShowNotifs(false)} style={{ background: 'none', border: 'none', cursor: 'pointer', fontSize: '18px', color: 'var(--gray-400)', padding: '0 4px' }}>&times;</button>
+            </div>
+            {notifications.length === 0 ? (
+              <div style={{ padding: '24px 16px', textAlign: 'center', color: 'var(--gray-400)', fontSize: '13px' }}>No notifications</div>
+            ) : notifications.map(n => (
+              <div key={n._id} style={{ padding: '12px 16px', borderBottom: '1px solid var(--gray-50)', background: n.read ? 'transparent' : '#f0fdf4' }}>
+                <p style={{ margin: 0, fontSize: '13px', fontWeight: 500, color: 'var(--gray-800)' }}>{n.title}</p>
+                <p style={{ margin: '4px 0 0', fontSize: '12px', color: 'var(--gray-400)' }}>{n.message}</p>
+              </div>
+            ))}
+          </div>
+        )}
       </div>
 
       <ConfirmModal

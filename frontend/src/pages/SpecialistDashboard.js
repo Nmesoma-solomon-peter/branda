@@ -339,7 +339,7 @@ const SpecialistDashboard = () => {
         }
         @media (max-width: 480px) {
           .dash-page { padding: 60px 12px 40px !important; }
-          .dash-welcome { flex-direction: column !important; text-align: center !important; }
+          .dash-welcome { flex-direction: column !important; text-align: center !important; padding-top: 20px !important; }
           .dash-avatar { width: 48px !important; height: 48px !important; font-size: 18px !important; }
           .dash-stat-num { font-size: 22px !important; }
           .dash-actions { grid-template-columns: 1fr !important; }
