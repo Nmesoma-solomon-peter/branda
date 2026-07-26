@@ -67,8 +67,8 @@ function App() {
 <Route path="/forgot-password" element={<><Navbar /><ForgotPassword /><Footer /></>} />
   <Route path="/reset-password/:token" element={<><Navbar /><ResetPassword /><Footer /></>} />
   <Route path="/verify-email/:token" element={<><Navbar /><VerifyEmail /><Footer /></>} />
-  <Route path="/terms" element={<><Navbar /><Terms /><Footer /></>} />
-  <Route path="/privacy" element={<><Navbar /><Privacy /><Footer /></>} />
+  <Route path="/terms" element={<Terms />} />
+  <Route path="/privacy" element={<Privacy />} />
               <Route path="/tools/brand-name" element={<><Navbar /><BrandNameGenerator /></>} />
               <Route path="/tools/color-palette" element={<><Navbar /><ColorPaletteGenerator /></>} />
               <Route path="/dashboard" element={<><Navbar /><PrivateRoute role="sme"><SMEDashboard /></PrivateRoute></>} />
