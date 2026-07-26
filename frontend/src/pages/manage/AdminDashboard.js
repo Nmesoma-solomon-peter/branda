@@ -150,6 +150,12 @@ const AdminDashboard = () => {
           .admin-header { padding: 0 16px; }
           .admin-main-content { padding: 16px; }
         }
+        @media (max-width: 480px) {
+          .admin-main-content { padding: 10px; }
+          .admin-header { padding: 0 10px; }
+          .admin-stats-grid { grid-template-columns: 1fr !important; }
+          .admin-chart-container { padding: 12px !important; }
+        }
       `}</style>
 
       <div className="admin-layout">

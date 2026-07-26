@@ -3,6 +3,10 @@ img {
   height: auto;
 }
 
+video, iframe {
+  max-width: 100%;
+}
+
 table {
   width: 100%;
   overflow-x: auto;
@@ -23,6 +27,8 @@ input, select, textarea, button {
   h1 { font-size: 24px !important; }
   h2 { font-size: 20px !important; }
   h3 { font-size: 17px !important; }
+  h4 { font-size: 15px !important; }
+  body, p, li, .text-body { font-size: 14px; }
 }
 
 @media (max-width: 480px) {
@@ -33,6 +39,8 @@ input, select, textarea, button {
   h1 { font-size: 20px !important; }
   h2 { font-size: 17px !important; }
   h3 { font-size: 15px !important; }
+  h4 { font-size: 14px !important; }
+  body, p, li, .text-body { font-size: 13px; }
 
   .form-input { padding: 10px 12px !important; font-size: 15px !important; }
   .btn { padding: 10px 16px !important; font-size: 14px !important; }

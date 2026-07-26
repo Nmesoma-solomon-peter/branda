@@ -84,6 +84,8 @@ const Onboarding = () => {
         .ob-feature-text { font-size: 14px; color: var(--gray-700); }
         .ob-feature-text strong { display: block; font-size: 14px; margin-bottom: 2px; }
         .ob-feature-text span { font-size: 13px; color: var(--gray-500); }
+        @media (max-width: 768px) { .ob-container { padding: 20px !important; } .ob-card { padding: 28px 20px !important; } .ob-title { font-size: 20px !important; } .ob-icon { width: 48px !important; height: 48px !important; } }
+        @media (max-width: 480px) { .ob-container { padding: 12px !important; } .ob-card { padding: 20px 14px !important; } .ob-title { font-size: 17px !important; } .ob-subtitle { font-size: 13px !important; } .ob-icon { width: 40px !important; height: 40px !important; } .ob-btn { width: 100% !important; justify-content: center !important; } .ob-btn.secondary { margin-left: 0 !important; margin-top: 8px !important; } .ob-feature { gap: 8px !important; } }
       `}</style>
 
       <div className="ob-container">
