@@ -306,17 +306,31 @@ const SMEDashboard = () => {
   }
 
   return (
-    <div style={styles.page}>
+    <div className="dash-page" style={styles.page}>
+      <style>{`
+        @media (max-width: 768px) {
+          .dash-stats { grid-template-columns: repeat(2, 1fr) !important; }
+          .dash-projects { grid-template-columns: 1fr !important; }
+        }
+        @media (max-width: 480px) {
+          .dash-page { padding: 60px 12px 40px !important; }
+          .dash-welcome { flex-direction: column !important; text-align: center !important; }
+          .dash-avatar { width: 48px !important; height: 48px !important; font-size: 18px !important; }
+          .dash-stat-num { font-size: 22px !important; }
+          .dash-quick { grid-template-columns: repeat(2, 1fr) !important; gap: 8px !important; }
+        }
+      `}</style>
       {/* Welcome */}
-      <div style={styles.welcome}>
+      <div className="dash-welcome" style={styles.welcome}>
         {user?.profileImage ? (
           <img
             src={user.profileImage.startsWith('/') ? user.profileImage : `/uploads/${user.profileImage}`}
             alt={user.name}
+            className="dash-avatar"
             style={styles.avatar}
           />
         ) : (
-          <div style={styles.initialsAvatar}>
+          <div className="dash-avatar" style={styles.initialsAvatar}>
             {getInitials(user?.name)}
           </div>
         )}
@@ -327,21 +341,21 @@ const SMEDashboard = () => {
       </div>
 
       {/* Stats */}
-      <div style={styles.statsRow}>
+      <div className="dash-stats" style={styles.statsRow}>
         <div style={styles.statCard}>
-          <div style={styles.statNumber}>{projects.length}</div>
+          <div className="dash-stat-num" style={styles.statNumber}>{projects.length}</div>
           <div style={styles.statLabel}>Total Projects</div>
         </div>
         <div style={styles.statCard}>
-          <div style={styles.statNumber}>{activeCount}</div>
+          <div className="dash-stat-num" style={styles.statNumber}>{activeCount}</div>
           <div style={styles.statLabel}>Active</div>
         </div>
         <div style={styles.statCard}>
-          <div style={styles.statNumber}>{completedCount}</div>
+          <div className="dash-stat-num" style={styles.statNumber}>{completedCount}</div>
           <div style={styles.statLabel}>Completed</div>
         </div>
         <div style={styles.statCard}>
-          <div style={{ ...styles.statNumber, fontSize: 20 }}>{formatCurrency(totalBudget) || '₦0'}</div>
+          <div className="dash-stat-num" style={{ ...styles.statNumber, fontSize: 20 }}>{formatCurrency(totalBudget) || '₦0'}</div>
           <div style={styles.statLabel}>Total Budget</div>
         </div>
       </div>
@@ -380,7 +394,7 @@ const SMEDashboard = () => {
           description="Create your first branding project to get started with Branda."
         />
       ) : (
-        <div style={styles.projectGrid}>
+        <div className="dash-projects" style={styles.projectGrid}>
           {projects.map(project => {
             const status = statusColors[project.status] || statusColors.active;
             const remaining = daysUntil(project.deadline);
@@ -421,7 +435,7 @@ const SMEDashboard = () => {
 
       <div style={{ marginTop: 40 }}>
         <h3 style={{ fontFamily: 'var(--font-heading)', fontSize: 18, fontWeight: 700, marginBottom: 16 }}>Quick Actions</h3>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(150px, 1fr))', gap: 12 }}>
+        <div className="dash-quick" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(150px, 1fr))', gap: 12 }}>
           <Link to="/browse" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 8, padding: 20, background: 'var(--white)', border: '1px solid var(--gray-200)', borderRadius: 'var(--radius)', textDecoration: 'none', color: 'var(--gray-600)', fontSize: 13, fontWeight: 600 }}>
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="22" height="22"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
             Find Specialists
