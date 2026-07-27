@@ -87,6 +87,12 @@ exports.acceptProposal = async (req, res) => {
     project.budget = proposal.bidAmount;
     await project.save();
 
+    const Chat = require('../models/Chat');
+    const existing = await Chat.findOne({ participants: { $all: [project.owner, proposal.specialist._id] } });
+    if (!existing) {
+      await Chat.create({ participants: [project.owner, proposal.specialist._id] });
+    }
+
     await Proposal.updateMany(
       { project: project._id, _id: { $ne: proposal._id } },
       { status: 'rejected' }
