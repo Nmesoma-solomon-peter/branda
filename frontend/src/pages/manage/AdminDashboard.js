@@ -22,6 +22,7 @@ import AdminTickets from './AdminTickets';
 import AdminBlog from './AdminBlog';
 import AdminAnnouncements from './AdminAnnouncements';
 import ConfirmModal from '../../components/common/ConfirmModal';
+import ErrorBoundary from '../../components/common/ErrorBoundary';
 
 const navItems = [
   { id: 'overview', label: 'Overview', icon: 'M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-4 0a1 1 0 01-1-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 01-1 1' },
@@ -71,7 +72,10 @@ const AdminDashboard = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [showLogout, setShowLogout] = useState(false);
 
+  console.log('[AdminDashboard]', { loading, user: user?.email, role: user?.role });
+
   useEffect(() => {
+    console.log('[AdminDashboard] auth check', { loading, user: user?.email, role: user?.role });
     if (!loading && (!user || user.role !== 'admin')) navigate('/manage/login');
   }, [loading, user, navigate]);
 
@@ -225,7 +229,9 @@ const AdminDashboard = () => {
           </header>
 
           <main className="admin-main-content">
-            {renderPage()}
+            <ErrorBoundary fallback={<p style={{ color: 'var(--gray-400)', textAlign: 'center', padding: 40 }}>Failed to load section. Check console for details.</p>}>
+              {renderPage()}
+            </ErrorBoundary>
           </main>
         </div>
       </div>
