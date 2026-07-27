@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import api, { BASE_URL } from '../api/axios';
 import { io } from 'socket.io-client';
@@ -67,6 +68,7 @@ const DoubleCheckIcon = ({ read }) => (
 
 const ChatPage = () => {
   const { user } = useAuth();
+  const [searchParams, setSearchParams] = useSearchParams();
   const [chats, setChats] = useState([]);
   const [activeChat, setActiveChat] = useState(null);
   const [messages, setMessages] = useState([]);
@@ -90,6 +92,26 @@ const ChatPage = () => {
       setChats(res.data.chats);
     }).catch(() => {}).finally(() => setLoading(false));
   }, []);
+
+  useEffect(() => {
+    if (loading) return;
+    const userId = searchParams.get('userId');
+    if (!userId) return;
+    const existing = chats.find(c => c.participants.some(p => p._id === userId));
+    if (existing) {
+      loadChat(existing);
+      setSearchParams({}, { replace: true });
+      return;
+    }
+    api.post('/chats', { participantId: userId }).then(res => {
+      const newChat = res.data.chat;
+      setChats(prev => [newChat, ...prev]);
+      loadChat(newChat);
+      setSearchParams({}, { replace: true });
+    }).catch(() => {
+      setSearchParams({}, { replace: true });
+    });
+  }, [loading]);
 
   useEffect(() => {
     if (!activeChat) return;

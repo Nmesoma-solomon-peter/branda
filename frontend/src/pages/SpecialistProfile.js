@@ -134,7 +134,7 @@ const SpecialistProfile = () => {
           </div>
         )}
         {user && user.role === 'sme' && (
-          <Link to={`/chat`} className="sp-msg-btn">Send Message</Link>
+          <Link to={`/chat?userId=${specialist._id}`} className="sp-msg-btn">Send Message</Link>
         )}
       </div>
 
